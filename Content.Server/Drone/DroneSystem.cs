@@ -55,19 +55,19 @@ namespace Content.Server.Drone
             if (args.Target != null && !HasComp<UnremoveableComponent>(args.Target) && NonDronesInRange(uid, component))
                 args.Cancel();
 
-            if (HasComp<ItemComponent>(args.Target) && !HasComp<UnremoveableComponent>(args.Target))
-            {
-                if (!_tagSystem.HasAnyTag(args.Target.Value, "DroneUsable", "Trash"))
-                    args.Cancel();
-            }
+            // if (HasComp<ItemComponent>(args.Target) && !HasComp<UnremoveableComponent>(args.Target))
+            //{
+            //    if (!_tagSystem.HasAnyTag(args.Target.Value, "DroneUsable", "Trash"))
+            //        args.Cancel();
+            //}
         }
 
         private void OnActivateUIAttempt(EntityUid uid, DroneComponent component, UserOpenActivatableUIAttemptEvent args)
         {
-            if (!_tagSystem.HasTag(args.Target, "DroneUsable"))
-            {
-                args.Cancel();
-            }
+            //if (!_tagSystem.HasTag(args.Target, "DroneUsable"))
+            //{
+            //    args.Cancel();
+            //}
         }
 
         private void OnExamined(EntityUid uid, DroneComponent component, ExaminedEvent args)
