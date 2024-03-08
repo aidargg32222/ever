@@ -4,8 +4,17 @@
   description: job-description-sai
   playTimeTracker: JobSAI
   requirements:
-  - !type:AdminRoleRequirement
-    role: LoyalAi
+  - !type:DepartmentTimeRequirement
+    department: Engineering
+    time: 72000 #20 hrs # Corvax-RoleTime
+  - !type:DepartmentTimeRequirement
+    department: Medical
+    time: 72000 #20 hrs # Corvax-RoleTime
+  - !type:DepartmentTimeRequirement
+    department: Security
+    time: 72000 #20 hrs # Corvax-RoleTime
+  - !type:OverallPlaytimeRequirement
+    time: 504000 #140 hrs # Corvax-RoleTime
   weight: 30
   icon: JobIconStationAI
   supervisors: "all crew"
