@@ -80,7 +80,7 @@
     prototype: Drone
   - type: InnateTool
     tools:
-      - id: ClothingBackpackSatchelDrone
+      - id: ClothingBackpackSatchel
       - id: trayScanner
       - id: Omnitool
       - id: WelderExperimental

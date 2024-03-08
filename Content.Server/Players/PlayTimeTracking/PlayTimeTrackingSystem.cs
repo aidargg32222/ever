@@ -174,7 +174,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         }
 
         return JobRequirements.TryRequirementsMet(job, playTimes, out _, EntityManager, _prototypes,
-            _adminManager.HasAdminFlag(player, AdminFlags.BrokenAi), _adminManager.HasAdminFlag(player, AdminFlags.LoyalAi));
+            _adminManager.HasAdminFlag(player, AdminFlags.BrokenAi));
     }
 
     public HashSet<string> GetDisallowedJobs(ICommonSession player)
@@ -196,7 +196,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
                 foreach (var requirement in job.Requirements)
                 {
                     if (JobRequirements.TryRequirementMet(requirement, playTimes, out _, EntityManager, _prototypes,
-                            _adminManager.HasAdminFlag(player, AdminFlags.BrokenAi), _adminManager.HasAdminFlag(player, AdminFlags.LoyalAi)))
+                            _adminManager.HasAdminFlag(player, AdminFlags.BrokenAi)))
                         continue;
 
                     goto NoRole;
@@ -235,7 +235,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
             foreach (var requirement in jobber.Requirements)
             {
                 if (JobRequirements.TryRequirementMet(requirement, playTimes, out _, EntityManager, _prototypes,
-                        _adminManager.HasAdminFlag(player, AdminFlags.BrokenAi), _adminManager.HasAdminFlag(player, AdminFlags.LoyalAi)))
+                        _adminManager.HasAdminFlag(player, AdminFlags.BrokenAi)))
                     continue;
 
                 jobs.RemoveSwap(i);
