@@ -163,8 +163,6 @@
         base:
           Off: { state: shell }
           On: { state: drone }
-  - type: ReplacementAccent
-    accent: silicon
   - type: Repairable
     fuelcost: 15
     doAfterDelay: 8

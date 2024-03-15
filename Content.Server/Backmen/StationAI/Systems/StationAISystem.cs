@@ -107,18 +107,18 @@ public sealed class StationAISystem : EntitySystem
                 mindId = mindVId.MindId.Value;
             }
 
-            if (component.AiDrone == null || !component.AiDrone.Value.IsValid())
+            if (component.AiDrone == null || !component.AiDrone.Value.IsValid() || !_entityManager.HasComponent<StationAiDroneComponent>(component.AiDrone))
             {
                 var elapsed = _timing.CurTime - component.LastDroneSpawn;
                 if (component.LastDroneSpawn != TimeSpan.Zero && elapsed < component.DroneSpawnDelay)
                 {
-                    _actions.SetCooldown(component.AiDroneChangeAction, elapsed);
+                    _actions.SetCooldown(component.AiDroneChangeAction, component.LastDroneSpawn - elapsed);
                     _popupSystem.PopupEntity(Loc.GetString("drone-wait-delay"), uid);
 
                     return;
                 }
 
-                component.LastDroneSpawn = _timing.CurTime;
+                component.DroneSpawnDelay = _timing.CurTime;
                 SpawnDrone(uid, component);
             }
 

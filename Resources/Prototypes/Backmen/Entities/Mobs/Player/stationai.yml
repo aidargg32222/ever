@@ -420,3 +420,9 @@
       tools: !type:Container
         ents: [ ]
       hand 1: !type:Container
+  # Innate access
+  - type: Access
+    groups:
+    - AllAccess
+  - type: Speech
+    speechSounds: Pai
