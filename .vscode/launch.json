@@ -6,7 +6,17 @@
     "configurations": [
         {
             "name": "Client",
-            "type": "coreclr",
+            "type": "coreclr"   ,
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/Content.Client/Content.Client.dll",
+            "args": [],
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "targetArchitecture": "x86_64"
+        },
+        {
+            "name": "Client Attach",
+            "type": "coreclr"   ,
             "request": "launch",
             "program": "${workspaceFolder}/bin/Content.Client/Content.Client.dll",
             "args": [],
@@ -20,7 +30,8 @@
             "program": "${workspaceFolder}/bin/Content.Client/Content.Client.dll",
             "args": "--cvar display.compat=true",
             "console": "internalConsole",
-            "stopAtEntry": false
+            "stopAtEntry": false,
+            "targetArchitecture": "x86_64"
         },
         {
             "name": "Server",
@@ -29,7 +40,8 @@
             "program": "${workspaceFolder}/bin/Content.Server/Content.Server.dll",
             "args": [],
             "console": "integratedTerminal",
-            "stopAtEntry": false
+            "stopAtEntry": false,
+            "targetArchitecture": "x86_64"
         },
         {
             "name": "YAML Linter",
@@ -39,7 +51,8 @@
             "program": "${workspaceFolder}/bin/Content.YAMLLinter/Content.YAMLLinter.dll",
             "cwd": "${workspaceFolder}/Content.YAMLLinter",
             "console": "internalConsole",
-            "stopAtEntry": false
+            "stopAtEntry": false,
+            "targetArchitecture": "x86_64"
         }
     ],
     "compounds": [

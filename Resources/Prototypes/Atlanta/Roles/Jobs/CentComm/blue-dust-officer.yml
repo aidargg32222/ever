@@ -37,7 +37,7 @@
     head: ClothingHeadHatBeretHoS
     eyes: ClothingEyesGlassesSecurity
     shoes: ClothingShoesBootsCombatFilled
-    id: SecurityPDA
+    id: StarDustOfficerPDA
     ears: ClothingHeadsetAltSecurity
     gloves: ClothingHandsGlovesCombat
     belt: ClothingBeltSecurityFilled
