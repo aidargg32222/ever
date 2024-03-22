@@ -4450,6 +4450,8 @@ entities:
       zoneSpeed: 0.5
       center: 1.015625,10
       lastDamageTime: 13.6880491
+    - type: RbMiscPresets
+      gear: RbFighterGear
 - proto: AcousticGuitarInstrument
   entities:
   - uid: 5973

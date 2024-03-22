@@ -157,6 +157,13 @@ public sealed class RoyalBattleRuleSystem : GameRuleSystem<RoyalBattleRuleCompon
         {
             rb.MapId = _transform.GetMapCoordinates(uid).MapId;
 
+            _sound.StopGlobalEventMusic(GlobalEventMusicType.RoyalBattleMusic, Filter.Broadcast());
+
+            if (TryComp<RbMiscPresetsComponent>(uid, out var rbMiscPresetsComponent))
+            {
+                rb.Gear = rbMiscPresetsComponent.Gear;
+            }
+
             // load lobby
             var lobbyMapOptions = new MapLoadOptions()
             {
