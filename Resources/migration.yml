@@ -177,11 +177,6 @@ DefaultStationBeaconTeslaEngine: null
 # 2023-11-11 Backmen: AI
 ToyAi: SpawnStationAI
 
-#2024-01-27
-ClothingBackpackSecurityFilledDetective: ClothingBackpackFilledDetective
-ClothingBackpackDuffelSecurityFilledDetective: ClothingBackpackDuffelFilledDetective
-ClothingBackpackSatchelSecurityFilledDetective: ClothingBackpackSatchelFilledDetective
-
 # 2024-01-28
 FoodBoxDonkpocketGondola: FoodBoxDonkpocketPizza
 

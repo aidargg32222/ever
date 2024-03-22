@@ -1,11 +1,14 @@
 using System.Numerics;
 using Content.Server.Atlanta.GameTicking.Rules.Components;
+using Content.Server.Audio;
 using Content.Server.Chat.Managers;
 using Content.Shared.Atlanta.RoyalBattle.Components;
 using Content.Shared.Atlanta.RoyalBattle.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Robust.Shared.Audio.Systems;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -17,6 +20,8 @@ public sealed class RbZoneSystem : SharedRbZoneSystem
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly ServerGlobalSoundSystem _sound = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -89,6 +94,8 @@ public sealed class RbZoneSystem : SharedRbZoneSystem
             }
 
             _chatManager.DispatchServerAnnouncement(Loc.GetString("rb-next-wave-announce", ("seconds", (int) zone.NextWave.TotalSeconds)), Color.Green);
+
+            _sound.PlayAdminGlobal(Filter.Broadcast(), _audio.GetSound(zone.ZoneStopSound));
         }
 
         Dirty(uid, zone);
@@ -109,6 +116,7 @@ public sealed class RbZoneSystem : SharedRbZoneSystem
             Dirty(uid, zone);
 
             _chatManager.DispatchServerAnnouncement(Loc.GetString("rb-zone-unstable"), Color.DarkRed);
+            _sound.PlayAdminGlobal(Filter.Broadcast(), _audio.GetSound(zone.ZoneStartSound));
         }
     }
 
@@ -125,6 +133,12 @@ public sealed class RbZoneSystem : SharedRbZoneSystem
 
             component.Center = _transform.GetWorldPosition(ent);
             Sawmill.Debug($"Setup the center of zone on {component.Center} coords.");
+
+            var royalBattleQuery = EntityQueryEnumerator<RoyalBattleRuleComponent>();
+            while (royalBattleQuery.MoveNext(out _, out var rb))
+            {
+                rb.Center = ent;
+            }
         }
 
         Dirty(uid, component);

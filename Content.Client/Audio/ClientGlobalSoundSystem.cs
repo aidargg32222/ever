@@ -8,7 +8,7 @@ using Robust.Shared.Player;
 
 namespace Content.Client.Audio;
 
-public sealed class ClientGlobalSoundSystem : SharedGlobalSoundSystem
+public sealed partial class ClientGlobalSoundSystem : SharedGlobalSoundSystem
 {
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -32,7 +32,13 @@ public sealed class ClientGlobalSoundSystem : SharedGlobalSoundSystem
         SubscribeNetworkEvent<StopStationEventMusic>(StopStationEventMusic);
         Subs.CVar(_cfg, CCVars.EventMusicEnabled, ToggleStationEventMusic, true);
 
+        // Atlanta
+        SubscribeNetworkEvent<GlobalEventMusicEvent>(PlayGlobalEventMusic);
+        SubscribeNetworkEvent<StopGlobalEventMusic>(StopGlobalEventMusic);
+
         SubscribeNetworkEvent<GameGlobalSoundEvent>(PlayGameSound);
+
+        Subs.CVar(_configManager, CCVars.AmbientMusicVolume, AmbienceCVarChanged, true);
     }
 
     private void OnRoundRestart(RoundRestartCleanupEvent ev)
@@ -64,7 +70,8 @@ public sealed class ClientGlobalSoundSystem : SharedGlobalSoundSystem
 
     private void PlayAdminSound(AdminSoundEvent soundEvent)
     {
-        if(!_adminAudioEnabled) return;
+        if(!_adminAudioEnabled)
+            return;
 
         var stream = _audio.PlayGlobal(soundEvent.Filename, Filter.Local(), false, soundEvent.AudioParams);
         _adminAudio.Add(stream.Value.Entity);

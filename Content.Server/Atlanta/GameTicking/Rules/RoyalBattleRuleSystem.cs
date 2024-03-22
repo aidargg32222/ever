@@ -1,6 +1,7 @@
 using Content.Server.Administration.Commands;
 using Content.Server.Atlanta.GameTicking.Rules.Components;
 using Content.Server.Atlanta.Roles;
+using Content.Server.Audio;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
@@ -12,6 +13,7 @@ using Content.Server.RoundEnd;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Atlanta.RoyalBattle.Components;
+using Content.Shared.Audio;
 using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
@@ -21,7 +23,10 @@ using Content.Shared.Roles;
 using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -43,6 +48,8 @@ public sealed class RoyalBattleRuleSystem : GameRuleSystem<RoyalBattleRuleCompon
     [Dependency] private readonly MapLoaderSystem _mapLoaderSystem = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly StationJobsSystem _jobsSystem = default!;
+    [Dependency] private readonly ServerGlobalSoundSystem _sound = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     private ISawmill _sawmill = default!;
 
     public override void Initialize()
@@ -86,6 +93,11 @@ public sealed class RoyalBattleRuleSystem : GameRuleSystem<RoyalBattleRuleCompon
                         }
                     }
 
+                    _sound.PlayAdminGlobal(Filter.Broadcast(), _audio.GetSound(rb.GreetingSound), AudioParams.Default);
+
+                    _sound.StopGlobalEventMusic(GlobalEventMusicType.RoyalBattleMusic, Filter.Broadcast());
+                    _sound.DispatchGlobalMusic(_audio.GetSound(rb.MusicLoop), GlobalEventMusicType.RoyalBattleMusic, Filter.Broadcast(), true);
+
                     foreach (var mob in rb.AlivePlayers)
                     {
 
@@ -116,21 +128,30 @@ public sealed class RoyalBattleRuleSystem : GameRuleSystem<RoyalBattleRuleCompon
                 {
                     if (time < TimeSpan.FromSeconds(10))
                     {
-                        if ((int) time.TotalSeconds < (int) rb.StartupTime.TotalSeconds)
+                        var totalSecond = (int) time.TotalSeconds;
+
+                        if (totalSecond < (int) rb.StartupTime.TotalSeconds)
                         {
-                            _chatManager.DispatchServerAnnouncement(Loc.GetString("rb-lobby-wait-time-remain", ("seconds", (int) time.TotalSeconds + 1)));
+                            if (totalSecond == (int) _audio.GetAudioLength(_audio.GetSound(rb.MusicEntry)).TotalSeconds - 1)
+                            {
+                                _sound.DispatchGlobalMusic(_audio.GetSound(rb.MusicEntry), GlobalEventMusicType.RoyalBattleMusic, Filter.Broadcast());
+                            }
+                            _chatManager.DispatchServerAnnouncement(Loc.GetString("rb-lobby-wait-time-remain", ("seconds", totalSecond + 1)));
                         }
                     }
 
                     rb.StartupTime = time;
                 }
             }
+            else if (rb.GameState == RoyalBattleGameState.InGame)
+            {
+            }
         }
     }
 
     private void OnMapInit(EntityUid uid, RbZoneComponent component, MapInitEvent args)
     {
-        _sawmill.Debug("Start process map with zone stratup.");
+        _sawmill.Debug("Start process map with zone startup.");
         var query = EntityQueryEnumerator<RoyalBattleRuleComponent>();
         while (query.MoveNext(out _, out var rb))
         {
@@ -202,6 +223,7 @@ public sealed class RoyalBattleRuleSystem : GameRuleSystem<RoyalBattleRuleCompon
                         ? meta.EntityName
                         : winner.ToString();
                     _chatManager.DispatchServerAnnouncement(Loc.GetString("rb-winner", ("winner", winnerName)), Color.Aqua);
+                    _sound.PlayAdminGlobal(Filter.Broadcast(), _audio.GetSound(rb.WinnerSound));
                 }
                 else
                 {
@@ -210,6 +232,11 @@ public sealed class RoyalBattleRuleSystem : GameRuleSystem<RoyalBattleRuleCompon
 
                 _chatManager.DispatchServerAnnouncement(Loc.GetString("rb-ending-announce"), Color.Aquamarine);
 
+                _sound.StopGlobalEventMusic(GlobalEventMusicType.RoyalBattleMusic, Filter.Broadcast());
+                _sound.DispatchGlobalMusic(_audio.GetSound(rb.MusicClosing), GlobalEventMusicType.RoyalBattleMusic, Filter.Broadcast());
+
+                rb.GameState = RoyalBattleGameState.InEnding;
+
                 var roundEnd = EntityManager.EntitySysManager.GetEntitySystem<RoundEndSystem>();
                 roundEnd.EndRound(rb.RestartTime);
             }
@@ -217,6 +244,9 @@ public sealed class RoyalBattleRuleSystem : GameRuleSystem<RoyalBattleRuleCompon
             {
                 _chatManager.DispatchServerAnnouncement(Loc.GetString("rb-death-announce",
                         ("count", rb.AlivePlayers.Count)), Color.Red);
+
+                _audio.PlayGlobal(rb.LoosingSound, Filter.Entities(player), true);
+                _audio.PlayGlobal(rb.DeathSound, Filter.Broadcast(), true);
             }
         }
     }

@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Shared.Damage;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -62,4 +63,10 @@ public sealed partial class RbZoneComponent : Component
 
     public SpriteSpecifier ZoneTexture = new SpriteSpecifier.Texture(
         new ResPath("Effects/fire.rsi/zone.png"));
+
+    [DataField("zoneStartSound")]
+    public SoundSpecifier ZoneStartSound = new SoundPathSpecifier("/Audio/Atlanta/Misc/RoyalBattle/rb_zone_start.ogg");
+
+    [DataField("zoneStopSound")]
+    public SoundSpecifier ZoneStopSound = new SoundPathSpecifier("/Audio/Atlanta/Misc/RoyalBattle/rb_zone_stop.ogg");
 }
