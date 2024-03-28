@@ -5,7 +5,6 @@ using Content.Shared.Hands;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Movement.Events;
-using Content.Shared.Physics.Pull;
 
 namespace Content.Shared.Backmen.StationAI;
 
