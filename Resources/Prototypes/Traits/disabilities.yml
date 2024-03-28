@@ -94,3 +94,10 @@
     - StationAI # backmen: AI
   components:
     - type: FrontalLisp
+
+- type: trait
+  id: Snoring
+  name: trait-snoring-name
+  description: trait-snoring-desc
+  components:
+    - type: Snoring
