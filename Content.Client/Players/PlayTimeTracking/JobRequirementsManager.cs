@@ -108,8 +108,7 @@ public sealed class JobRequirementsManager
         var reasons = new List<string>();
         foreach (var requirement in requirements)
         {
-            if (JobRequirements.TryRequirementMet(requirement, _roles, out var jobReason, _entManager, _prototypes,
-                    _adminManager.HasFlag(AdminFlags.BrokenAi)))
+            if (JobRequirements.TryRequirementMet(requirement, _roles, out var jobReason, _entManager, _prototypes))
                 continue;
 
             reasons.Add(jobReason.ToMarkup());

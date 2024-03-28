@@ -4,16 +4,16 @@ using Content.Server.Backmen.StationAI;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
-using Content.Server.NPC.Systems;
 using Content.Server.Objectives;
 using Content.Server.Radio.Components;
 using Content.Server.Roles;
 using Content.Shared.Administration;
 using Content.Shared.Backmen.StationAI.Components;
+using Content.Shared.NPC.Systems;
 using Content.Shared.Roles;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -26,6 +26,7 @@ public sealed class BrokenAiRuleSystem : GameRuleSystem<BrokenAiRuleComponent>
     [Dependency] private readonly SharedRoleSystem _roleSystem = default!;
     [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly InnateItemSystem _innateItemSystem = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
@@ -69,6 +70,9 @@ public sealed class BrokenAiRuleSystem : GameRuleSystem<BrokenAiRuleComponent>
             if (!ev.Profile.AntagPreferences.Contains(component.BrokenAiPrototypeId))
                 return;
 
+            if (_random.Prob(0.5f))
+                return;
+
             if (ev.JobId is "SAI")
             {
                 BreakAi(ev.Player, component, ev.Mob);
@@ -83,9 +87,6 @@ public sealed class BrokenAiRuleSystem : GameRuleSystem<BrokenAiRuleComponent>
             Log.Info("Failed getting mind for picked traitor.");
             return;
         }
-
-        if (!_adminManager.HasAdminFlag(evPlayer, AdminFlags.BrokenAi))
-            return;
 
         if (HasComp<BrokenAiRoleComponent>(mindId))
         {

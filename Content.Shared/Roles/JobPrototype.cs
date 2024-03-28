@@ -116,12 +116,6 @@ namespace Content.Shared.Roles
 
         [DataField("extendedAccessGroups", customTypeSerializer: typeof(PrototypeIdListSerializer<AccessGroupPrototype>))]
         public IReadOnlyCollection<string> ExtendedAccessGroups { get; private set; } = Array.Empty<string>();
-
-        ///
-        /// AI changes
-        ///
-        [DataField("alwaysUseSpawner")]
-        public bool AlwaysUseSpawner { get; private set; } = false;
     }
 
     /// <summary>

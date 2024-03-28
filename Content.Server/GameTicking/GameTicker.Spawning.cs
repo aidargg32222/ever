@@ -193,12 +193,6 @@ namespace Content.Server.GameTicking
                 return;
             }
 
-            var jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
-            var job = new JobComponent { Prototype = jobId };
-
-            if (jobPrototype.AlwaysUseSpawner && lateJoin)
-                return;
-
             PlayerJoinGame(player, silent);
 
             var data = player.ContentData();
@@ -208,6 +202,8 @@ namespace Content.Server.GameTicking
             var newMind = _mind.CreateMind(data!.UserId, character.Name);
             _mind.SetUserId(newMind, data.UserId);
 
+            var jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
+            var job = new JobComponent { Prototype = jobId };
             _roles.MindAddRole(newMind, job, silent: silent);
             var jobName = _jobs.MindTryGetJobName(newMind);
 
