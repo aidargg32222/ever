@@ -3,6 +3,7 @@ using Content.Server.Atlanta.GameTicking.Rules.Components;
 using Content.Server.Atlanta.Roles;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
+using Content.Server.GameTicking.Components;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.KillTracking;

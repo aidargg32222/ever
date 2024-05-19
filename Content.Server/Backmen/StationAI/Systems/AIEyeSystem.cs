@@ -80,7 +80,7 @@ public sealed class AIEyePowerSystem : EntitySystem
         if (!args.Powered)
         {
             EnsureComp<ReplacementAccentComponent>(uid).Accent = "dwarf";
-            _uiSystem.TryCloseAll(uid);
+            _uiSystem.CloseUis(uid);
         }
         else
         {
