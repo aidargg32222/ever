@@ -32,17 +32,6 @@
 - type: startingGear
   id: StarDustOfficerGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitStarDustOfficer
-    back: ClothingBackpackSecurityFilled
-    head: ClothingHeadHatBeretHoS
     eyes: ClothingEyesGlassesSecurity
-    shoes: ClothingShoesBootsCombatFilled
-    id: StarDustOfficerPDA
     ears: ClothingHeadsetAltSecurity
-    gloves: ClothingHandsGlovesCombat
-    belt: ClothingBeltSecurityFilled
-    pocket1: WeaponPistolG22NonLethal
-    outerClothing: ClothingOuterVestArmorSec
-  innerClothingSkirt: ClothingUniformJumpsuitStarDustOfficer
-  satchel: ClothingBackpackSatchelSecurityFilled
-  duffelbag: ClothingBackpackDuffelSecurityFilled
+    pocket1: WeaponPistolG22

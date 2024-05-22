@@ -195,8 +195,8 @@
 - type: rbCratePack
   id: ScafArmorPack
   pack:
-  - ClothingOuterArmorScaf
-  - ClothingHeadHelmetScaf
+  - ClothingOuterArmorBasic
+  - ClothingHeadHelmetBasic
 
 - type: rbCratePack
   id: MedSecArmorPack

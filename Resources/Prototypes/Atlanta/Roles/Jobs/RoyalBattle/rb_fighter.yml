@@ -10,12 +10,4 @@
 - type: startingGear
   id: RbFighterGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitMercenary
-    back: ClothingBackpackFilled
-    shoes: ClothingShoesBootsMercFilled
-    id: CaptainIDCard
     ears: ClothingHeadsetGrey
-    gloves: ClothingHandsGlovesMercFingerless
-  innerClothingSkirt: ClothingUniformJumpsuitMercenary
-  satchel: ClothingBackpackFilled
-  duffelbag: ClothingBackpackFilled
