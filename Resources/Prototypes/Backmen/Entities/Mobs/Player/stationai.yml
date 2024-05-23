@@ -167,7 +167,6 @@
       canDischarge: false
     - type: BatteryCharger
     - type: Battery
-      charge: 12000
       maxCharge: 120000
       pricePerJoule: 0
     # - type: GenericVisualizer
