@@ -1,0 +1,50 @@
+# Star Dust Officer
+- type: loadoutGroup
+  id: StarDustOfficerHead
+  name: loadout-group-star-dust-officer-head
+  loadouts:
+  - StarDustOfficerBeret
+
+- type: loadoutGroup
+  id: StarDustOfficerJumpsuit
+  name: loadout-group-star-dust-officer-jumpsuit
+  loadouts:
+  - StarDustOfficerJumpsuit
+
+- type: loadoutGroup
+  id: StarDustOfficerBack
+  name: loadout-group-star-dust-officer-back
+  loadouts:
+  - StarDustOfficerBackpack
+  - StarDustOfficerSatchel
+  - StarDustOfficerDuffel
+
+- type: loadoutGroup
+  id: StarDustOfficerBelt
+  name: loadout-group-star-dust-officer-belt
+  loadouts:
+  - StarDustOfficerBelt
+
+- type: loadoutGroup
+  id: StarDustOfficerOuterClothing
+  name: loadout-group-star-dust-officer-outer-clothing
+  loadouts:
+  - ArmorVest
+
+- type: loadoutGroup
+  id: StarDustOfficerShoes
+  name: loadout-group-star-dust-officer-shoes
+  loadouts:
+  - CombatBoots
+
+- type: loadoutGroup
+  id: StarDustOfficerPDA
+  name: loadout-group-star-dust-officer-PDA
+  loadouts:
+  - StarDustOfficerPDA
+
+- type: loadoutGroup
+  id: StarDustOfficerGloves
+  name: loadout-group-star-dust-officer-gloves
+  loadouts:
+  - StarDustOfficerGloves
