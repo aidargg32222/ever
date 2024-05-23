@@ -11,3 +11,6 @@
   id: RbFighterGear
   equipment:
     ears: ClothingHeadsetGrey
+    id: CaptainIDCard
+    jumpsuit: ClothingUniformJumpsuitMercenary
+    shoes: ClothingShoesBootsMercFilled

@@ -53833,7 +53833,7 @@ entities:
       rot: -1.5707963267948966 rad
       pos: -20.274944,14.650303
       parent: 2
-- proto: WeaponPistolG22NonLethal
+- proto: WeaponPistolG22
   entities:
   - uid: 4848
     components:
