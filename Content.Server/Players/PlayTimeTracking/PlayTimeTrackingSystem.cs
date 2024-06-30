@@ -1,10 +1,10 @@
 using System.Linq;
+using Content.Server.Administration;
 using Content.Server.Administration.Managers;
 using Content.Server.Afk;
 using Content.Server.Afk.Events;
 using Content.Server.GameTicking;
 using Content.Server.Mind;
-using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Mobs;
@@ -50,6 +50,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         SubscribeLocalEvent<UnAFKEvent>(OnUnAFK);
         SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<PlayerJoinedLobbyEvent>(OnPlayerJoinedLobby);
+        _adminManager.OnPermsChanged += AdminPermsChanged;
     }
 
     public override void Shutdown()
@@ -57,12 +58,20 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         base.Shutdown();
 
         _tracking.CalcTrackers -= CalcTrackers;
+        _adminManager.OnPermsChanged -= AdminPermsChanged;
     }
 
     private void CalcTrackers(ICommonSession player, HashSet<string> trackers)
     {
         if (_afk.IsAfk(player))
             return;
+
+        if (_adminManager.IsAdmin(player))
+        {
+            trackers.Add(PlayTimeTrackingShared.TrackerAdmin);
+            trackers.Add(PlayTimeTrackingShared.TrackerOverall);
+            return;
+        }
 
         if (!IsPlayerAlive(player))
             return;
@@ -134,6 +143,11 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         _tracking.QueueRefreshTrackers(ev.Session);
     }
 
+    private void AdminPermsChanged(AdminPermsChangedEventArgs admin)
+    {
+        _tracking.QueueRefreshTrackers(admin.Player);
+    }
+
     private void OnPlayerAttached(PlayerAttachedEvent ev)
     {
         _tracking.QueueRefreshTrackers(ev.Player);
@@ -173,8 +187,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
             playTimes = new Dictionary<string, TimeSpan>();
         }
 
-        return JobRequirements.TryRequirementsMet(job, playTimes, out _, EntityManager, _prototypes,
-            _adminManager.HasAdminFlag(player, AdminFlags.BrokenAi));
+        return JobRequirements.TryRequirementsMet(job, playTimes, out _, EntityManager, _prototypes);
     }
 
     public HashSet<string> GetDisallowedJobs(ICommonSession player)
@@ -195,8 +208,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
             {
                 foreach (var requirement in job.Requirements)
                 {
-                    if (JobRequirements.TryRequirementMet(requirement, playTimes, out _, EntityManager, _prototypes,
-                            _adminManager.HasAdminFlag(player, AdminFlags.BrokenAi)))
+                    if (JobRequirements.TryRequirementMet(requirement, playTimes, out _, EntityManager, _prototypes))
                         continue;
 
                     goto NoRole;
@@ -234,8 +246,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
 
             foreach (var requirement in jobber.Requirements)
             {
-                if (JobRequirements.TryRequirementMet(requirement, playTimes, out _, EntityManager, _prototypes,
-                        _adminManager.HasAdminFlag(player, AdminFlags.BrokenAi)))
+                if (JobRequirements.TryRequirementMet(requirement, playTimes, out _, EntityManager, _prototypes))
                     continue;
 
                 jobs.RemoveSwap(i);

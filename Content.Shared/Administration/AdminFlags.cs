@@ -95,9 +95,14 @@
         MassBan = 1 << 15,
 
         /// <summary>
-        ///     Lets you play broken AI.
+        /// Allows you to remain hidden from adminwho except to other admins with this flag.
         /// </summary>
-        BrokenAi = 1 << 16,
+        Stealth = 1 << 16,
+
+        ///<summary>
+		/// Allows you to use Admin chat
+		///</summary>
+		Adminchat = 1 << 17,
 
         /// <summary>
         ///     Dangerous host permissions like scsi.

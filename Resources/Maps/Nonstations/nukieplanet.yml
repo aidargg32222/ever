@@ -15174,7 +15174,6 @@ entities:
     - type: Transform
       pos: 9.67418,-4.571714
       parent: 104
-      type: Transform
 - proto: WeaponSubMachineGunMP7
   entities:
   - uid: 1704

@@ -29,8 +29,10 @@ public sealed class AICameraList : EntitySystem
             cameraList.Add(uid);
         }
 
-        var ui = _userInterfaceSystem.GetUi(owner, args.UiKey);
-        var state = new AIBoundUserInterfaceState(GetNetEntityList(cameraList));
-        _userInterfaceSystem.TrySetUiState(owner, ui.UiKey, state);
+        if (_userInterfaceSystem.TryGetOpenUi(owner, args.UiKey, out var ui))
+        {
+            var state = new AIBoundUserInterfaceState(GetNetEntityList(cameraList));
+            _userInterfaceSystem.SetUiState(owner, ui.UiKey, state);
+        }
     }
 }

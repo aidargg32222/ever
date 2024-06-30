@@ -9,12 +9,13 @@ using Robust.Client;
 using Robust.Client.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Players.PlayTimeTracking;
 
-public sealed class JobRequirementsManager
+public sealed class JobRequirementsManager : ISharedPlaytimeManager
 {
     [Dependency] private readonly IBaseClient _client = default!;
     [Dependency] private readonly IClientNetManager _net = default!;
@@ -108,8 +109,7 @@ public sealed class JobRequirementsManager
         var reasons = new List<string>();
         foreach (var requirement in requirements)
         {
-            if (JobRequirements.TryRequirementMet(requirement, _roles, out var jobReason, _entManager, _prototypes,
-                    _adminManager.HasFlag(AdminFlags.BrokenAi)))
+            if (JobRequirements.TryRequirementMet(requirement, _roles, out var jobReason, _entManager, _prototypes))
                 continue;
 
             reasons.Add(jobReason.ToMarkup());
@@ -137,5 +137,13 @@ public sealed class JobRequirementsManager
         }
     }
 
+    public IReadOnlyDictionary<string, TimeSpan> GetPlayTimes(ICommonSession session)
+    {
+        if (session != _playerManager.LocalSession)
+        {
+            return new Dictionary<string, TimeSpan>();
+        }
 
+        return _roles;
+    }
 }

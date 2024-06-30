@@ -18,7 +18,6 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
-    <PackageReference Include="SQLitePCLRaw.provider.e_sqlite3" />
 
     <!-- Necessary at design time -->
     <PackageReference Include="SQLitePCLRaw.provider.sqlite3" Condition="'$(UseSystemSqlite)' == 'True' and '$(Configuration)' != 'Release'" />

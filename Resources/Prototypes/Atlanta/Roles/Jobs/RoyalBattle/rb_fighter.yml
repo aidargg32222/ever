@@ -10,28 +10,7 @@
 - type: startingGear
   id: RbFighterGear
   equipment:
+    ears: ClothingHeadsetGrey
+    id: CaptainIDCard
     jumpsuit: ClothingUniformJumpsuitMercenary
-    back: ClothingBackpackFilled
     shoes: ClothingShoesBootsMercFilled
-    id: CaptainIDCard
-    ears: ClothingHeadsetGrey
-    gloves: ClothingHandsGlovesMercFingerless
-  innerClothingSkirt: ClothingUniformJumpsuitMercenary
-  satchel: ClothingBackpackFilled
-  duffelbag: ClothingBackpackFilled
-
-- type: startingGear
-  id: RbKreiserFighterGear
-  equipment:
-    head: ClothingHeadHatTophat
-    jumpsuit: ClothingUniformJumpsuitLawyerBlack
-    eyes: ClothingEyesGlassesCheapSunglasses
-    back: ClothingBackpackFilled
-    shoes: ClothingShoesBootsLaceup
-    id: CaptainIDCard
-    ears: ClothingHeadsetGrey
-    gloves: ClothingHandsGlovesColorWhite
-    pocket1: FlashlightSeclite
-  innerClothingSkirt: ClothingUniformJumpskirtLawyerBlack
-  satchel: ClothingBackpackFilled
-  duffelbag: ClothingBackpackFilled

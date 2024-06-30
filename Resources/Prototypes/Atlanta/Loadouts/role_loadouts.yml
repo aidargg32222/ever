@@ -1,0 +1,12 @@
+- type: roleLoadout
+  id: JobStarDustOfficer
+  groups:
+  - StarDustOfficerHead
+  - StarDustOfficerJumpsuit
+  - StarDustOfficerBack
+  - StarDustOfficerBelt
+  - StarDustOfficerOuterClothing
+  - StarDustOfficerShoes
+  - StarDustOfficerPDA
+  - StarDustOfficerGloves
+  - Inventory # Corvax-Loadouts

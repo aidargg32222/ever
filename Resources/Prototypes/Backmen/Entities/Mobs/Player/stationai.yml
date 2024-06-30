@@ -13,18 +13,18 @@
     - type: Visibility
     - type: UserInterface
       interfaces:
-        - key: enum.CommunicationsConsoleUiKey.Key
+        enum.CommunicationsConsoleUiKey.Key:
           type: CommunicationsConsoleBoundUserInterface
-        - key: enum.AICameraListUiKey.Key
+        enum.AICameraListUiKey.Key:
           type: AICameraListBoundUserInterface
-        - key: enum.SiliconLawsUiKey.Key
+        enum.SiliconLawsUiKey.Key:
           type: SiliconLawBoundUserInterface
-        - key: enum.StrippingUiKey.Key
+        enum.StrippingUiKey.Key:
           type: StrippableBoundUserInterface
     - type: IntrinsicUI
       uis:
-      - key: enum.CommunicationsConsoleUiKey.Key
-        toggleAction: ActionAGhostShowCommunications
+        enum.CommunicationsConsoleUiKey.Key:
+          toggleAction: ActionAGhostShowCommunications
     - type: ContainerContainer
       containers:
         tools: !type:Container
@@ -167,7 +167,6 @@
       canDischarge: false
     - type: BatteryCharger
     - type: Battery
-      charge: 12000
       maxCharge: 120000
       pricePerJoule: 0
     # - type: GenericVisualizer
@@ -337,7 +336,7 @@
           shader: unshaded
     - type: IntrinsicUI
       uis:
-        - key: enum.CommunicationsConsoleUiKey.Key
+        enum.CommunicationsConsoleUiKey.Key:
           toggleAction: ActionAGhostShowCommunications
         #- key: enum.CommunicationsConsoleUiKey.Key
         #  toggleAction:
@@ -365,18 +364,18 @@
     lawsId: LawsStationAIDefault
   - type: UserInterface
     interfaces:
-    - key: enum.CommunicationsConsoleUiKey.Key
-      type: CommunicationsConsoleBoundUserInterface
-    - key: enum.AICameraListUiKey.Key
-      type: AICameraListBoundUserInterface
-    - key: enum.SiliconLawsUiKey.Key
-      type: SiliconLawBoundUserInterface
-    - key: enum.StrippingUiKey.Key
-      type: StrippableBoundUserInterface
+      enum.CommunicationsConsoleUiKey.Key:
+        type: CommunicationsConsoleBoundUserInterface
+      enum.AICameraListUiKey.Key:
+        type: AICameraListBoundUserInterface
+      enum.SiliconLawsUiKey.Key:
+        type: SiliconLawBoundUserInterface
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
   - type: IntrinsicUI
     uis:
-    - key: enum.CommunicationsConsoleUiKey.Key
-      toggleAction: ActionAGhostShowCommunications
+      enum.CommunicationsConsoleUiKey.Key:
+        toggleAction: ActionAGhostShowCommunications
   - type: CommunicationsConsole
     title: ai-station-console
     color: "#93e2ff"

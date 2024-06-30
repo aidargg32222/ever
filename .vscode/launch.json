@@ -21,7 +21,8 @@
             "program": "${workspaceFolder}/bin/Content.Client/Content.Client.dll",
             "args": [],
             "console": "internalConsole",
-            "stopAtEntry": false
+            "stopAtEntry": false,
+            "targetArchitecture": "x86_64"
         },
         {
             "name": "Client (Compatibility renderer)",

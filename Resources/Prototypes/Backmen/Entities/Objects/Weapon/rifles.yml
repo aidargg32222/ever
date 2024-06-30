@@ -211,7 +211,7 @@
     slots:
       gun_magazine:
         name: Magazine
-        startingItem: MagazineRifleRubber
+        startingItem: MagazineRifle
         insertSound: /Audio/Weapons/Guns64/Rifles/ar18_reload.ogg
         ejectSound: /Audio/Weapons/Guns64/Rifles/ar18_unload.ogg
         priority: 2
