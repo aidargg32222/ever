@@ -11,8 +11,6 @@
     <Nullable>enable</Nullable>
     <Configurations>Debug;Release;Tools;DebugOpt</Configurations>
     <Platforms>AnyCPU</Platforms>
-
-    <TargetPlatform>x64</TargetPlatform>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Nett" />

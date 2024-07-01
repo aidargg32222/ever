@@ -12,8 +12,6 @@
     <WarningsAsErrors>nullable</WarningsAsErrors>
     <Nullable>enable</Nullable>
     <ServerGarbageCollection>true</ServerGarbageCollection>
-
-    <TargetPlatform>x64</TargetPlatform>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" PrivateAssets="All" />
