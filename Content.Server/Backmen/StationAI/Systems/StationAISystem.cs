@@ -171,50 +171,50 @@ public sealed class StationAISystem : EntitySystem
             if (eye.AiCore == null)
             {
                 QueueDel(ent);
-                args.Cancel();
+                args.Cancelled = true;
                 return;
             }
             core = eye.AiCore.Value;
         }
         if (!core.Owner.Valid)
         {
-            args.Cancel();
+            args.Cancelled = true;
             return;
         }
 
         if (args.Target != null && Transform(core).GridUid != Transform(args.Target.Value).GridUid)
         {
-            args.Cancel();
+            args.Cancelled = true;
             return;
         }
 
         if (!TryComp<ApcPowerReceiverComponent>(core, out var power))
         {
-            args.Cancel();
+            args.Cancelled = true;
             return;
         }
 
         if (power is { NeedsPower: true, Powered: false })
         {
-            args.Cancel();
+            args.Cancelled = true;
             return;
         }
 
         if (HasComp<ItemComponent>(args.Target))
         {
-            args.Cancel();
+            args.Cancelled = true;
             return;
         }
 
         if (HasComp<EntityStorageComponent>(args.Target))
         {
-            args.Cancel();
+            args.Cancelled = true;
             return;
         }
 
         if (TryComp<ApcPowerReceiverComponent>(args.Target, out var targetPower) && targetPower.NeedsPower && !targetPower.Powered)
         {
-            args.Cancel();
+            args.Cancelled = true;
         }
     }
 

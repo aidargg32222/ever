@@ -13,7 +13,7 @@
     <Nullable>enable</Nullable>
     <ServerGarbageCollection>true</ServerGarbageCollection>
 
-    <PlatformTarget>x64</PlatformTarget>
+    <TargetPlatform>x64</TargetPlatform>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" PrivateAssets="All" />

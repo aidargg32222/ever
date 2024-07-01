@@ -2,14 +2,14 @@ using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Server.Backmen.StationAI;
 using Content.Server.Chat.Managers;
-using Content.Server.GameTicking.Components;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
 using Content.Server.Objectives;
 using Content.Server.Radio.Components;
 using Content.Server.Roles;
-using Content.Shared.Administration;
 using Content.Shared.Backmen.StationAI.Components;
+using Content.Shared.GameTicking.Components;
+using Content.Shared.Mind;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Roles;
 using Robust.Shared.Player;
@@ -28,6 +28,7 @@ public sealed class BrokenAiRuleSystem : GameRuleSystem<BrokenAiRuleComponent>
     [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly InnateItemSystem _innateItemSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly MindSystem _mind = default!;
 
     public override void Initialize()
     {
@@ -140,11 +141,18 @@ public sealed class BrokenAiRuleSystem : GameRuleSystem<BrokenAiRuleComponent>
 
     private void OnObjectivesTextGetInfo(EntityUid uid, BrokenAiRuleComponent comp, ref ObjectivesTextGetInfoEvent args)
     {
-        //args.Minds = comp.TraitorMinds;
-        //args.AgentName = Loc.GetString("traitor-round-end-agent-name");
+        // TODO: make broken ai objectives available for players
 
         if (comp.BrokenAi != null)
-            args.Minds = new List<EntityUid>() { comp.BrokenAi.Value };
+        {
+            string? characterName = null;
+            if (_mind.TryGetMind(uid, out var mindId, out var mind))
+            {
+                characterName = mind.CharacterName;
+            }
+
+            args.Minds = [(comp.BrokenAi.Value, characterName ?? "?")];
+        }
         args.AgentName = Loc.GetString("broken-ai-round-end-agent-name");
     }
 

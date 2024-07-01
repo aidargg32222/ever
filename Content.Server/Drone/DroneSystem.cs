@@ -53,7 +53,7 @@ namespace Content.Server.Drone
         private void OnInteractionAttempt(EntityUid uid, DroneComponent component, InteractionAttemptEvent args)
         {
             if (args.Target != null && !HasComp<UnremoveableComponent>(args.Target) && NonDronesInRange(uid, component))
-                args.Cancel();
+                args.Cancelled = true;
 
             // if (HasComp<ItemComponent>(args.Target) && !HasComp<UnremoveableComponent>(args.Target))
             //{

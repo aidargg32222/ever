@@ -32,7 +32,7 @@ public sealed partial class RoyalBattleRuleComponent : Component
     public TimeSpan StartupTime = TimeSpan.FromMinutes(1);
 
     [DataField("playersMinds")]
-    public List<EntityUid> PlayersMinds = new();
+    public List<(EntityUid, string)> PlayersMinds = new();
 
     [DataField("alivePlayers")]
     public List<EntityUid> AlivePlayers = new();

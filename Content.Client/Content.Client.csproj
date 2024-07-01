@@ -12,7 +12,7 @@
     <Configurations>Debug;Release;Tools;DebugOpt</Configurations>
     <Platforms>AnyCPU</Platforms>
 
-    <TragetPlatform>x64</TragetPlatform>
+    <TargetPlatform>x64</TargetPlatform>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Nett" />

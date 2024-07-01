@@ -140,7 +140,7 @@ namespace Content.Server.GameTicking
                     _mapManager.AddUninitializedMap(toLoad);
                 }
 
-                LoadGameMap(map, toLoad, null, ignoreOffset: map.ID.StartsWith("Rb"));
+                LoadGameMap(map, toLoad, null);
             }
         }
 
@@ -716,15 +716,12 @@ namespace Content.Server.GameTicking
         public readonly MapId Map;
         public GameMapPrototype GameMap;
         public MapLoadOptions Options;
-        // Atlanta moment
-        public readonly bool IgnoreOffset;
 
-        public PreGameMapLoad(MapId map, GameMapPrototype gameMap, MapLoadOptions options, bool ignoreOffset)
+        public PreGameMapLoad(MapId map, GameMapPrototype gameMap, MapLoadOptions options)
         {
             Map = map;
             GameMap = gameMap;
             Options = options;
-            IgnoreOffset = ignoreOffset;
         }
     }
 

@@ -4,7 +4,6 @@ using Content.Server.Atlanta.Roles;
 using Content.Server.Audio;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
-using Content.Server.GameTicking.Components;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.KillTracking;
@@ -20,6 +19,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
+using Content.Shared.GameTicking.Components;
 using Content.Shared.Roles;
 using Robust.Server.GameObjects;
 using Robust.Server.Maps;
@@ -277,6 +277,7 @@ public sealed class RoyalBattleRuleSystem : GameRuleSystem<RoyalBattleRuleCompon
             _mind.TransferTo(newMind, mob);
             SetOutfitCommand.SetOutfit(mob, rb.Gear, EntityManager);
             EnsureComp<KillTrackerComponent>(mob);
+            string? characterName = null;
 
             if (!_mind.TryGetMind(mob, out var mindId, out var mind))
             {
@@ -295,13 +296,15 @@ public sealed class RoyalBattleRuleSystem : GameRuleSystem<RoyalBattleRuleCompon
                 _chatManager.DispatchServerMessage(ev.Player, Loc.GetString("rb-rules"));
 
                 _sawmill.Info($"Added new player {mind.CharacterName}/{mind}");
+
+                characterName = mind.CharacterName;
             }
 
             EnsureComp<GodmodeComponent>(mob);
             EnsureComp<PacifiedComponent>(mob);
 
             rb.AlivePlayers.Add(mob);
-            rb.PlayersMinds.Add(mindId);
+            rb.PlayersMinds.Add((mindId, characterName ?? "?"));
 
             ev.Handled = true;
             break;
