@@ -47,7 +47,9 @@ entities:
       ambientLightColor: '#050505FF'
     - type: RbZone
       waveTiming: 160
-      damage: {}
+      damage:
+        types:
+          Blunt: 1
       range: 80
       rangeLerp: 80
       rangeMultiplierRatio: 0.95
