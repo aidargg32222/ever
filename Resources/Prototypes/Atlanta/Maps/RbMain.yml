@@ -3,6 +3,8 @@
   mapName: Royal Battle Main
   mapPath: /Maps/Atlanta/cluster_royal_battle.yml
   minPlayers: 1
+  maxRandomOffset: 0
+  randomRotation: false
   stations:
     RbMain:
       stationProto: StandardNanotrasenStation

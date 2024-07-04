@@ -3,6 +3,8 @@
   mapName: Royal Battle Kreiser
   mapPath: /Maps/Atlanta/kreiser_royal_battle.yml
   minPlayers: 5
+  maxRandomOffset: 0
+  randomRotation: false
   stations:
     RbKreiser:
       stationProto: StandardNanotrasenStation
