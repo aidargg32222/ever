@@ -8,7 +8,8 @@
     xmlns:style="clr-namespace:Content.Client.Stylesheets"
     xmlns:lobbyUi="clr-namespace:Content.Client.Lobby.UI"
     xmlns:info="clr-namespace:Content.Client.Info"
-    xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Chat.Widgets">
+    xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Chat.Widgets"
+    xmlns:playersScore="clr-namespace:Content.Client.Atlanta.Info.PlayersScore">
     <!-- Background -->
     <TextureRect Access="Public" VerticalExpand="True" HorizontalExpand="True" Name="Background"
                  Stretch="KeepAspectCovered" />
@@ -46,6 +47,25 @@
                         <!-- Voting Popups -->
                         <BoxContainer Orientation="Vertical" SeparationOverride="4" Name="VoteContainer"
                                       Access="Public" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0 8" />
+                        <!-- Western Changes -->
+                        <!-- Score Panel -->
+                        <BoxContainer Name="LeftCenter" Orientation="Vertical"
+                                      HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <PanelContainer StyleClasses="AngleRect" Name="LeftSideCenter"
+                                            MinWidth="500"
+                                            MinHeight="800">
+                                <BoxContainer Orientation="Vertical">
+                                    <!-- Overall Score -->
+                                    <Label Name="OverallPlaytimeLabel" HorizontalExpand="True" Text="Score bar"
+                                           VerticalAlignment="Top" />
+                                    <Control MinSize="0 5" />
+                                    <!-- Table for roles -->
+                                    <ScrollContainer HorizontalExpand="True" VerticalExpand="True">
+                                        <BoxContainer Orientation="Vertical" Name="PlayersScoreList" />
+                                    </ScrollContainer>
+                                </BoxContainer>
+                            </PanelContainer>
+                        </BoxContainer>
                     </BoxContainer>
                     <!-- Vertical Padding-->
                     <Control VerticalExpand="True" />
