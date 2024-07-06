@@ -304,6 +304,11 @@ namespace Content.Server.Database
         Task<bool> RemoveJobWhitelist(Guid player, ProtoId<JobPrototype> job);
 
         #endregion
+
+        Task<List<(string, int, int)>> LoadPlayersScores();
+
+        Task<(string, int, int)?> LoadPlayerScore(NetUserId userId);
+        Task SavePlayerScore(NetUserId userId, int winScore, int kills);
     }
 
     public sealed class ServerDbManager : IServerDbManager
@@ -905,6 +910,24 @@ namespace Content.Server.Database
         {
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.RemoveJobWhitelist(player, job));
+        }
+
+        public Task<List<(string, int, int)>> LoadPlayersScores()
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.LoadPlayersScores());
+        }
+
+        public Task<(string, int, int)?> LoadPlayerScore(NetUserId userId)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.LoadPlayerScore(userId));
+        }
+
+        public Task SavePlayerScore(NetUserId userId, int winScore, int kills)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.SavePlayerScore(userId, winScore, kills));
         }
 
         // Wrapper functions to run DB commands from the thread pool.

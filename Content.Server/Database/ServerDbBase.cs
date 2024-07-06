@@ -606,6 +606,9 @@ namespace Content.Server.Database
             record.LastSeenUserName = userName;
             record.LastSeenHWId = hwId.ToArray();
 
+            // Western
+            await EnsurePlayerScore(userId);
+
             await db.DbContext.SaveChangesAsync();
         }
 
@@ -1652,6 +1655,83 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             return true;
         }
 
+        #endregion
+
+        # region Score
+
+        private async Task<Score> EnsurePlayerScore(NetUserId userId)
+        {
+            await using var db = await GetDb();
+
+            var record = await db.DbContext.Scores.SingleOrDefaultAsync(p => p.PlayerUserId == userId.UserId);
+            if (record == null)
+            {
+                db.DbContext.Scores.Add(record = new Score()
+                {
+                    PlayerUserId = userId.UserId,
+                    WinScore = 0,
+                    Kills = 0
+                });
+
+                await db.DbContext.SaveChangesAsync();
+            }
+
+            return record;
+        }
+
+        public async Task SavePlayerScore(NetUserId userId, int winScore, int kills)
+        {
+            await using var db = await GetDb();
+            var record = await EnsurePlayerScore(userId);
+            record.WinScore = winScore;
+            record.Kills = kills;
+            await db.DbContext.SaveChangesAsync();
+        }
+
+        public async Task<(string, int, int)?> LoadPlayerScore(NetUserId userId)
+        {
+            await using var db = await GetDb();
+            var score = await EnsurePlayerScore(userId);
+
+            var usernameEntry = await db.DbContext.AssignedUserId
+                .Where(u => u.UserId == userId.UserId)
+                .SingleOrDefaultAsync();
+
+            if (usernameEntry == null)
+            {
+                return null;
+            }
+
+            var nickname = usernameEntry.UserName;
+            var winScore = score.WinScore;
+            var kills = score.Kills;
+
+            return (nickname, winScore, kills);
+        }
+
+        public async Task<List<(string, int, int)>> LoadPlayersScores()
+        {
+            await using var db = await GetDb();
+
+            var entries = db.DbContext.Scores.ToList();
+            var result = new List<(string, int, int)>();
+
+            foreach (var entry in entries)
+            {
+                var usernameEntry = await db.DbContext.AssignedUserId
+                    .Where(u => u.UserId == entry.PlayerUserId)
+                    .SingleOrDefaultAsync();
+
+                if (usernameEntry == null)
+                {
+                    break;
+                }
+
+                result.Add((usernameEntry.UserName, entry.WinScore, entry.Kills));
+            }
+
+            return result;
+        }
         #endregion
 
         // SQLite returns DateTime as Kind=Unspecified, Npgsql actually knows for sure it's Kind=Utc.

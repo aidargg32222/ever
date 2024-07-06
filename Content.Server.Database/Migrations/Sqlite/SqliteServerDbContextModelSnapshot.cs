@@ -941,6 +941,29 @@ namespace Content.Server.Database.Migrations.Sqlite
                     b.ToTable("round", (string)null);
                 });
 
+            modelBuilder.Entity("Content.Server.Database.Score", b =>
+                {
+                    b.Property<Guid>("PlayerUserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("player_user_id");
+
+                    b.Property<int>("Kills")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("kills");
+
+                    b.Property<int>("WinScore")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("win_score");
+
+                    b.HasKey("PlayerUserId")
+                        .HasName("PK_scores");
+
+                    b.HasIndex("PlayerUserId");
+
+                    b.ToTable("scores", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.Server", b =>
                 {
                     b.Property<int>("Id")

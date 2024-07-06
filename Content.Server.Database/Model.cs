@@ -43,6 +43,12 @@ namespace Content.Server.Database
         public DbSet<RoleWhitelist> RoleWhitelists { get; set; } = null!;
         public DbSet<BanTemplate> BanTemplate { get; set; } = null!;
 
+        /*
+         * Western
+         */
+
+        public DbSet<Score> Scores { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Preference>()
@@ -326,6 +332,12 @@ namespace Content.Server.Database
                 .HasForeignKey(w => w.PlayerUserId)
                 .HasPrincipalKey(p => p.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            /*
+             * Western
+             */
+            modelBuilder.Entity<Score>()
+                .HasIndex(s => s.PlayerUserId);
         }
 
         public virtual IQueryable<AdminLog> SearchLogs(IQueryable<AdminLog> query, string searchText)
@@ -1188,5 +1200,14 @@ namespace Content.Server.Database
         /// </summary>
         /// <seealso cref="ServerBan.Hidden"/>
         public bool Hidden { get; set; }
+    }
+
+    [PrimaryKey(nameof(PlayerUserId))]
+    public sealed class Score
+    {
+        [Required, ForeignKey("Player")]
+        public Guid PlayerUserId { get; set; }
+        public int WinScore { get; set; }
+        public int Kills { get; set; }
     }
 }

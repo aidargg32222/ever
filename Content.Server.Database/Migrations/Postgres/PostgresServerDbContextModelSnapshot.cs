@@ -857,12 +857,10 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("text")
                         .HasColumnName("species");
 
-                    // Corvax-TTS-Start
                     b.Property<string>("Voice")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("voice");
-                    // Corvax-TTS-End
 
                     b.HasKey("Id")
                         .HasName("PK_profile");
@@ -996,6 +994,29 @@ namespace Content.Server.Database.Migrations.Postgres
                     b.HasIndex("StartDate");
 
                     b.ToTable("round", (string)null);
+                });
+
+            modelBuilder.Entity("Content.Server.Database.Score", b =>
+                {
+                    b.Property<Guid>("PlayerUserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("player_user_id");
+
+                    b.Property<int>("Kills")
+                        .HasColumnType("integer")
+                        .HasColumnName("kills");
+
+                    b.Property<int>("WinScore")
+                        .HasColumnType("integer")
+                        .HasColumnName("win_score");
+
+                    b.HasKey("PlayerUserId")
+                        .HasName("PK_scores");
+
+                    b.HasIndex("PlayerUserId");
+
+                    b.ToTable("scores", (string)null);
                 });
 
             modelBuilder.Entity("Content.Server.Database.Server", b =>
