@@ -45,11 +45,11 @@ public sealed partial class PlayerScoreStatsHeader : Control
 
     private void UpdateLabels()
     {
-        NicknameLabel.Text = Loc.GetString("nickname") +
+        NicknameLabel.Text = Loc.GetString("ui-lobby-score-nickname") +
                              (_sortDirection == Header.Nickname ? " ↓" : " ↑");
-        WinScoreLabel.Text = Loc.GetString("win score") +
+        WinScoreLabel.Text = Loc.GetString("ui-lobby-score-win-score") +
                              (_sortDirection == Header.WinScore ? " ↓" : " ↑");
-        KillsLabel.Text = Loc.GetString("kills") +
+        KillsLabel.Text = Loc.GetString("ui-lobby-score-kills") +
                              (_sortDirection == Header.Kills ? " ↓" : " ↑");
     }
 

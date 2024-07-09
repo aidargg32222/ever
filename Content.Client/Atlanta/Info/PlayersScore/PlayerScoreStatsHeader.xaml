@@ -12,7 +12,7 @@
                    SizeFlagsStretchRatio="3"
                    HorizontalExpand="True"
                    ClipText="True"
-                   Text="Nickname"
+                   Text="{Loc 'ui-lobby-score-nickname'}"
                    MouseFilter="Pass"
                    Margin="5,5,5,5"/>
             <customControls:VSeparator/>
@@ -20,14 +20,14 @@
                    SizeFlagsStretchRatio="3"
                    HorizontalExpand="True"
                    ClipText="True"
-                   Text="win score"
+                   Text="{Loc 'ui-lobby-score-win-score'}"
                    MouseFilter="Pass"
                    Margin="5,5,5,5"/>
             <Label Name="KillsLabel"
                    SizeFlagsStretchRatio="3"
                    HorizontalExpand="True"
                    ClipText="True"
-                   Text="kills"
+                   Text="{Loc 'ui-lobby-score-kills'}"
                    MouseFilter="Pass"
                    Margin="5,5,5,5"/>
         </BoxContainer>
