@@ -4,3 +4,10 @@
   noSpawn: true
   components:
   - type: RoyalBattleRule
+
+- type: entity
+  id: ScoreRecordingRule
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: ScoreRecordingRule
