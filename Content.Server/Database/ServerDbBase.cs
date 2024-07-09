@@ -1663,16 +1663,19 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
         {
             await using var db = await GetDb();
 
-            var record = await db.DbContext.Scores.SingleOrDefaultAsync(p => p.PlayerUserId == userId.UserId);
-            if (record == null)
+            Score record;
+            try
+            {
+                record = await db.DbContext.Scores.Where(e => e.PlayerUserId == userId.UserId).SingleAsync();
+            }
+            catch (InvalidOperationException) // there is no any record with userId
             {
                 db.DbContext.Scores.Add(record = new Score()
                 {
                     PlayerUserId = userId.UserId,
                     WinScore = 0,
-                    Kills = 0
+                    Kills = 0,
                 });
-
                 await db.DbContext.SaveChangesAsync();
             }
 
@@ -1682,7 +1685,8 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
         public async Task SavePlayerScore(NetUserId userId, int winScore, int kills)
         {
             await using var db = await GetDb();
-            var record = await EnsurePlayerScore(userId);
+            var record = await db.DbContext.Scores
+                .SingleAsync(e => e.PlayerUserId == userId.UserId);
             record.WinScore = winScore;
             record.Kills = kills;
             await db.DbContext.SaveChangesAsync();
@@ -1693,8 +1697,8 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             await using var db = await GetDb();
             var score = await EnsurePlayerScore(userId);
 
-            var usernameEntry = await db.DbContext.AssignedUserId
-                .Where(u => u.UserId == userId.UserId)
+            var usernameEntry = await db.DbContext.Player
+                .Where(e => e.UserId == score.PlayerUserId)
                 .SingleOrDefaultAsync();
 
             if (usernameEntry == null)
@@ -1702,7 +1706,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                 return null;
             }
 
-            var nickname = usernameEntry.UserName;
+            var nickname = usernameEntry.LastSeenUserName;
             var winScore = score.WinScore;
             var kills = score.Kills;
 
@@ -1718,8 +1722,8 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
             foreach (var entry in entries)
             {
-                var usernameEntry = await db.DbContext.AssignedUserId
-                    .Where(u => u.UserId == entry.PlayerUserId)
+                var usernameEntry = await db.DbContext.Player
+                    .Where(e => e.UserId == entry.PlayerUserId)
                     .SingleOrDefaultAsync();
 
                 if (usernameEntry == null)
@@ -1727,7 +1731,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                     break;
                 }
 
-                result.Add((usernameEntry.UserName, entry.WinScore, entry.Kills));
+                result.Add((usernameEntry.LastSeenUserName, entry.WinScore, entry.Kills));
             }
 
             return result;

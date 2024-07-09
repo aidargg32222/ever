@@ -17,10 +17,10 @@ public sealed class ScoreSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeNetworkEvent<ScoreListEvent>(OnScoreList);
+        SubscribeNetworkEvent<LoadedScoreListEvent>(OnScoreList);
     }
 
-    private void OnScoreList(ScoreListEvent ev)
+    private void OnScoreList(LoadedScoreListEvent ev)
     {
         if (_userInterfaceManager.ActiveScreen is LobbyGui lobbyGui)
         {
