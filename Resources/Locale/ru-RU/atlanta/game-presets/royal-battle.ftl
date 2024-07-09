@@ -37,4 +37,5 @@ rb-draw = Опс! Видимо все погибли. Чтож, мы и не н�
 rb-ending-announce = Всем спасибо за участие! Поздравим всех участников!
 
 rb-results-everyone-dead = Все погибли!
-rb-results-place = { $place } место: { $player }
+rb-results-place = { $place } место: { $player }, устранил { $kills } целей
+rb-result-prise-place = [bold]{ $place } место: { $player }, устранил { $kills } целей - { $price } очков[/bold]

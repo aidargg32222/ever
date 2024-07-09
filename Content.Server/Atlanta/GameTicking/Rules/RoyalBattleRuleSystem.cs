@@ -1,11 +1,11 @@
 using Content.Server.Administration.Commands;
 using Content.Server.Atlanta.GameTicking.Rules.Components;
 using Content.Server.Atlanta.Roles;
+using Content.Server.Atlanta.Score;
 using Content.Server.Audio;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
-using Content.Server.GameTicking.Rules.Components;
 using Content.Server.KillTracking;
 using Content.Server.Mind;
 using Content.Server.Objectives;
@@ -36,7 +36,8 @@ namespace Content.Server.Atlanta.GameTicking.Rules;
 
 public sealed class RoyalBattleRuleSystem : GameRuleSystem<RoyalBattleRuleComponent>
 {
-    /// <inheritdoc/>
+    private static readonly int WinMaxPrice = 5;
+
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
@@ -51,6 +52,7 @@ public sealed class RoyalBattleRuleSystem : GameRuleSystem<RoyalBattleRuleCompon
     [Dependency] private readonly StationJobsSystem _jobsSystem = default!;
     [Dependency] private readonly ServerGlobalSoundSystem _sound = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly ScoreSystem _scoreSystem = default!;
     private ISawmill _sawmill = default!;
 
     public override void Initialize()
@@ -97,11 +99,13 @@ public sealed class RoyalBattleRuleSystem : GameRuleSystem<RoyalBattleRuleCompon
                     _sound.PlayAdminGlobal(Filter.Broadcast(), _audio.GetSound(rb.GreetingSound), AudioParams.Default);
 
                     _sound.StopGlobalEventMusic(GlobalEventMusicType.RoyalBattleMusic, Filter.Broadcast());
-                    _sound.DispatchGlobalMusic(_audio.GetSound(rb.MusicLoop), GlobalEventMusicType.RoyalBattleMusic, Filter.Broadcast(), true);
+                    _sound.DispatchGlobalMusic(_audio.GetSound(rb.MusicLoop),
+                        GlobalEventMusicType.RoyalBattleMusic,
+                        Filter.Broadcast(),
+                        true);
 
                     foreach (var mob in rb.AlivePlayers)
                     {
-
                         RemComp<GodmodeComponent>(mob);
                         RemComp<PacifiedComponent>(mob);
 
@@ -116,14 +120,17 @@ public sealed class RoyalBattleRuleSystem : GameRuleSystem<RoyalBattleRuleCompon
                         }
                         else
                         {
-                            _sawmill.Error("No spawners! Player will be spawned on default position, but it doesn't well!");
+                            _sawmill.Error(
+                                "No spawners! Player will be spawned on default position, but it doesn't well!");
                         }
                     }
 
                     RaiseLocalEvent(new RoyalBattleStartEvent());
                     rb.GameState = RoyalBattleGameState.InGame;
 
-                    _chatManager.DispatchServerAnnouncement(Loc.GetString("rb-start-battle-player-count", ("count", rb.AlivePlayers.Count)), Color.Cyan);
+                    _chatManager.DispatchServerAnnouncement(
+                        Loc.GetString("rb-start-battle-player-count", ("count", rb.AlivePlayers.Count)),
+                        Color.Cyan);
                 }
                 else
                 {
@@ -133,11 +140,16 @@ public sealed class RoyalBattleRuleSystem : GameRuleSystem<RoyalBattleRuleCompon
 
                         if (totalSecond < (int) rb.StartupTime.TotalSeconds)
                         {
-                            if (totalSecond == (int) _audio.GetAudioLength(_audio.GetSound(rb.MusicEntry)).TotalSeconds - 1)
+                            if (totalSecond ==
+                                (int) _audio.GetAudioLength(_audio.GetSound(rb.MusicEntry)).TotalSeconds - 1)
                             {
-                                _sound.DispatchGlobalMusic(_audio.GetSound(rb.MusicEntry), GlobalEventMusicType.RoyalBattleMusic, Filter.Broadcast());
+                                _sound.DispatchGlobalMusic(_audio.GetSound(rb.MusicEntry),
+                                    GlobalEventMusicType.RoyalBattleMusic,
+                                    Filter.Broadcast());
                             }
-                            _chatManager.DispatchServerAnnouncement(Loc.GetString("rb-lobby-wait-time-remain", ("seconds", totalSecond + 1)));
+
+                            _chatManager.DispatchServerAnnouncement(Loc.GetString("rb-lobby-wait-time-remain",
+                                ("seconds", totalSecond + 1)));
                         }
                     }
 
@@ -187,9 +199,13 @@ public sealed class RoyalBattleRuleSystem : GameRuleSystem<RoyalBattleRuleCompon
             {
                 _mapManager.DoMapInitialize(rb.LobbyMapId.Value);
             }
+
             _mapManager.SetMapPaused(rb.MapId.Value, true);
 
-            _chatManager.DispatchServerAnnouncement(Loc.GetString("rb-lobby-remain", ("seconds", (int) rb.StartupTime.TotalSeconds)));
+            _chatManager.DispatchServerAnnouncement(Loc.GetString("rb-lobby-remain",
+                ("seconds", (int) rb.StartupTime.TotalSeconds)));
+
+            _scoreSystem.InitializeScoreRecording();
         }
     }
 
@@ -198,12 +214,18 @@ public sealed class RoyalBattleRuleSystem : GameRuleSystem<RoyalBattleRuleCompon
         rule.AvailableSpawners.Add(spawner);
     }
 
+    #region Score
 
     private void OnKillReport(ref KillReportedEvent ev)
     {
+        RegisterKill(ev.Primary);
+
         var query = EntityQueryEnumerator<RoyalBattleRuleComponent>();
         while (query.MoveNext(out var uid, out var rb))
         {
+            if (rb.GameState == RoyalBattleGameState.IsEnd)
+                continue;
+
             var player = ev.Entity;
 
             if (rb.AlivePlayers.Remove(player))
@@ -212,25 +234,23 @@ public sealed class RoyalBattleRuleSystem : GameRuleSystem<RoyalBattleRuleCompon
                     new DamageSpecifier(new DamageSpecifier(
                         _prototypeManager.Index<DamageGroupPrototype>("Airloss"),
                         FixedPoint2.New(200))));
-
-                var deadPlayerName = TryComp<MetaDataComponent>(player, out var meta) ? meta.EntityName : player.ToString();
-                rb.DeadPlayers.Add(deadPlayerName);
             }
             else
             {
-                _sawmill.Error($"Can't remove entity {player}! It can throws errors,");
+                _sawmill.Error($"Can't remove entity {player}! It mustn't happen.");
             }
+
+            rb.DeadPlayers.Add(player);
 
             if (rb.AlivePlayers.Count <= 1)
             {
                 if (rb.AlivePlayers.Count > 0)
                 {
                     var winner = rb.AlivePlayers[0];
-                    AddComp<GodmodeComponent>(winner);
-                    var winnerName = TryComp<MetaDataComponent>(winner, out var meta)
-                        ? meta.EntityName
-                        : winner.ToString();
-                    _chatManager.DispatchServerAnnouncement(Loc.GetString("rb-winner", ("winner", winnerName)), Color.Aqua);
+                    var winnerName = MetaData(winner).EntityName;
+                    _chatManager.DispatchServerAnnouncement(
+                        Loc.GetString("rb-winner", ("winner", winnerName)),
+                        Color.Aqua);
                     _sound.PlayAdminGlobal(Filter.Broadcast(), _audio.GetSound(rb.WinnerSound));
                 }
                 else
@@ -240,10 +260,15 @@ public sealed class RoyalBattleRuleSystem : GameRuleSystem<RoyalBattleRuleCompon
 
                 _chatManager.DispatchServerAnnouncement(Loc.GetString("rb-ending-announce"), Color.Aquamarine);
 
-                _sound.StopGlobalEventMusic(GlobalEventMusicType.RoyalBattleMusic, Filter.Broadcast());
-                _sound.DispatchGlobalMusic(_audio.GetSound(rb.MusicClosing), GlobalEventMusicType.RoyalBattleMusic, Filter.Broadcast());
+                CalculateWinScore(rb);
+                _scoreSystem.UploadPlayersScoreRecords();
 
-                rb.GameState = RoyalBattleGameState.InEnding;
+                _sound.StopGlobalEventMusic(GlobalEventMusicType.RoyalBattleMusic, Filter.Broadcast());
+                _sound.DispatchGlobalMusic(_audio.GetSound(rb.MusicClosing),
+                    GlobalEventMusicType.RoyalBattleMusic,
+                    Filter.Broadcast());
+
+                rb.GameState = RoyalBattleGameState.IsEnd;
 
                 var roundEnd = EntityManager.EntitySysManager.GetEntitySystem<RoundEndSystem>();
                 roundEnd.EndRound(rb.RestartTime);
@@ -251,13 +276,25 @@ public sealed class RoyalBattleRuleSystem : GameRuleSystem<RoyalBattleRuleCompon
             else
             {
                 _chatManager.DispatchServerAnnouncement(Loc.GetString("rb-death-announce",
-                        ("count", rb.AlivePlayers.Count)), Color.Red);
+                        ("count", rb.AlivePlayers.Count)),
+                    Color.Red);
 
                 _audio.PlayGlobal(rb.LoosingSound, Filter.Entities(player), true);
                 _audio.PlayGlobal(rb.DeathSound, Filter.Broadcast(), true);
             }
         }
     }
+
+    private void RegisterKill(KillSource killSource)
+    {
+        // _player.TryGetSessionByEntity()
+        if (killSource is KillPlayerSource killPlayerSource)
+        {
+            _scoreSystem.RecordKills(killPlayerSource.PlayerId, 1);
+        }
+    }
+
+    #endregion
 
     private void OnBeforeSpawn(PlayerBeforeSpawnEvent ev)
     {
@@ -285,7 +322,6 @@ public sealed class RoyalBattleRuleSystem : GameRuleSystem<RoyalBattleRuleCompon
             }
             else
             {
-
                 var rbPlayerRole = new RbPlayerRoleComponent
                 {
                     PrototypeId = rb.RoyalBattlePrototypeId
@@ -302,45 +338,105 @@ public sealed class RoyalBattleRuleSystem : GameRuleSystem<RoyalBattleRuleCompon
 
             EnsureComp<GodmodeComponent>(mob);
             EnsureComp<PacifiedComponent>(mob);
-
             rb.AlivePlayers.Add(mob);
             rb.PlayersMinds.Add((mindId, characterName ?? "?"));
-
+            rb.PlayersNetUserIds.Add(mob, ev.Player.UserId);
+            rb.AttachedNames.Add(mob, MetaData(mob).EntityName);
             ev.Handled = true;
+
             break;
         }
     }
 
-    private void OnObjectivesTextGetInfo(EntityUid uid, RoyalBattleRuleComponent component, ref ObjectivesTextGetInfoEvent args)
+    private void OnObjectivesTextGetInfo(EntityUid uid,
+        RoyalBattleRuleComponent component,
+        ref ObjectivesTextGetInfoEvent args)
     {
         args.Minds = component.PlayersMinds;
         args.AgentName = Loc.GetString("rb-agent-name");
     }
 
-    private void OnObjectivesTextPrepend(EntityUid uid, RoyalBattleRuleComponent component, ref ObjectivesTextPrependEvent args)
+    private void OnObjectivesTextPrepend(EntityUid uid,
+        RoyalBattleRuleComponent component,
+        ref ObjectivesTextPrependEvent args)
     {
         args.Text += "\n";
         var place = 1;
 
         if (component.AlivePlayers.Count == 0)
         {
-            args.Text += Loc.GetString("rb-results-everyone-dead");
+            args.Text += Loc.GetString("rb-result-everyone-dead");
         }
         else
         {
-            component.DeadPlayers.Add(EnsureComp<MetaDataComponent>(component.AlivePlayers[0]).EntityName);
+            MakeObjectivesText(component.AlivePlayers[0],
+                component,
+                place++,
+                component.PlayersMinds.Count,
+                ref args);
         }
 
-        args.Text += "\n";
-
-        while (component.DeadPlayers.Count > 0)
+        foreach (var player in component.DeadPlayers)
         {
-            var player = component.DeadPlayers[^1];
+            MakeObjectivesText(player,
+                component,
+                place++,
+                component.PlayersMinds.Count,
+                ref args);
+        }
+    }
+
+    private void MakeObjectivesText(EntityUid player,
+        RoyalBattleRuleComponent component,
+        int place,
+        int playerCount,
+        ref ObjectivesTextPrependEvent args)
+    {
+        var record = _scoreSystem.LoadPlayerScoreRecord(component.PlayersNetUserIds[player]);
+        if (place < 4 && place != playerCount)
+        {
+            args.Text += Loc.GetString("rb-result-prise-place",
+                ("place", place),
+                ("player", GetPlayerName(player, component)),
+                ("kills", record.Item2),
+                ("price", record.Item1));
+        }
+        else
+        {
             args.Text += Loc.GetString("rb-results-place",
-                ("place", place++), ("player", player)) + "\n";
-            component.DeadPlayers.Remove(player);
+                ("place", place),
+                ("player", GetPlayerName(player, component)),
+                ("kills", record.Item2));
+        }
+        args.Text += '\n';
+    }
+
+    private string GetPlayerName(EntityUid attachedEntity, RoyalBattleRuleComponent component)
+    {
+        return component.AttachedNames[attachedEntity];
+    }
+
+    private void CalculateWinScore(RoyalBattleRuleComponent comp)
+    {
+        EntityUid? player = null;
+        var place = 1;
+        if (comp.AlivePlayers.Count != 0)
+        {
+            player = comp.AlivePlayers[0];
         }
 
-        args.Text += " - попуск.";
+        for (var i = comp.DeadPlayers.Count; i > 0; i--)
+        {
+            if (player != null)
+            {
+                if (place > 3)
+                    break;
+
+                var userId = comp.PlayersNetUserIds[player.Value];
+                _scoreSystem.RecordWinScore(userId, WinMaxPrice / place++);
+            }
+
+            player = comp.DeadPlayers[i - 1];
+        }
     }
 }

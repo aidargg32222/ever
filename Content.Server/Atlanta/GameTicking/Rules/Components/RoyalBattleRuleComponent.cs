@@ -3,6 +3,7 @@ using Content.Shared.Atlanta.RoyalBattle.Components;
 using Content.Shared.Roles;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Atlanta.GameTicking.Rules.Components;
@@ -31,17 +32,27 @@ public sealed partial class RoyalBattleRuleComponent : Component
     [DataField("startupTime")]
     public TimeSpan StartupTime = TimeSpan.FromMinutes(1);
 
-    [DataField("playersMinds")]
-    public List<(EntityUid, string)> PlayersMinds = new();
+    #region Players
 
-    [DataField("alivePlayers")]
-    public List<EntityUid> AlivePlayers = new();
+    [DataField]
+    public List<(EntityUid, string)> PlayersMinds = [];
 
-    [DataField("deadPlayers")]
-    public List<string> DeadPlayers = new();
+    [DataField]
+    public List<EntityUid> AlivePlayers = [];
+
+    [DataField]
+    public List<EntityUid> DeadPlayers = [];
+
+    [DataField]
+    public Dictionary<EntityUid, NetUserId> PlayersNetUserIds = [];
+
+    [DataField]
+    public Dictionary<EntityUid, string> AttachedNames = [];
+
+    #endregion
 
     [DataField("availableSpawners")]
-    public List<EntityUid> AvailableSpawners = new();
+    public List<EntityUid> AvailableSpawners = [];
     /// <summary>
     /// The gear all players spawn with.
     /// </summary>
@@ -96,5 +107,5 @@ public enum RoyalBattleGameState
 {
     InLobby,
     InGame,
-    InEnding
+    IsEnd
 }
