@@ -3,6 +3,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.Notes;
 using Content.Server.Afk;
+using Content.Server.Atlanta.Score;
 using Content.Server.Chat.Managers;
 using Content.Server.Connection;
 using Content.Server.Corvax.TTS;
@@ -68,6 +69,9 @@ namespace Content.Server.IoC
             IoCManager.Register<ServerApi>();
             IoCManager.Register<JobWhitelistManager>();
             IoCManager.Register<PlayerRateLimitManager>();
+
+            // Western
+            IoCManager.Register<ScoreSystem>();
         }
     }
 }
