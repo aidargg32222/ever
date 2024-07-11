@@ -62,8 +62,6 @@ entities:
       wavesCount: 8
       zoneStartSound: !type:SoundPathSpecifier
         path: /Audio/Atlanta/Misc/RoyalBattle/rb_zone_start.ogg
-    - type: RbMiscPresets
-      gear: RbKreiserFighterGear
   - uid: 2
     components:
     - type: MetaData
