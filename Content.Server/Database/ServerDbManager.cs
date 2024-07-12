@@ -931,6 +931,12 @@ namespace Content.Server.Database
             return RunDbCommand(() => _db.SavePlayerScore(userId, winScore, kills));
         }
 
+        public Task<Score> EnsurePlayerScore(NetUserId userId)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.EnsurePlayerScore(userId));
+        }
+
         // Wrapper functions to run DB commands from the thread pool.
         // This will avoid SynchronizationContext capturing and avoid running CPU work on the main thread.
         // For SQLite, this will also enable read parallelization (within limits).
