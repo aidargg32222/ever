@@ -26,7 +26,7 @@
 - type: startingGear
   id: StarDustOfficerBackpack
   equipment:
-    back: ClothingBackpackSecurityFilled
+    back: ClothingBackpackSecurity
 
 - type: loadout
   id: StarDustOfficerSatchel
@@ -35,7 +35,7 @@
 - type: startingGear
   id: StarDustOfficerSatchel
   equipment:
-    back: ClothingBackpackSatchelSecurityFilled
+    back: ClothingBackpackSatchelSecurity
 
 - type: loadout
   id: StarDustOfficerDuffel
@@ -44,7 +44,7 @@
 - type: startingGear
   id: StarDustOfficerDuffel
   equipment:
-    back: ClothingBackpackDuffelSecurityFilled
+    back: ClothingBackpackDuffelSecurity
 
 # Belt
 - type: loadout
