@@ -305,6 +305,7 @@ namespace Content.Server.Database
 
         #endregion
 
+        Task<Score> EnsurePlayerScore();
         Task<List<(string, int, int)>> LoadPlayersScores();
 
         Task<(string, int, int)?> LoadPlayerScore(NetUserId userId);
