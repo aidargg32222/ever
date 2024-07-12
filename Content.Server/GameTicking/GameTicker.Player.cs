@@ -73,7 +73,7 @@ namespace Content.Server.GameTicking
                                           Math.Abs((record.FirstSeenTime - record.LastSeenTime).TotalMinutes) < 1;
 
                     // Western
-                    await _dbManager.EnsurePlayerScore();
+                    await _dbManager.EnsurePlayerScore(args.Session.UserId);
 
                     _chatManager.SendAdminAnnouncement(firstConnection
                         ? Loc.GetString("player-first-join-message", ("name", args.Session.Name))
