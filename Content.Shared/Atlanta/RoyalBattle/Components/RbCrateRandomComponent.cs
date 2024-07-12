@@ -10,5 +10,5 @@ namespace Content.Shared.Atlanta.RoyalBattle.Components;
 public sealed partial class RbCrateRandomComponent : Component
 {
     [DataField("content", required: true)]
-    public ProtoId<RbCratePoolPrototype> Content;
+    public ProtoId<RbCratePoolPrototype> Content = default!;
 }

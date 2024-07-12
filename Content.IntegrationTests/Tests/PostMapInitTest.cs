@@ -60,6 +60,11 @@ namespace Content.IntegrationTests.Tests
             "CorvaxFrame",
             "CorvaxPearl",
             // Corvax-End
+            // Western-Start
+            "RbMain",
+            "RbKreiser",
+            "RbDeathStar",
+            // Western-End
             "Dev",
             "TestTeg",
             "Fland",
