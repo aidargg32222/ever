@@ -11,3 +11,10 @@
   noSpawn: true
   components:
   - type: ScoreRecordingRule
+
+- type: entity
+  id: MistGameRule
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: MistGameRule
