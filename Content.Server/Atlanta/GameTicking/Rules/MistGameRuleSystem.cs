@@ -11,7 +11,7 @@ using Robust.Shared.Timing;
 namespace Content.Server.Atlanta.GameTicking.Rules;
 
 /// <summary>
-/// This handles...
+/// Mist game rule
 /// </summary>
 public sealed class MistGameRuleSystem :  GameRuleSystem<MistGameRuleComponent>
 {
