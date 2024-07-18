@@ -27,8 +27,8 @@ public sealed class ExtendedLateJoinRuleSystem :  GameRuleSystem<ExtendedLateJoi
     public override void Initialize()
     {
         // queue
-        SubscribeLocalEvent<JoinLateGameQueueEvent>(OnJoinQueue);
-        SubscribeLocalEvent<LeaveLateGameQueueEvent>(OnLeaveQueue);
+        SubscribeNetworkEvent<JoinLateGameQueueEvent>(OnJoinQueue);
+        SubscribeNetworkEvent<LeaveLateGameQueueEvent>(OnLeaveQueue);
         // spawners
         SubscribeLocalEvent<ExtendedLateJoinPointRegisterEvent>(OnSpawnerRegister);
         // spawning
