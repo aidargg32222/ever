@@ -1,5 +1,6 @@
 using Content.Server.Atlanta.GameTicking.Rules.Components;
 using Content.Server.Atlanta.Player.Events;
+using Content.Server.Atlanta.Waves.Events;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Mind;
 using Content.Shared.Atlanta.Player.Events;
@@ -33,6 +34,7 @@ public sealed class ExtendedLateJoinRuleSystem :  GameRuleSystem<ExtendedLateJoi
         SubscribeLocalEvent<ExtendedLateJoinPointRegisterEvent>(OnSpawnerRegister);
         // spawning
         SubscribeLocalEvent<SpawnQueuePlayersEvent>(OnSpawnPlayerQueue);
+        SubscribeLocalEvent<ExtendedSpawnEntityEvent>(OnExtendedSpawnEntity);
 
         _sawmill = _logManager.GetSawmill("Extended Late Join Rule");
     }
@@ -124,6 +126,18 @@ public sealed class ExtendedLateJoinRuleSystem :  GameRuleSystem<ExtendedLateJoi
             ev.Cancel();
         }
     }
+
+    #region NonPlayerEntity
+
+    private void OnExtendedSpawnEntity(ref ExtendedSpawnEntityEvent ev)
+    {
+        if (TryGetRandomSpawnerCoordinates(ev.SpawnerProtoId, out var coords))
+        {
+            ev.Instance = Spawn(ev.EntityProtoId, coords!.Value);
+        }
+    }
+
+    #endregion
 
     private bool TryGetRandomSpawnerCoordinates(EntProtoId pointProto, out EntityCoordinates? coords)
     {
