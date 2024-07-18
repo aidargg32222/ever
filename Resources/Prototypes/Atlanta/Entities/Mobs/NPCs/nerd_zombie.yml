@@ -1,6 +1,6 @@
 - type: entity
   name: debug nerd xeno
-  id: ZombieCompound
+  id: DebugNerdXeno
   parent: MobXeno
   description: Moves across all map to kill you
   components:
