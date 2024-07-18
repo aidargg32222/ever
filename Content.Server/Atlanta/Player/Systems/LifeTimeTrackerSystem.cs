@@ -19,7 +19,7 @@ public sealed class LifeTimeTrackerSystem : EntitySystem
         SubscribeLocalEvent<KillReportedEvent>(OnKillReported);
     }
 
-    private void OnKillReported(KillReportedEvent ev)
+    private void OnKillReported(ref KillReportedEvent ev)
     {
         if (!TryComp<LifeTrackerComponent>(ev.Entity, out var lifetime))
             return;

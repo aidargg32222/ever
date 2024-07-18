@@ -7,3 +7,13 @@
   parent: MarkerBase
   components:
   - type: LateGamePlayerJoin
+
+- type: entity
+  id: MistGameEnemySpawnPoint
+  name: the mist game enemy spawn point
+  description: Here will be spawning new enemies
+  placement:
+    mode: SnapgridCenter
+  parent: MarkerBase
+  components:
+  - type: LateGamePlayerJoin

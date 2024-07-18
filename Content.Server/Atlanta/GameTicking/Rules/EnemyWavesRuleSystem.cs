@@ -55,6 +55,8 @@ public sealed class EnemyWavesRuleSystem :  GameRuleSystem<EnemyWavesRuleCompone
             if (!rule.IsPaused && _timing.CurTime > rule.NextWaveTime)
             {
                 SpawnEnemies(rule);
+
+                rule.NextWaveTime = _timing.CurTime + rule.WavesTimings;
             }
 
             // deleting enemies
@@ -156,7 +158,7 @@ public sealed class EnemyWavesRuleSystem :  GameRuleSystem<EnemyWavesRuleCompone
                 continue;
             }
 
-            var ev = new ExtendedSpawnEntityEvent(enemyProtoId,
+            var ev = new ExtendedSpawnEntityEvent(enemyPrototype.ProtoId,
                 rule.EnemySpawnPointPrototype);
             RaiseLocalEvent(ref ev);
 

@@ -33,7 +33,7 @@ public sealed class MistGameRuleSystem :  GameRuleSystem<MistGameRuleComponent>
         _sawmill = _logManager.GetSawmill("Mist Game Rule");
     }
 
-    private void OnKillReported(KillReportedEvent ev)
+    private void OnKillReported(ref KillReportedEvent ev)
     {
         var player = ev.Entity;
         _sawmill.Debug($"New kill report from {player}.");

@@ -9,3 +9,17 @@
   supportedMaps: RoyalBattleMapPool
   rules:
   - RoyalBattleRule
+
+- type: gamePreset
+  id: MistGame
+  alias:
+  - Mist
+  - mist
+  name: the mist
+  description: bla bla bla
+  showInVote: true
+  supportedMaps: Dev
+  rules:
+  - MistGameRule
+  - MistEnemyWavesRule
+  - ExtendedLateJoin

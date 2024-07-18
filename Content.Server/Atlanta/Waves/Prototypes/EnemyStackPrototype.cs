@@ -17,7 +17,7 @@ public sealed partial class EnemyStackPrototype : IPrototype, IWeightedRandomPro
     [DataField(required: true)]
     public Dictionary<string, float> Weights { get; } = [];
 
-    [DataField("timing", required: true)]
+    [DataField("timing")]
     public TimeSpan WavesTiming = TimeSpan.FromMinutes(3);
 
     public bool IsPaused = false;

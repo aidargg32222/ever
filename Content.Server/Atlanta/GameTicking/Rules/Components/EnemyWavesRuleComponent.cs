@@ -12,7 +12,7 @@ public sealed partial class EnemyWavesRuleComponent : Component
     [DataField("enemyStack", required: true)]
     public ProtoId<EnemyStackPrototype> EnemyStackPrototype = default!;
 
-    [DataField("enemySpawnpoint", required: true)]
+    [DataField("enemySpawnPoint", required: true)]
     public EntProtoId EnemySpawnPointPrototype = default!;
 
     [DataField]
@@ -34,7 +34,7 @@ public sealed partial class EnemyWavesRuleComponent : Component
     /// Time between waves
     /// </summary>
     [DataField]
-    public TimeSpan WavesTimings = TimeSpan.FromMinutes(3);
+    public TimeSpan WavesTimings = TimeSpan.FromSeconds(15);
 
     /// <summary>
     /// Time before next wave

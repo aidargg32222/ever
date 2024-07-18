@@ -18,3 +18,20 @@
   noSpawn: true
   components:
   - type: MistGameRule
+
+- type: entity
+  id: ExtendedLateJoin
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: ExtendedLateJoinRule
+
+- type: entity
+  id: MistEnemyWavesRule
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: EnemyWavesRule
+    enemyStack: DefaultWavesWeights
+    enemySpawnPoint: MistGameEnemySpawnPoint
+    difficulty: 10

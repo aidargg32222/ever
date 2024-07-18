@@ -139,15 +139,13 @@ public sealed class ExtendedLateJoinRuleSystem :  GameRuleSystem<ExtendedLateJoi
 
     #endregion
 
-    private bool TryGetRandomSpawnerCoordinates(EntProtoId pointProto, out EntityCoordinates? coords)
+    private bool TryGetRandomSpawnerCoordinates(EntProtoId pointProto, out MapCoordinates? coords)
     {
         var queue = EntityQueryEnumerator<ExtendedLateJoinRuleComponent>();
         while (queue.MoveNext(out var _, out var rule))
         {
             var spawner = _random.Pick(rule.SpawnPointsDictionary[pointProto]);
             coords = _transform.GetMapCoordinates(spawner);
-            if (coords == null)
-                continue;
 
             return true;
         }
