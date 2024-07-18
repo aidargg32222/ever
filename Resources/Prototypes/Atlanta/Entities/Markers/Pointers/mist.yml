@@ -1,0 +1,9 @@
+- type: entity
+  id: MistGamePlayerSpawnPoint
+  name: the mist game player spawn point
+  description: Here will be spawning new "lost" players
+  placement:
+    mode: SnapgridCenter
+  parent: MarkerBase
+  components:
+  - type: LateGamePlayerJoin
