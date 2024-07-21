@@ -1,0 +1,7 @@
+- type: entity
+  id: MobMistPlayer
+  name: mist player
+  parent: MobHuman
+  description: I'm too lazy to do normal prototype for players.
+  components:
+  - type: MistPlayer

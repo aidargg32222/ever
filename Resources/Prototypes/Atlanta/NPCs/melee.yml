@@ -32,6 +32,7 @@
         - !type:HTNPrimitiveTask
           operator: !type:MeleeOperator
             targetKey: Target
+            targetState: 2
           preconditions:
             - !type:KeyExistsPrecondition
               key: Target

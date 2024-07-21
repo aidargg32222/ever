@@ -5,7 +5,7 @@
     "tasks": [
         {
             "label": "build",
-            "command": "/usr/local/share/dotnet/x64/dotnet",
+            "command": "dotnet",
             "type": "shell",
             "args": [
                 "build",
@@ -23,7 +23,7 @@
         },
         {
             "label": "build-yaml-linter",
-            "command": "/usr/local/share/dotnet/x64/dotnet",
+            "command": "dotnet",
             "type": "process",
             "args": [
                 "build",

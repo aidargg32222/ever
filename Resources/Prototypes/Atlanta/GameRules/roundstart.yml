@@ -20,11 +20,18 @@
   - type: MistGameRule
 
 - type: entity
-  id: ExtendedLateJoin
+  id: ExtendedLateJoinRule
   parent: BaseGameRule
   noSpawn: true
   components:
   - type: ExtendedLateJoinRule
+
+- type: entity
+  id: SupplyPointsRule
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: SupplyPointsRule
 
 - type: entity
   id: MistEnemyWavesRule
@@ -34,4 +41,4 @@
   - type: EnemyWavesRule
     enemyStack: DefaultWavesWeights
     enemySpawnPoint: MistGameEnemySpawnPoint
-    difficulty: 10
+    difficulty: 5
