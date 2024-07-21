@@ -41,7 +41,7 @@ public sealed partial class MistGameRuleComponent : Component
     public readonly float Escalation = 1.08f;
 
     [DataField]
-    public TimeSpan SupplyTiming = TimeSpan.FromSeconds(30);
+    public TimeSpan SupplyTiming = TimeSpan.FromMinutes(3);
 
     [DataField]
     public TimeSpan SmoothingSupplyTiming = TimeSpan.FromSeconds(30);
