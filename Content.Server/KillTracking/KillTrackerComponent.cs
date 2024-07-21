@@ -1,4 +1,5 @@
-﻿using Content.Shared.FixedPoint;
+﻿using Content.Server.Atlanta.GameTicking.Rules;
+using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
 using Robust.Shared.Network;
 
@@ -7,7 +8,7 @@ namespace Content.Server.KillTracking;
 /// <summary>
 /// This is used for entities that track player damage sources and killers.
 /// </summary>
-[RegisterComponent, Access(typeof(KillTrackingSystem))]
+[RegisterComponent, Access(typeof(KillTrackingSystem), typeof(MistGameRuleSystem))]
 public sealed partial class KillTrackerComponent : Component
 {
     /// <summary>
@@ -21,6 +22,8 @@ public sealed partial class KillTrackerComponent : Component
     /// </summary>
     [DataField("lifetimeDamage")]
     public Dictionary<KillSource, FixedPoint2> LifetimeDamage = new();
+
+    public bool RegisterOnlyDeath { get; set; } = false;
 }
 
 public abstract record KillSource;

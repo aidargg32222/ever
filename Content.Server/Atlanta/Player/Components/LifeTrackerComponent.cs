@@ -15,5 +15,5 @@ public sealed partial class LifeTrackerComponent : Component
     [DataField]
     public TimeSpan DeathTime;
 
-    public TimeSpan Lifetime => StartupTime - DeathTime;
+    public TimeSpan Lifetime => DeathTime - StartupTime;
 }

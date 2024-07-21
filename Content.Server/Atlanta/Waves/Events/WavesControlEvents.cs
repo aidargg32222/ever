@@ -31,12 +31,21 @@ public sealed class SpeedupWaveEvent(TimeSpan speedup)
 }
 
 /// <summary>
-/// Change difficulty by value. <para>difficulty </para> may be negative value, if player leaves for example
+/// Change difficulty by value.
 /// </summary>
-/// <param name="difficulty"></param>
+/// <param name="difficulty">May be negative value, if player leaves for example</param>
 public sealed class ChangeDifficultyEvent(float difficulty)
 {
     public readonly float Difficulty = difficulty;
+}
+
+/// <summary>
+/// Multiply difficulty by a value.
+/// </summary>
+/// <param name="ratio"></param>
+public sealed class MultiplyDifficultyEvent(float ratio)
+{
+    public readonly float DifficultyRatio = ratio;
 }
 
 /// <summary>

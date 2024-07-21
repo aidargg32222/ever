@@ -10,3 +10,15 @@ public sealed class SpawnQueuePlayersEvent(EntProtoId playerProto, EntProtoId sp
     public readonly EntProtoId PlayerProtoId = playerProto;
     public readonly EntProtoId SpawnPointProtoId = spawnPointProto;
 }
+
+/// <summary>
+/// Enables spawning. It means, if someone entry queue, them will be spawned immediately.
+/// If queue already has entries, them wil be spawned.
+/// </summary>
+public sealed class EnableQueueSpawningEvent(EntProtoId mobProtoId, EntProtoId spawnerProtoId)
+{
+    public readonly EntProtoId MobProtoId = mobProtoId;
+    public readonly EntProtoId SpawnerProtoId = spawnerProtoId;
+}
+
+public sealed class DisableQueueSpawningEvent;
