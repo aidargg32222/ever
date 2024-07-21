@@ -25,6 +25,8 @@
     <ProjectReference Include="..\Corvax\Content.Corvax.Interfaces.Shared\Content.Corvax.Interfaces.Shared.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Atlanta\Player\Components\" />
+    <Folder Include="Atlanta\Player\Systems\" />
     <Folder Include="Power\Components\" />
   </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
