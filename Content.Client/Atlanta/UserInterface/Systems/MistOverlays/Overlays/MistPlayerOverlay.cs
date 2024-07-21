@@ -1,8 +1,10 @@
+using Content.Shared.Atlanta.Mist;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using MistPlayerComponent = Content.Shared.Atlanta.Mist.Components.MistPlayerComponent;
 
 namespace Content.Client.UserInterface.Systems.DamageOverlays.Overlays;
 
@@ -13,11 +15,11 @@ public sealed class MistPlayerOverlay : Overlay
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
 
-    public float MistLevel = 0.8f;
-
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
 
     private readonly ShaderInstance _mistShader;
+
+    public readonly float MistLevel = 0.8f;
 
     public MistPlayerOverlay()
     {
@@ -34,6 +36,14 @@ public sealed class MistPlayerOverlay : Overlay
         if (args.Viewport.Eye != eyeComp.Eye)
             return;
 
+        var level = 0.15f;
+        var minLevel = 0.15f;
+        if (_entityManager.TryGetComponent<MistPlayerComponent>(_playerManager.LocalEntity, out var mist))
+        {
+            level = mist.MistLevel;
+            minLevel = mist.MinMistLevel;
+        }
+
         var viewport = args.WorldAABB;
         var handle = args.WorldHandle;
         var distance = args.ViewportBounds.Width;
@@ -48,14 +58,16 @@ public sealed class MistPlayerOverlay : Overlay
         float innerMaxLevel = 0.6f * distance;
         float innerMinLevel = 0.2f * distance;
 
-        var outerRadius = outerMaxLevel - MistLevel * (outerMaxLevel - outerMinLevel);
-        var innerRadius = innerMaxLevel - MistLevel * (innerMaxLevel - innerMinLevel);
+        var radius = Math.Min(1.5f, MistLevel + (1f * (level / minLevel - 1)));
+
+        var outerRadius = outerMaxLevel - radius * (outerMaxLevel - outerMinLevel);
+        var innerRadius = innerMaxLevel - radius * (innerMaxLevel - innerMinLevel);
 
         var pulse = MathF.Max(0f, MathF.Sin(adjustedTime));
 
         _mistShader.SetParameter("time", pulse);
         _mistShader.SetParameter("color", new Vector3(1f, 1f, 1f));
-        _mistShader.SetParameter("darknessAlphaOuter", 0.15f);
+        _mistShader.SetParameter("darknessAlphaOuter", level);
 
         _mistShader.SetParameter("outerCircleRadius", outerRadius);
         _mistShader.SetParameter("outerCircleMaxRadius", outerRadius + 0.2f * distance);

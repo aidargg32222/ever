@@ -6,7 +6,10 @@
     mode: SnapgridCenter
   parent: MarkerBase
   components:
-  - type: LateGamePlayerJoin
+  - type: Sprite
+    layers:
+    - state: green
+  - type: LateGamePointJoin
 
 - type: entity
   id: MistGameEnemySpawnPoint
@@ -16,4 +19,35 @@
     mode: SnapgridCenter
   parent: MarkerBase
   components:
-  - type: LateGamePlayerJoin
+  - type: Sprite
+    layers:
+    - state: red
+  - type: LateGamePointJoin
+
+- type: entity
+  id: MistGameCenterPoint
+  name: the mist game center point
+  description: lalallllvlvlvlalvalvalvalvalv
+  placement:
+    mode: SnapgridCenter
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: pink
+  - type: MistCenterPoint
+
+- type: entity
+  id: MistGameSupplyPoint
+  name: the mist game supply point
+  description: Here appears supply boxes.
+  placement:
+    mode: SnapgridCenter
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: pink
+  - type: SupplyPoint
+    category: MistGame
+    supplyProto: MistSupply

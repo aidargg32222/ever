@@ -1,15 +1,16 @@
-using Content.Client.Overlays;
 using Content.Client.UserInterface.Systems.DamageOverlays.Overlays;
+using Content.Shared.Atlanta.Mist;
+using Content.Shared.Atlanta.Mist.Systems;
 using Content.Shared.Mobs.Components;
 using Robust.Client.Graphics;
 using Robust.Shared.Player;
 
-namespace Content.Shared.Atlanta.Mist;
+namespace Content.Client.Atlanta.Mist;
 
 /// <summary>
 /// This handles...
 /// </summary>
-public sealed class MistPlayerSystem : EntitySystem
+public sealed class MistPlayerSystem : SharedMistPlayerSystem
 {
     [Dependency] private readonly IOverlayManager _overlayManager = default!;
 
@@ -17,20 +18,21 @@ public sealed class MistPlayerSystem : EntitySystem
 
     public override void Initialize()
     {
+        base.Initialize();
         _overlay = new MistPlayerOverlay();
 
-        SubscribeLocalEvent<MistPlayerComponent, LocalPlayerAttachedEvent>(OnPlayerAttach);
-        SubscribeLocalEvent<MistPlayerComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
+        SubscribeLocalEvent<Shared.Atlanta.Mist.Components.MistPlayerComponent, LocalPlayerAttachedEvent>(OnPlayerAttach);
+        SubscribeLocalEvent<Shared.Atlanta.Mist.Components.MistPlayerComponent, LocalPlayerDetachedEvent>(OnPlayerDetached);
     }
 
-    private void OnPlayerAttach(Entity<MistPlayerComponent> _, ref LocalPlayerAttachedEvent ev)
+    private void OnPlayerAttach(Entity<Shared.Atlanta.Mist.Components.MistPlayerComponent> _, ref LocalPlayerAttachedEvent ev)
     {
         if (!EntityManager.TryGetComponent<MobStateComponent>(ev.Entity, out var _))
             return;
         _overlayManager.AddOverlay(_overlay);
     }
 
-    private void OnPlayerDetached(Entity<MistPlayerComponent> _, ref LocalPlayerDetachedEvent ev)
+    private void OnPlayerDetached(Entity<Shared.Atlanta.Mist.Components.MistPlayerComponent> _, ref LocalPlayerDetachedEvent ev)
     {
         _overlayManager.RemoveOverlay(_overlay);
     }
