@@ -1,4 +1,5 @@
 using Content.Server.Atlanta.Waves;
+using Content.Shared.Atlanta.Waves;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Atlanta.GameTicking.Rules.Components;
@@ -34,7 +35,7 @@ public sealed partial class EnemyWavesRuleComponent : Component
     /// Time between waves
     /// </summary>
     [DataField]
-    public TimeSpan WavesTimings = TimeSpan.FromSeconds(15);
+    public TimeSpan WavesTimings = TimeSpan.FromMinutes(2);
 
     /// <summary>
     /// Time before next wave

@@ -7,6 +7,6 @@ namespace Content.Server.Atlanta.Player;
 /// Used in <seealso cref="MistGameRuleSystem"/>
 /// </summary>
 [RegisterComponent]
-public sealed partial class LateGamePlayerJoinComponent : Component
+public sealed partial class LateGamePointJoinComponent : Component
 {
 }

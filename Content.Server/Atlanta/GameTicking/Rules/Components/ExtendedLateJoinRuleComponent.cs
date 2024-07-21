@@ -8,6 +8,14 @@ namespace Content.Server.Atlanta.GameTicking.Rules.Components;
 [RegisterComponent, Access(typeof(ExtendedLateJoinRuleSystem))]
 public sealed partial class ExtendedLateJoinRuleComponent : Component
 {
+    public readonly EntProtoId JoinAction = "ExtendedJoinSpawnQueuePlayerAction";
+    public readonly EntProtoId LeaveAction = "ExtendedLeaveSpawnQueuePlayerAction";
+
+    public bool Enabled { get; set; } = false;
+
+    public EntProtoId EntryMobProtoId = default!;
+    public EntProtoId EntrySpawnerProtoId = default!;
+
     /// <summary>
     /// Collects all minds ready to join.
     /// </summary>

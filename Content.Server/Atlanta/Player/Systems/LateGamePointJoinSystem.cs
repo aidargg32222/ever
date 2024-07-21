@@ -7,15 +7,14 @@ namespace Content.Server.Atlanta.Player.Systems;
 /// This is used for late game connection if it needs to wait some logic before spawn.
 /// Used in <seealso cref="MistGameRuleSystem"/>
 /// </summary>
-public sealed class LateGamePlayerJoinSystem : EntitySystem
+public sealed class LateGamePointJoinSystem : EntitySystem
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
     public override void Initialize()
     {
-        SubscribeLocalEvent<LateGamePlayerJoinComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<LateGamePointJoinComponent, ComponentStartup>(OnStartup);
     }
 
-    private void OnStartup(Entity<LateGamePlayerJoinComponent> ent, ref ComponentStartup args)
+    private void OnStartup(Entity<LateGamePointJoinComponent> ent, ref ComponentStartup args)
     {
         var proto = MetaData(ent.Owner).EntityPrototype;
 

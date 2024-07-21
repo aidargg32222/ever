@@ -5,6 +5,7 @@ using Content.Server.Atlanta.Waves;
 using Content.Server.Atlanta.Waves.Component;
 using Content.Server.Atlanta.Waves.Events;
 using Content.Server.GameTicking.Rules;
+using Content.Shared.Atlanta.Waves;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -35,6 +36,7 @@ public sealed class EnemyWavesRuleSystem :  GameRuleSystem<EnemyWavesRuleCompone
         SubscribeLocalEvent<SpeedupWaveEvent>(OnSpeedupWaves);
 
         SubscribeLocalEvent<ChangeDifficultyEvent>(OnChangeDifficulty);
+        SubscribeLocalEvent<MultiplyDifficultyEvent>(OnMultiplyDifficulty);
         // enemy controlling
         SubscribeLocalEvent<EnemyDeadReportEvent>(OnEnemyDeadReport);
 
@@ -90,6 +92,16 @@ public sealed class EnemyWavesRuleSystem :  GameRuleSystem<EnemyWavesRuleCompone
         while (queue.MoveNext(out var rule))
         {
             rule.Difficulty += ev.Difficulty;
+        }
+    }
+
+
+    private void OnMultiplyDifficulty(MultiplyDifficultyEvent ev)
+    {
+        var queue = EntityQueryEnumerator<EnemyWavesRuleComponent>();
+        while (queue.MoveNext(out var rule))
+        {
+            rule.Difficulty *= ev.DifficultyRatio;
         }
     }
     #endregion

@@ -3,6 +3,8 @@ using Content.Server.Atlanta.Player.Events;
 using Content.Server.Atlanta.Waves.Events;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Mind;
+using Content.Shared.Actions;
+using Content.Shared.Atlanta.Player.Components;
 using Content.Shared.Atlanta.Player.Events;
 using Content.Shared.Mind;
 using Robust.Server.GameObjects;
@@ -19,24 +21,49 @@ namespace Content.Server.Atlanta.GameTicking.Rules;
 public sealed class ExtendedLateJoinRuleSystem :  GameRuleSystem<ExtendedLateJoinRuleComponent>
 {
     [Dependency] private readonly MindSystem _mind = default!;
-    [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
+    [Dependency] private readonly SharedActionsSystem _actions = default!;
 
     private ISawmill _sawmill = default!;
 
     public override void Initialize()
     {
         // queue
-        SubscribeNetworkEvent<JoinLateGameQueueEvent>(OnJoinQueue);
-        SubscribeNetworkEvent<LeaveLateGameQueueEvent>(OnLeaveQueue);
+        SubscribeLocalEvent<ExtendedSpawnActionsComponent, JoinLateGameQueueEvent>(OnJoinQueue);
+        SubscribeLocalEvent<ExtendedSpawnActionsComponent, LeaveLateGameQueueEvent>(OnLeaveQueue);
+
+        SubscribeLocalEvent<EnableQueueSpawningEvent>(OnQueueSpawningEnable);
+        SubscribeLocalEvent<DisableQueueSpawningEvent>(OnQueueSpawningDisable);
         // spawners
         SubscribeLocalEvent<ExtendedLateJoinPointRegisterEvent>(OnSpawnerRegister);
         // spawning
-        SubscribeLocalEvent<SpawnQueuePlayersEvent>(OnSpawnPlayerQueue);
+        SubscribeLocalEvent<SpawnQueuePlayersEvent>(OnSpawnPlayersQueue);
         SubscribeLocalEvent<ExtendedSpawnEntityEvent>(OnExtendedSpawnEntity);
 
         _sawmill = _logManager.GetSawmill("Extended Late Join Rule");
+    }
+
+    private void OnQueueSpawningDisable(DisableQueueSpawningEvent ev)
+    {
+        var queue = EntityQueryEnumerator<ExtendedLateJoinRuleComponent>();
+        while (queue.MoveNext(out var _, out var rule))
+        {
+            rule.Enabled = false;
+        }
+    }
+
+    private void OnQueueSpawningEnable(EnableQueueSpawningEvent ev)
+    {
+        var queue = EntityQueryEnumerator<ExtendedLateJoinRuleComponent>();
+        while (queue.MoveNext(out var _, out var rule))
+        {
+            rule.Enabled = true;
+            rule.EntryMobProtoId = ev.MobProtoId;
+            rule.EntrySpawnerProtoId = ev.SpawnerProtoId;
+            RaiseLocalEvent(new SpawnQueuePlayersEvent(ev.MobProtoId, ev.SpawnerProtoId));
+        }
     }
 
     private void OnSpawnerRegister(ExtendedLateJoinPointRegisterEvent ev)
@@ -54,11 +81,12 @@ public sealed class ExtendedLateJoinRuleSystem :  GameRuleSystem<ExtendedLateJoi
         }
     }
 
-    private void OnSpawnPlayerQueue(SpawnQueuePlayersEvent ev)
+    private void OnSpawnPlayersQueue(SpawnQueuePlayersEvent ev)
     {
         _sawmill.Debug("Starts player spawning!");
 
         var queue = EntityQueryEnumerator<ExtendedLateJoinRuleComponent>();
+        List<EntityUid> removedMindsQueue = [];
         while (queue.MoveNext(out var _, out var rule))
         {
             if (rule.MindQueue.Count == 0)
@@ -66,6 +94,7 @@ public sealed class ExtendedLateJoinRuleSystem :  GameRuleSystem<ExtendedLateJoi
                 _sawmill.Debug("Skip rule spawning because queue is empty.");
                 continue;
             }
+
             foreach (var mindId in rule.MindQueue)
             {
                 if (!TryComp<MindComponent>(mindId, out var mindComp))
@@ -80,50 +109,79 @@ public sealed class ExtendedLateJoinRuleSystem :  GameRuleSystem<ExtendedLateJoi
                     continue;
                 }
 
-                if (!TryGetRandomSpawnerCoordinates(ev.SpawnPointProtoId, out var coords))
-                    continue;
-
-                var instance = Spawn(ev.PlayerProtoId, coords!.Value);
-                _mind.ControlMob(mindId, instance);
-
-                RaiseLocalEvent(new PlayerSpawnAfterEvent(instance));
+                if (TrySpawnPlayer(mindId, ev.PlayerProtoId, ev.SpawnPointProtoId, out var instance))
+                {
+                    removedMindsQueue.Add(mindId);
+                }
             }
+
+            foreach (var mindId in removedMindsQueue)
+            {
+                rule.MindQueue.Remove(mindId);
+            }
+
+            removedMindsQueue.Clear();
         }
     }
 
-    private void OnLeaveQueue(LeaveLateGameQueueEvent ev, EntitySessionEventArgs args)
+    private bool TrySpawnPlayer(EntityUid mindId, EntProtoId playerProtoId, EntProtoId spawnerProtoId, out EntityUid? instance)
     {
-        if (_mind.TryGetMind(args.SenderSession.UserId, out var mindId))
+        if (!TryGetRandomSpawnerCoordinates(spawnerProtoId, out var coords))
+        {
+            instance = null;
+            return false;
+        }
+
+        instance = Spawn(playerProtoId, coords!.Value);
+        _mind.TransferTo(mindId, instance, true);
+
+        RaiseLocalEvent(new PlayerSpawnAfterEvent(instance!.Value));
+        return true;
+    }
+
+    private void OnLeaveQueue(Entity<ExtendedSpawnActionsComponent> ent, ref LeaveLateGameQueueEvent ev)
+    {
+        if (_mind.TryGetMind(ent.Owner, out var mindId , out var _))
         {
             var queue = EntityQueryEnumerator<ExtendedLateJoinRuleComponent>();
             while (queue.MoveNext(out var _, out var rule))
             {
-                rule.MindQueue.Remove(mindId.Value);
+                rule.MindQueue.Remove(mindId);
+
+                _actions.RemoveAction(ent.Owner, ent.Comp.ActionId);
+                ent.Comp.ActionId = null;
+                _actions.AddAction(ent.Owner, ref ent.Comp.ActionId, ent.Comp.JoinProtoId);
             }
         }
         else
         {
             _sawmill.Debug("Cancel leaving queue because mind was not found.");
-            ev.Cancel();
         }
     }
 
-
-    private void OnJoinQueue(JoinLateGameQueueEvent ev, EntitySessionEventArgs args)
+    private void OnJoinQueue(Entity<ExtendedSpawnActionsComponent> ent, ref JoinLateGameQueueEvent ev)
     {
-        if (_mind.TryGetMind(args.SenderSession.UserId, out var mindId, out var _))
+        if (_mind.TryGetMind(ent.Owner, out var mindId , out var _))
         {
             var queue = EntityQueryEnumerator<ExtendedLateJoinRuleComponent>();
             while (queue.MoveNext(out var _, out var rule))
             {
-                rule.MindQueue.Add(mindId.Value);
+                if (rule.Enabled)
+                {
+                    if (TrySpawnPlayer(mindId, rule.EntryMobProtoId, rule.EntrySpawnerProtoId, out _))
+                        return;
+                }
+                rule.MindQueue.Add(mindId);
             }
+
+            _actions.RemoveAction(ent.Owner, ent.Comp.ActionId);
+            ent.Comp.ActionId = null;
+            _actions.AddAction(ent.Owner, ref ent.Comp.ActionId, ent.Comp.LeaveProtoId);
         }
         else
         {
 
             _sawmill.Debug("Cancel joining queue because mind was not found.");
-            ev.Cancel();
         }
     }
 

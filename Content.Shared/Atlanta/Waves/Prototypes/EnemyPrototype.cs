@@ -1,6 +1,6 @@
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Atlanta.Waves;
+namespace Content.Shared.Atlanta.Waves;
 
 /// <summary>
 /// This is a prototype for enemy setup. <see cref="EnemyStackPrototype"/>
