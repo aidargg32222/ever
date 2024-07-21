@@ -116,6 +116,8 @@ public sealed class MistGameRuleSystem : GameRuleSystem<MistGameRuleComponent>
             var killTracker = EnsureComp<KillTrackerComponent>(ev.PlayerEntity);
             EnsureComp<LifeTrackerComponent>(ev.PlayerEntity);
 
+            Dirty(ev.PlayerEntity, mistPlayer);
+
             killTracker.RegisterOnlyDeath = true;
 
             rule.AlivePlayers.Add(ev.PlayerEntity);
