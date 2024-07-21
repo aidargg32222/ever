@@ -195,7 +195,7 @@ public sealed class AIEyePowerSystem : EntitySystem
             return;
 
         _sharedEyeSystem.SetVisibilityMask(uid,  eye.VisibilityMask | (int) VisibilityFlags.AIEye, eye);
-        _visibilitySystem.AddLayer(uid, visibility, (int) VisibilityFlags.AIEye);
+        _visibilitySystem.AddLayer(uid, visibility.Layer);
         _actions.AddAction(uid, ref component.ReturnActionUid, component.ReturnAction);
     }
 
