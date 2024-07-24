@@ -225,3 +225,32 @@
   pack:
   - ClothingHeadHelmetRiot
   - ClothingOuterArmorRiot
+
+# cold steel
+- type: rbCratePool
+  id: ColdSteelPacksPool
+  weights:
+    EnergySwordPack: 0.3
+    KatanaPack: 0.5
+    MachetePack: 0.5
+    ClaymorePack: 0.3
+
+- type: rbCratePack
+  id: EnergySwordPack
+  pack:
+  - EnergySword
+
+- type: rbCratePack
+  id: KatanaPack
+  pack:
+  - Katana
+
+- type: rbCratePack
+  id: MachetePack
+  pack:
+  - Machete
+
+- type: rbCratePack
+  id: ClaymorePack
+  pack:
+  - Claymore

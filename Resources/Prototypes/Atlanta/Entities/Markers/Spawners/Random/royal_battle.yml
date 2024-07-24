@@ -45,6 +45,17 @@
   - type: RandomRbCrateSpawner
     proto: ShotgunCrateRoyalBattle
 
+- type: entity
+  parent: MarkerBase
+  id: RandomColdSteelCrateRoyalBattle
+  name: random cold steel crate royal battle
+  components:
+  - type: Sprite
+    layers:
+    - state: blue
+  - type: RandomRbCrateSpawner
+    proto: ColdSteelCrateRoyalBattle
+
 
 - type: entity
   parent: MarkerBase
@@ -62,4 +73,5 @@
     - SpawnMechanicRoyalBattleCrate
     - SpawnScienceRoyalBattleCrate
     - SpawnMedicalRoyalBattleCrate
+    - RandomColdSteelCrateRoyalBattle
     offset: 0.0
