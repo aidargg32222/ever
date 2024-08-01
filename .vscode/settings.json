@@ -1,8 +1,0 @@
-{
-    "omnisharp.analyzeOpenDocumentsOnly": true,
-    "dotnet.defaultSolution": "SpaceStation14.sln",
-    "dotnet.preferCSharpExtension": true,
-    "omnisharp.useModernNet": false
-    // "task.verboseLogging": true,
-    // "omnisharp.loggingLevel": "debug"
-}
