@@ -12,7 +12,5 @@
       - type: StationNameSetup
         mapNameTemplate: "Royal Battle Death Star"
       - type: StationJobs
-        overflowJobs:
-        - Passenger
         availableJobs:
           Passenger: [-1, -1]

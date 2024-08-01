@@ -606,9 +606,6 @@ namespace Content.Server.Database
             record.LastSeenUserName = userName;
             record.LastSeenHWId = hwId.ToArray();
 
-            // Western
-            await EnsurePlayerScore(userId);
-
             await db.DbContext.SaveChangesAsync();
         }
 
@@ -1428,9 +1425,9 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             notesCol.AddRange(
                 (await (from note in db.DbContext.AdminNotes
                         where note.PlayerUserId == player &&
-                              !note.Secret &&
-                              !note.Deleted &&
-                              (note.ExpirationTime == null || DateTime.UtcNow < note.ExpirationTime)
+                            !note.Secret &&
+                            !note.Deleted &&
+                            (note.ExpirationTime == null || DateTime.UtcNow < note.ExpirationTime)
                         select note)
                     .Include(note => note.Round)
                     .ThenInclude(r => r!.Server)
@@ -1659,7 +1656,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
 
         # region Score
 
-        private async Task<Score> EnsurePlayerScore(NetUserId userId)
+        public async Task<Score> EnsurePlayerScore(NetUserId userId)
         {
             await using var db = await GetDb();
 
