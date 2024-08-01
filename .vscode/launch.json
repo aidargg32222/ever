@@ -8,8 +8,8 @@
             "name": "Client",
             "type": "coreclr"   ,
             "request": "launch",
-            "program": "${workspaceFolder}/bin/Content.Client/Content.Client.dll",
-            "args": [],
+            "program": "/usr/local/share/dotnet/x64/dotnet",
+            "args": ["${workspaceFolder}/bin/Content.Client/Content.Client.dll"],
             "console": "internalConsole",
             "stopAtEntry": false,
             "targetArchitecture": "x86_64"
@@ -18,8 +18,8 @@
             "name": "Client Attach",
             "type": "coreclr"   ,
             "request": "launch",
-            "program": "${workspaceFolder}/bin/Content.Client/Content.Client.dll",
-            "args": [],
+            "program": "/usr/local/share/dotnet/x64/dotnet",
+            "args": ["${workspaceFolder}/bin/Content.Client/Content.Client.dll"],
             "console": "internalConsole",
             "stopAtEntry": false,
             "targetArchitecture": "x86_64"
@@ -28,8 +28,8 @@
             "name": "Client (Compatibility renderer)",
             "type": "coreclr",
             "request": "launch",
-            "program": "${workspaceFolder}/bin/Content.Client/Content.Client.dll",
-            "args": "--cvar display.compat=true",
+            "program": "/usr/local/share/dotnet/x64/dotnet",
+            "args": ["${workspaceFolder}/bin/Content.Client/Content.Client.dll", "--cvar display.compat=true"],
             "console": "internalConsole",
             "stopAtEntry": false,
             "targetArchitecture": "x86_64"
@@ -38,8 +38,8 @@
             "name": "Server",
             "type": "coreclr",
             "request": "launch",
-            "program": "${workspaceFolder}/bin/Content.Server/Content.Server.dll",
-            "args": [],
+            "program": "/usr/local/share/dotnet/x64/dotnet",
+            "args": ["${workspaceFolder}/bin/Content.Server/Content.Server.dll"],
             "console": "integratedTerminal",
             "stopAtEntry": false,
             "targetArchitecture": "x86_64"
