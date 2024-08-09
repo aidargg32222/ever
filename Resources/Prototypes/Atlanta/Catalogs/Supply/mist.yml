@@ -1,0 +1,16 @@
+- type: supplyPoint
+  id: MistSupply
+  weights:
+    PistolPack: 0.6
+    MedicinePack: 0.4
+
+- type: supplyPointContent
+  id: PistolPack
+  content:
+  - WeaponPistolG22
+  - MagazinePistol
+
+- type: supplyPointContent
+  id: MedicinePack
+  content:
+  - MedkitFilled

@@ -10,6 +10,7 @@ using Content.Server.KillTracking;
 using Content.Server.Mind;
 using Content.Server.Objectives;
 using Content.Server.RoundEnd;
+using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Atlanta.RoyalBattle.Components;
@@ -60,6 +61,7 @@ public sealed class RoyalBattleRuleSystem : GameRuleSystem<RoyalBattleRuleCompon
         base.Initialize();
 
         SubscribeLocalEvent<RbZoneComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<RoyalBattleRuleComponent, ComponentStartup>(OnRuleStartup);
 
         SubscribeLocalEvent<PlayerBeforeSpawnEvent>(OnBeforeSpawn);
         SubscribeLocalEvent<KillReportedEvent>(OnKillReport);
@@ -68,6 +70,11 @@ public sealed class RoyalBattleRuleSystem : GameRuleSystem<RoyalBattleRuleCompon
         SubscribeLocalEvent<RoyalBattleRuleComponent, ObjectivesTextPrependEvent>(OnObjectivesTextPrepend);
 
         _sawmill = Logger.GetSawmill("Royal Battle Rule");
+    }
+
+    private void OnRuleStartup(Entity<RoyalBattleRuleComponent> ent, ref ComponentStartup args)
+    {
+        EntityManager.System<ArrivalsSystem>().SetArrivals(false); // ensure that arrivals disabled
     }
 
     public override void Update(float frameTime)
@@ -168,7 +175,7 @@ public sealed class RoyalBattleRuleSystem : GameRuleSystem<RoyalBattleRuleCompon
         var query = EntityQueryEnumerator<RoyalBattleRuleComponent>();
         while (query.MoveNext(out _, out var rb))
         {
-            rb.MapId = _transform.GetMapCoordinates(uid).MapId;
+            rb.MapId = _transform.GetMapId(uid);
 
             _sound.StopGlobalEventMusic(GlobalEventMusicType.RoyalBattleMusic, Filter.Broadcast());
 

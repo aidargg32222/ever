@@ -523,7 +523,7 @@ public sealed class ArrivalsSystem : EntitySystem
         }
     }
 
-    private void SetArrivals(bool obj)
+    public void SetArrivals(bool obj)
     {
         Enabled = obj;
 

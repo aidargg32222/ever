@@ -48,6 +48,8 @@
   - type: Tag
     tags:
     - BypassInteractionRangeChecks
+  # Western
+  - type: ExtendedSpawnActions
 
 - type: entity
   id: ActionGhostBoo

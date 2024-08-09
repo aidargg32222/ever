@@ -28,6 +28,7 @@
     <ProjectReference Include="..\Corvax\Content.Corvax.Interfaces.Server\Content.Corvax.Interfaces.Server.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Atlanta\Mist\Components\" />
     <Folder Include="Objectives\Interfaces\" />
   </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />

@@ -1,0 +1,9 @@
+- type: wavesEnemyStack
+  id: DefaultWavesWeights
+  weights:
+    DebugXeno: 1
+
+- type: wavesEnemy
+  id: DebugXeno
+  protoId: DebugNerdXeno
+  difficulty: 1

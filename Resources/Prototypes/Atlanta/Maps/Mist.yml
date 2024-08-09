@@ -1,0 +1,13 @@
+- type: gameMap
+  id: Mist
+  mapName: Mist Okay
+  mapPath: /Maps/Atlanta/mist.yml
+  minPlayers: 1
+  maxRandomOffset: 0
+  randomRotation: false
+  stations:
+    Mist:
+      stationProto: StandardNanotrasenStation
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: "Mist"
