@@ -7,7 +7,7 @@
   randomRotation: false
   stations:
     Mist:
-      stationProto: StandardNanotrasenStation
+      stationProto: StandardStationArena
       components:
       - type: StationNameSetup
         mapNameTemplate: "Mist"
