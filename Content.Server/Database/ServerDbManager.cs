@@ -305,6 +305,7 @@ namespace Content.Server.Database
 
         #endregion
 
+        Task<Score> EnsurePlayerScore(NetUserId userId);
         Task<List<(string, int, int)>> LoadPlayersScores();
 
         Task<(string, int, int)?> LoadPlayerScore(NetUserId userId);
@@ -928,6 +929,12 @@ namespace Content.Server.Database
         {
             DbReadOpsMetric.Inc();
             return RunDbCommand(() => _db.SavePlayerScore(userId, winScore, kills));
+        }
+
+        public Task<Score> EnsurePlayerScore(NetUserId userId)
+        {
+            DbReadOpsMetric.Inc();
+            return RunDbCommand(() => _db.EnsurePlayerScore(userId));
         }
 
         // Wrapper functions to run DB commands from the thread pool.
