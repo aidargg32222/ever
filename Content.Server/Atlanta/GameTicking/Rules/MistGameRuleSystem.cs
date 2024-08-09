@@ -1,5 +1,6 @@
 using System.Threading;
 using Content.Server.Atlanta.GameTicking.Rules.Components;
+using Content.Server.Atlanta.Mist;
 using Content.Server.Atlanta.Player;
 using Content.Server.Atlanta.Player.Events;
 using Content.Server.Atlanta.Supply.Events;
@@ -152,6 +153,7 @@ public sealed class MistGameRuleSystem : GameRuleSystem<MistGameRuleComponent>
 
     private void OnWaveEnemiesDead(AllWaveEnemiesDead _)
     {
+        RaiseLocalEvent(new NewMistRadioAnnounceEvent());
         var query = EntityQueryEnumerator<MistGameRuleComponent>();
         while (query.MoveNext(out var _, out var rule))
         {
