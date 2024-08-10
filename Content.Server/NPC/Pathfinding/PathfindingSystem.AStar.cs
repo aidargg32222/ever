@@ -70,7 +70,7 @@ public sealed partial class PathfindingSystem
         while (request.Frontier.Count > 0 && count < NodeLimit)
         {
             // Handle whether we need to pause if we've taken too long
-            if (count % 20 == 0 && count > 0 && request.Stopwatch.Elapsed > PathTime)
+            if (count % 120 == 0 && count > 0 && request.Stopwatch.Elapsed > PathTime)
             {
                 // I had this happen once in testing but I don't think it should be possible?
                 DebugTools.Assert(request.Frontier.Count > 0);
