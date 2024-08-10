@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Corvax.Interfaces.Server;
+using Content.Server.Atlanta.Player.Events;
 using Content.Server.Database;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
@@ -80,6 +81,9 @@ namespace Content.Server.GameTicking
                         : Loc.GetString("player-join-message", ("name", args.Session.Name)));
 
                     RaiseNetworkEvent(GetConnectionStatusMsg(), session.Channel);
+                    // Start Atlanta
+                    RaiseLocalEvent(new NewConnectedPlayer(session));
+                    // End Atlanta
 
                     if (firstConnection && _configurationManager.GetCVar(CCVars.AdminNewPlayerJoinSound))
                         _audioSystem.PlayGlobal(new SoundPathSpecifier("/Audio/Effects/newplayerping.ogg"),

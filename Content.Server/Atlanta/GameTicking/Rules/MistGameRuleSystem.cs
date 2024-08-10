@@ -6,14 +6,13 @@ using Content.Server.Atlanta.Player;
 using Content.Server.Atlanta.Player.Events;
 using Content.Server.Atlanta.Supply.Events;
 using Content.Server.Atlanta.Waves.Events;
+using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules;
 using Content.Server.KillTracking;
 using Content.Server.Mind;
 using Content.Server.Objectives;
 using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Systems;
-using Content.Server.Station.Systems;
-using Content.Server.Weather;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
@@ -34,11 +33,13 @@ public sealed class MistGameRuleSystem : GameRuleSystem<MistGameRuleComponent>
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly IChatManager _chatManager = default!;
 
     private ISawmill _sawmill = default!;
 
     public override void Initialize()
     {
+        base.Initialize();
         // rule
         SubscribeLocalEvent<MistGameRuleComponent, ComponentStartup>(OnRuleStartup,
             after:
@@ -47,6 +48,7 @@ public sealed class MistGameRuleSystem : GameRuleSystem<MistGameRuleComponent>
             ]);
 
         // players
+        SubscribeLocalEvent<NewConnectedPlayer>(OnNewConnectedPlayer);
         SubscribeLocalEvent<PlayerSpawnAfterEvent>(OnAfterPlayerSpawner);
         SubscribeLocalEvent<KillReportedEvent>(OnKillReported);
 
@@ -101,6 +103,17 @@ public sealed class MistGameRuleSystem : GameRuleSystem<MistGameRuleComponent>
 
         RaiseLocalEvent(new EnableQueueSpawningEvent(ent.Comp.PlayerMob, ent.Comp.PlayerSpawner));
         RaiseLocalEvent(new PauseWavesEvent());
+
+        _chatManager.DispatchServerAnnouncement(Loc.GetString("mist-rules-text"));
+    }
+
+    private void OnNewConnectedPlayer(NewConnectedPlayer ev)
+    {
+        var query = EntityQueryEnumerator<MistGameRuleComponent>();
+        while (query.MoveNext(out _, out _))
+        {
+            _chatManager.DispatchServerMessage(ev.Session, Loc.GetString("mist-rules-text"));
+        }
     }
 
     private void OnAfterPlayerSpawner(PlayerSpawnAfterEvent ev)
@@ -162,46 +175,57 @@ public sealed class MistGameRuleSystem : GameRuleSystem<MistGameRuleComponent>
         var query = EntityQueryEnumerator<MistGameRuleComponent>();
         while (query.MoveNext(out var _, out var rule))
         {
-            RaiseLocalEvent(new EnableQueueSpawningEvent("MobHuman", rule.PlayerSpawner));
+            RaiseLocalEvent(new EnableQueueSpawningEvent(rule.PlayerMob, rule.PlayerSpawner));
             RaiseLocalEvent(new MultiplyDifficultyEvent(rule.Escalation));
         }
     }
 
     private string GenerateGraveMessage(KillReportedEvent ev, LifeTrackerComponent lifeTracker, string characterName)
     {
-        // TODO: move to localization
-        var primary =
-            $"{characterName} - from {lifeTracker.StartupTime} to {lifeTracker.DeathTime} / {lifeTracker.Lifetime}";
+        var primary = Loc.GetString("mist-player-lifetime",
+        [
+            ("character", characterName), ("start", GetTime(lifeTracker.StartupTime)),
+            ("end", GetTime(lifeTracker.DeathTime)),
+            ("lifetime", GetTime(lifeTracker.DeathTime - lifeTracker.StartupTime)),
+        ]);
 
         if (ev.Primary is KillEnvironmentSource)
         {
-            primary = $"{primary}\n\tYou couldn't stand the environment";
+            primary = $"{primary}\n\t{Loc.GetString("mist-player-death-environment")}";
         }
         else if (ev.Primary is KillPlayerSource playerSource)
         {
             if (ev.Suicide)
             {
-                primary = $"{primary}\n\tWe remember you, the mate...";
+                primary = $"{primary}\n\t{Loc.GetString("mist-player-death-suicide")}";
             }
             else
             {
-                primary = $"{primary}\n\tMade a mistake with the choice of a friend.";
+                primary = $"{primary}\n\t{Loc.GetString("mist-player-death-player")}";
                 if (_mind.TryGetMind(playerSource.PlayerId, out var mind))
                 {
-                    primary = $"{primary}\n\tTHANK YOU, THE \"ALLY\" {mind.Value.Comp.CharacterName ?? "murderer"}!";
+                    primary = $"{primary}\n\t {Loc.GetString("mist-player-death-player-1", [("player", mind.Value.Comp.CharacterName ?? "murderer")])}!";
                 }
             }
         }
         else if (ev.Primary is KillNpcSource npcSource)
         {
-            primary = $"{primary}\n\tFound your death in fight with {MetaData(npcSource.NpcEnt).EntityName}.";
+            primary = $"{primary}\n\t{Loc.GetString("mist-player-death-monster", [("monster", MetaData(npcSource.NpcEnt).EntityName)])}.";
         }
         else
         {
-            primary = $"{primary}\n\tNobody knows, how them dead. Developer too.";
+            primary = $"{primary}\n\t{Loc.GetString("mist-player-death-unknown")}";
         }
 
         return primary;
+    }
+
+    private string GetTime(TimeSpan timeSpan)
+    {
+        var hours = timeSpan.Hours;
+        var minutes = timeSpan.Minutes;
+        var seconds = timeSpan.Seconds;
+        return $"{hours}:{minutes}:{seconds}";
     }
 
     private void OnObjectivesTextGetInfo(Entity<MistGameRuleComponent> ent, ref ObjectivesTextGetInfoEvent args)
@@ -234,7 +258,7 @@ public sealed class MistGameRuleSystem : GameRuleSystem<MistGameRuleComponent>
     private void OnRoundEnd(RoundEndSystemChangedEvent ev)
     {
         var query = EntityQueryEnumerator<MistGameRuleComponent>();
-        while (query.MoveNext(out var _, out var rule))
+        while (query.MoveNext(out _, out var rule))
         {
             rule.SupplyTimerToken.Cancel();
         }
