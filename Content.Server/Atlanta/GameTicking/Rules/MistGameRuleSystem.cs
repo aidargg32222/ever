@@ -1,4 +1,5 @@
 using System.Threading;
+using Content.Server.Administration.Commands;
 using Content.Server.Atlanta.GameTicking.Rules.Components;
 using Content.Server.Atlanta.Mist;
 using Content.Server.Atlanta.Player;
@@ -11,6 +12,8 @@ using Content.Server.Mind;
 using Content.Server.Objectives;
 using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Systems;
+using Content.Server.Station.Systems;
+using Content.Server.Weather;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
@@ -129,6 +132,8 @@ public sealed class MistGameRuleSystem : GameRuleSystem<MistGameRuleComponent>
                 continue;
 
             _sawmill.Debug("Mist Game haven't started yet, initialize everything.");
+
+            SetOutfitCommand.SetOutfit(ev.PlayerEntity, rule.PlayerStartingGear, EntityManager);
 
             SpawnSupply(rule.SupplyTiming,
                 rule.SmoothingSupplyTiming,

@@ -28,7 +28,7 @@ public sealed class MistRadioSystem : EntitySystem
             if (!_prototypeManager.TryIndex(comp.Pack, out var messagePack))
                 continue;
 
-            _chat.TrySendInGameICMessage(uid, _random.Pick(messagePack.Values), InGameICChatType.Speak, ChatTransmitRange.Normal);
+            _chat.TrySendInGameICMessage(uid, Loc.GetString(_random.Pick(messagePack.Values)), InGameICChatType.Speak, ChatTransmitRange.Normal);
         }
     }
 }

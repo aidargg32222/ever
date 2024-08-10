@@ -1,4 +1,5 @@
 using System.Threading;
+using Content.Shared.Roles;
 using Content.Shared.Wieldable;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
@@ -50,4 +51,8 @@ public sealed partial class MistGameRuleComponent : Component
     public SoundSpecifier SupplyAttention = new SoundPathSpecifier("/Audio/Atlanta/Misc/Mist/supply-helicopter.ogg");
 
     public CancellationTokenSource SupplyTimerToken = new();
+
+    // Players outfit
+    [DataField]
+    public ProtoId<StartingGearPrototype> PlayerStartingGear = "MistPlayerGear";
 }
