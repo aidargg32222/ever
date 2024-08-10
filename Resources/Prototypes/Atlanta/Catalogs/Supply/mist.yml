@@ -3,6 +3,12 @@
   weights:
     PistolPack: 0.6
     MedicinePack: 0.4
+    M1Garand: 0.5
+    Mosin: 0.5
+    Ar18: 0.2
+    M16A4: 0.2
+    Bullets30: 0.4
+    Bullets20: 0.3
 
 - type: supplyPointContent
   id: PistolPack
@@ -14,3 +20,37 @@
   id: MedicinePack
   content:
   - MedkitFilled
+
+- type: supplyPointContent
+  id: M1Garand
+  content:
+  - WeaponSniperM1Garand
+  - SpeedLoaderLightRifle
+
+- type: supplyPointContent
+  id: Mosin
+  content:
+  - WeaponSniperMosin
+  - SpeedLoaderLightRifle
+
+- type: supplyPointContent
+  id: Ar18
+  content:
+  - WeaponRifleAR18
+  - MagazineRifle
+
+- type: supplyPointContent
+  id: M16A4
+  content:
+  - WeaponRifleM16A4
+  - MagazineRifle
+
+- type: supplyPointContent
+  id: Bullets30
+  content:
+  - MagazineLightRiflePkBox
+
+- type: supplyPointContent
+  id: Bullets20
+  content:
+  - MagazineBoxRifleBig

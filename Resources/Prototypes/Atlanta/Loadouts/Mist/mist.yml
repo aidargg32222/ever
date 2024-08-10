@@ -1,0 +1,7 @@
+- type: startingGear
+  id: MistPlayerGear
+  equipment:
+    head: ClothingHeadHatHoshat
+    jumpsuit: ClothingUniformJumpsuitJournalist
+    shoes: ClothingShoesBootsLaceup
+    belt: ClothingBeltStorageWaistbag

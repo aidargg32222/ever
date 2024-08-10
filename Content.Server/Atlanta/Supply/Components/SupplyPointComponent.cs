@@ -16,5 +16,5 @@ public sealed partial class SupplyPointComponent : Component
     public ProtoId<SupplyPointPrototype> SupplyPointProto = default!;
 
     [DataField]
-    public float Chance = 0.9f;
+    public float Chance = 0.4f;
 }
