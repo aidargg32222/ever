@@ -18,6 +18,11 @@
   noSpawn: true
   components:
   - type: MistGameRule
+    playerStartingGears:
+    - MistPlayerGearOfficial1
+    - MistPlayerGearSecurity1
+    - MistPlayerGearEngineer1
+    - MistPlayerGearMedical1
 
 - type: entity
   id: ExtendedLateJoinRule

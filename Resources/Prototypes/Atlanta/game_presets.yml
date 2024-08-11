@@ -15,8 +15,8 @@
   alias:
   - Mist
   - mist
-  name: the mist
-  description: bla bla bla
+  name: mist-game-preset-name
+  description: mist-game-preset-description
   showInVote: true
   supportedMaps: Dev
   rules:

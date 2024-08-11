@@ -141,12 +141,12 @@ public sealed class MistGameRuleSystem : GameRuleSystem<MistGameRuleComponent>
 
             _sawmill.Debug("New player was successfully initialized!");
 
+            SetOutfitCommand.SetOutfit(ev.PlayerEntity, _random.Pick(rule.PlayerStartingGears), EntityManager);
+
             if (rule.Started)
                 continue;
 
             _sawmill.Debug("Mist Game haven't started yet, initialize everything.");
-
-            SetOutfitCommand.SetOutfit(ev.PlayerEntity, rule.PlayerStartingGear, EntityManager);
 
             SpawnSupply(rule.SupplyTiming,
                 rule.SmoothingSupplyTiming,

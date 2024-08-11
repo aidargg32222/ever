@@ -54,5 +54,5 @@ public sealed partial class MistGameRuleComponent : Component
 
     // Players outfit
     [DataField]
-    public ProtoId<StartingGearPrototype> PlayerStartingGear = "MistPlayerGear";
+    public List<ProtoId<StartingGearPrototype>> PlayerStartingGears = [];
 }
