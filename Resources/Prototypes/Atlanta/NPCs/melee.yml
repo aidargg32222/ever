@@ -52,7 +52,7 @@
   considerations:
   - !type:TargetDistanceCon
       curve: !type:PresetCurve
-        preset: ZombieTargetDistance
+        preset: TargetDistance
 
 - type: utilityCurvePreset
   id: ZombieTargetDistance
