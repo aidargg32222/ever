@@ -24,6 +24,9 @@
         20
       BufferRange: !type:Single
         20
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 6
+    baseSprintSpeed: 4
 
 - type: entity
   name: jared
@@ -39,8 +42,6 @@
         true
       NavInteract: !type:Bool
         true
-      NavPry: !type:Bool
-        true
       NavSmash: !type:Bool
         true
       RangedRange: !type:Single
@@ -51,6 +52,9 @@
         20
       BufferRange: !type:Single
         20
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 4
+    baseSprintSpeed: 3
 
 - type: entity
   name: golem
@@ -66,8 +70,6 @@
         true
       NavInteract: !type:Bool
         true
-      NavPry: !type:Bool
-        true
       NavSmash: !type:Bool
         true
       RangedRange: !type:Single
@@ -78,6 +80,9 @@
         20
       BufferRange: !type:Single
         20
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 4
+    baseSprintSpeed: 3
 
 - type: entity
   name: clamp
@@ -93,8 +98,6 @@
         true
       NavInteract: !type:Bool
         true
-      NavPry: !type:Bool
-        true
       NavSmash: !type:Bool
         true
       RangedRange: !type:Single
@@ -105,6 +108,9 @@
         20
       BufferRange: !type:Single
         20
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 4
+    baseSprintSpeed: 3
 
 - type: entity
   name: lover
@@ -120,8 +126,6 @@
         true
       NavInteract: !type:Bool
         true
-      NavPry: !type:Bool
-        true
       NavSmash: !type:Bool
         true
       RangedRange: !type:Single
@@ -132,3 +136,6 @@
         20
       BufferRange: !type:Single
         20
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 4
+    baseSprintSpeed: 3
