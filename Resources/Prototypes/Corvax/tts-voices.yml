@@ -1,32 +1,50 @@
 - type: ttsVoice
-  id: Aidar
-  name: tts-voice-name-aidar
+  id: Oleg
+  name: tts-voice-name-oleg
   sex: Male
-  speaker: aidar
+  speaker: oleg
 
 - type: ttsVoice
-  id: Baya
-  name: tts-voice-name-baya
-  sex: Unsexed
-  speaker: baya
-
-- type: ttsVoice
-  id: Kseniya
-  name: tts-voice-name-kseniya
+  id: Arisha
+  name: tts-voice-name-arisha
   sex: Female
-  speaker: kseniya
+  speaker: arisha
 
 - type: ttsVoice
-  id: Xenia
-  name: tts-voice-name-xenia
+  id: Alice
+  name: tts-voice-name-alice
   sex: Female
-  speaker: xenia
+  speaker: alice
 
 - type: ttsVoice
-  id: Eugene
-  name: tts-voice-name-eugene
+  id: Asha
+  name: tts-voice-name-asha
+  sex: Female
+  speaker: asha
+
+- type: ttsVoice
+  id: Aya
+  name: tts-voice-name-aya
+  sex: Female
+  speaker: aya
+
+- type: ttsVoice
+  id: Masha
+  name: tts-voice-name-masha
+  sex: Female
+  speaker: masha
+
+- type: ttsVoice
+  id: Gennadiy
+  name: tts-voice-name-gennadiy
   sex: Male
-  speaker: eugene
+  speaker: gennadiy
+
+- type: ttsVoice
+  id: Sofa
+  name: tts-voice-name-sofa
+  sex: Female
+  speaker: sofa
 
 - type: ttsVoice
   id: Zina
@@ -35,157 +53,223 @@
   speaker: zina
 
 - type: ttsVoice
-  id: Man1
-  name: tts-voice-name-man-1
-  sex: Male
-  speaker: man1
+  id: Zahar
+  name: tts-voice-name-zahar
+  sex: Unsexed
+  speaker: robot_zahar
 
 - type: ttsVoice
-  id: Man2
-  name: tts-voice-name-man-2
+  id: Flip
+  name: tts-voice-name-flip
   sex: Male
-  speaker: man2
+  speaker: flip
 
 - type: ttsVoice
-  id: Man3
-  name: tts-voice-name-man-3
-  sex: Male
-  speaker: man3
-
-- type: ttsVoice
-  id: Man4
-  name: tts-voice-name-man-4
-  sex: Male
-  speaker: man4
-
-- type: ttsVoice
-  id: Man5
-  name: tts-voice-name-man-5
-  sex: Male
-  speaker: man5
-
-- type: ttsVoice
-  id: Man6
-  name: tts-voice-name-man-6
-  sex: Male
-  speaker: man6
-
-- type: ttsVoice
-  id: Man7
-  name: tts-voice-name-man-7
-  sex: Male
-  speaker: man7
-
-- type: ttsVoice
-  id: Man8
-  name: tts-voice-name-man-8
-  sex: Male
-  speaker: man8
-
-- type: ttsVoice
-  id: Man9
-  name: tts-voice-name-man-9
-  sex: Male
-  speaker: man9
-
-- type: ttsVoice
-  id: Man10
-  name: tts-voice-name-man-10
-  sex: Male
-  speaker: man10
-
-- type: ttsVoice
-  id: Man11
-  name: tts-voice-name-man-11
-  sex: Male
-  speaker: man11
-
-- type: ttsVoice
-  id: Man12
-  name: tts-voice-name-man-12
-  sex: Male
-  speaker: man12
-
-- type: ttsVoice
-  id: Man13
-  name: tts-voice-name-man-13
-  sex: Male
-  speaker: man13
-
-- type: ttsVoice
-  id: Man14
-  name: tts-voice-name-man-14
-  sex: Male
-  speaker: man14
-
-- type: ttsVoice
-  id: Woman1
-  name: tts-voice-name-woman-1
+  id: Varya
+  name: tts-voice-name-varya
   sex: Female
-  speaker: woman1
+  speaker: varya
 
 - type: ttsVoice
-  id: Woman2
-  name: tts-voice-name-woman-2
+  id: Rita
+  name: tts-voice-name-rita
   sex: Female
-  speaker: woman2
+  speaker: rita
 
 - type: ttsVoice
-  id: Woman3
-  name: tts-voice-name-woman-3
-  sex: Female
-  speaker: woman3
+  id: Richard
+  name: tts-voice-name-richard
+  sex: Male
+  speaker: richard
 
 - type: ttsVoice
-  id: Woman4
-  name: tts-voice-name-woman-4
-  sex: Female
-  speaker: woman4
+  id: Uiliam
+  name: tts-voice-name-uiliam
+  sex: Male
+  speaker: uiliam
 
 - type: ttsVoice
-  id: Woman5
-  name: tts-voice-name-woman-5
-  sex: Female
-  speaker: woman5
+  id: Erik
+  name: tts-voice-name-erik
+  sex: Male
+  speaker: erik
 
 - type: ttsVoice
-  id: Woman6
-  name: tts-voice-name-woman-6
+  id: Olga
+  name: tts-voice-name-olga
   sex: Female
-  speaker: woman6
+  speaker: olga
 
 - type: ttsVoice
-  id: Woman7
-  name: tts-voice-name-woman-7
-  sex: Female
-  speaker: woman7
+  id: Mark
+  name: tts-voice-name-mark
+  sex: Male
+  speaker: mark
 
 - type: ttsVoice
-  id: Woman8
-  name: tts-voice-name-woman-8
-  sex: Female
-  speaker: woman8
+  id: Efim
+  name: tts-voice-name-efim
+  sex: Male
+  speaker: efim
 
 - type: ttsVoice
-  id: Woman9
-  name: tts-voice-name-woman-9
+  id: Zaika
+  name: tts-voice-name-zaika
   sex: Female
-  speaker: woman9
+  speaker: zaika
 
 - type: ttsVoice
-  id: Woman10
-  name: tts-voice-name-woman-10
-  sex: Female
-  speaker: woman10
+  id: Glyk
+  name: tts-voice-name-glyk
+  sex: Male
+  speaker: glyk
 
 - type: ttsVoice
-  id: Woman11
-  name: tts-voice-name-woman-11
+  id: Francio
+  name: tts-voice-name-francio
   sex: Female
-  speaker: woman11
+  speaker: francio
 
 - type: ttsVoice
-  id: Woman12
-  name: tts-voice-name-woman-12
+  id: Liza
+  name: tts-voice-name-liza
   sex: Female
-  speaker: woman12
+  speaker: liza
+
+- type: ttsVoice
+  id: Moris
+  name: tts-voice-name-moris
+  sex: Male
+  speaker: moris
+
+- type: ttsVoice
+  id: Irina
+  name: tts-voice-name-irina
+  sex: Female
+  speaker: irina
+
+- type: ttsVoice
+  id: Erina
+  name: tts-voice-name-erina
+  sex: Female
+  speaker: erina
+
+- type: ttsVoice
+  id: Sept
+  name: tts-voice-name-sept
+  sex: Male
+  speaker: sept
+
+- type: ttsVoice
+  id: Galina
+  name: tts-voice-name-galina
+  sex: Female
+  speaker: galina
+
+- type: ttsVoice
+  id: Elira
+  name: tts-voice-name-elira
+  sex: Female
+  speaker: elira
+
+- type: ttsVoice
+  id: Grig
+  name: tts-voice-name-grig
+  sex: Male
+  speaker: grig
+
+- type: ttsVoice
+  id: Urios
+  name: tts-voice-name-urios
+  sex: Male
+  speaker: urios
+
+- type: ttsVoice
+  id: Anya
+  name: tts-voice-name-anya
+  sex: Female
+  speaker: anya
+
+- type: ttsVoice
+  id: Elina
+  name: tts-voice-name-elina
+  sex: Female
+  speaker: elina
+
+- type: ttsVoice
+  id: Eliza
+  name: tts-voice-name-eliza
+  sex: Female
+  speaker: eliza
+
+- type: ttsVoice
+  id: Gladas
+  name: tts-voice-name-gladas
+  sex: Female
+  speaker: gladas
+
+- type: ttsVoice
+  id: Maria
+  name: tts-voice-name-maria
+  sex: Female
+  speaker: maria
+
+- type: ttsVoice
+  id: Zinaida
+  name: tts-voice-name-zinaida
+  sex: Female
+  speaker: zinaida
+
+- type: ttsVoice
+  id: Natali
+  name: tts-voice-name-natali
+  sex: Female
+  speaker: natali
+
+- type: ttsVoice
+  id: Nidali
+  name: tts-voice-name-nidali
+  sex: Female
+  speaker: nidali
+
+- type: ttsVoice
+  id: Alexandr
+  name: tts-voice-name-alexandr
+  sex: Male
+  speaker: alexandr
+
+- type: ttsVoice
+  id: Wolter
+  name: tts-voice-name-wolter
+  sex: Male
+  speaker: wolter
+
+- type: ttsVoice
+  id: Francize
+  name: tts-voice-name-francize
+  sex: Male
+  speaker: francize
+
+- type: ttsVoice
+  id: Vincen
+  name: tts-voice-name-vincen
+  sex: Male
+  speaker: vincen
+
+- type: ttsVoice
+  id: Silly
+  name: tts-voice-name-silly
+  sex: Female
+  speaker: silly
+
+- type: ttsVoice
+  id: Winny
+  name: tts-voice-name-winny
+  sex: Female
+  speaker: winny
+
+- type: ttsVoice
+  id: Krinol
+  name: tts-voice-name-krinol
+  sex: Male
+  speaker: krinol
