@@ -25,8 +25,8 @@
       BufferRange: !type:Single
         20
   - type: MovementSpeedModifier
-    baseWalkSpeed: 6
-    baseSprintSpeed: 4
+    baseWalkSpeed: 10
+    baseSprintSpeed: 10
 
 - type: entity
   name: jared
@@ -54,7 +54,7 @@
         20
   - type: MovementSpeedModifier
     baseWalkSpeed: 4
-    baseSprintSpeed: 3
+    baseSprintSpeed: 6
 
 - type: entity
   name: golem
@@ -82,7 +82,7 @@
         20
   - type: MovementSpeedModifier
     baseWalkSpeed: 4
-    baseSprintSpeed: 3
+    baseSprintSpeed: 4
 
 - type: entity
   name: clamp
@@ -110,7 +110,7 @@
         20
   - type: MovementSpeedModifier
     baseWalkSpeed: 4
-    baseSprintSpeed: 3
+    baseSprintSpeed: 5
 
 - type: entity
   name: lover
@@ -138,4 +138,4 @@
         20
   - type: MovementSpeedModifier
     baseWalkSpeed: 4
-    baseSprintSpeed: 3
+    baseSprintSpeed: 5
