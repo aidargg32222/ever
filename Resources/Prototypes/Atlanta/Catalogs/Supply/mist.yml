@@ -8,7 +8,7 @@
     Ar18: 0.2
     M16A4: 0.2
     Bullets30: 0.4
-    Bullets20: 0.3
+    Bullets20: 0.5
 
 - type: supplyPointContent
   id: PistolPack

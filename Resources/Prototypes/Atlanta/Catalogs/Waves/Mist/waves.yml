@@ -10,7 +10,7 @@
 - type: wavesEnemy
   id: DebugXeno
   protoId: DebugNerdXeno
-  difficulty: 0.8
+  difficulty: 1
 
 - type: wavesEnemy
   id: FlashJared
