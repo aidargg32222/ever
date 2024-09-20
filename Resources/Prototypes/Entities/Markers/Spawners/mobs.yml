@@ -853,6 +853,21 @@
     prototypes:
     - MobClownSpider
 
+- type: entity
+  name: honk bot spawner
+  id: SpawnHonkBot
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: honkbot
+      sprite: Mobs/Silicon/Bots/honkbot.rsi
+  - type: ConditionalSpawner
+    prototypes:
+    - MobHonkBot
+
+
 # Atlanta
 - type: entity
   name: AI Core spawner

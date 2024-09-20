@@ -6,6 +6,7 @@ using Content.Server.Station.Events;
 using Content.Shared.CCVar;
 using Content.Shared.Fax;
 using Content.Shared.Station;
+using Content.Shared.Station.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -32,7 +33,6 @@ public sealed class StationSystem : EntitySystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly ChatSystem _chatSystem = default!;
-    [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly MapSystem _map = default!;
