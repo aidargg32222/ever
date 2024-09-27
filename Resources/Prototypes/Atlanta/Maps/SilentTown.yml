@@ -1,5 +1,5 @@
 - type: gameMap
-  id: Mist
+  id: SilentTown
   mapName: Silent Town - городок Вашей мечты
   mapPath: Maps/Atlanta/mist.yml
   minPlayers: 1
