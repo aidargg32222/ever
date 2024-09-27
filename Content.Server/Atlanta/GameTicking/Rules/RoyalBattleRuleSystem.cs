@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Administration.Commands;
 using Content.Server.Atlanta.GameTicking.Rules.Components;
 using Content.Server.Atlanta.Roles;
@@ -50,10 +51,12 @@ public sealed class RoyalBattleRuleSystem : GameRuleSystem<RoyalBattleRuleCompon
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly MapLoaderSystem _mapLoaderSystem = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly MapSystem _mapSystem = default!;
     [Dependency] private readonly StationJobsSystem _jobsSystem = default!;
     [Dependency] private readonly ServerGlobalSoundSystem _sound = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly ScoreSystem _scoreSystem = default!;
+
     private ISawmill _sawmill = default!;
 
     public override void Initialize()
@@ -185,13 +188,12 @@ public sealed class RoyalBattleRuleSystem : GameRuleSystem<RoyalBattleRuleCompon
             }
 
             // load lobby
-            var lobbyMapOptions = new MapLoadOptions()
-            {
-            };
+            var lobbyMapOptions = new MapLoadOptions();
 
-            rb.LobbyMapId = _mapManager.CreateMap();
+            _mapSystem.CreateMap(out var lobbyMapId);
+            rb.LobbyMapId = lobbyMapId;
 
-            if (!_mapLoaderSystem.TryLoad(rb.LobbyMapId.Value, rb.LobbyMapPath, out _, lobbyMapOptions))
+            if (!_mapLoaderSystem.TryLoad(lobbyMapId, rb.LobbyMapPath, out _, lobbyMapOptions))
             {
                 _sawmill.Error("Couldn't load lobby map.");
                 _chatManager.DispatchServerAnnouncement(Loc.GetString("rb-lobby-cant-spawn"), Color.Red);
@@ -202,9 +204,14 @@ public sealed class RoyalBattleRuleSystem : GameRuleSystem<RoyalBattleRuleCompon
                 continue;
             }
 
-            if (!_mapManager.IsMapInitialized(rb.LobbyMapId.Value))
+            if (!_mapSystem.IsInitialized(lobbyMapId))
             {
-                _mapManager.DoMapInitialize(rb.LobbyMapId.Value);
+                _mapManager.DoMapInitialize(lobbyMapId);
+            }
+
+            if (!_mapSystem.IsPaused(lobbyMapId))
+            {
+                _mapSystem.SetPaused(lobbyMapId, false);
             }
 
             _mapManager.SetMapPaused(rb.MapId.Value, true);
@@ -228,7 +235,7 @@ public sealed class RoyalBattleRuleSystem : GameRuleSystem<RoyalBattleRuleCompon
         RegisterKill(ev.Primary);
 
         var query = EntityQueryEnumerator<RoyalBattleRuleComponent>();
-        while (query.MoveNext(out var uid, out var rb))
+        while (query.MoveNext(out _, out var rb))
         {
             if (rb.GameState == RoyalBattleGameState.IsEnd)
                 continue;
@@ -251,6 +258,8 @@ public sealed class RoyalBattleRuleSystem : GameRuleSystem<RoyalBattleRuleCompon
 
             if (rb.AlivePlayers.Count <= 1)
             {
+                _sawmill.Debug("Royal battle ended.");
+
                 if (rb.AlivePlayers.Count > 0)
                 {
                     var winner = rb.AlivePlayers[0];
@@ -370,43 +379,41 @@ public sealed class RoyalBattleRuleSystem : GameRuleSystem<RoyalBattleRuleCompon
         args.Text += "\n";
         var place = 1;
 
+        var playerList = new List<EntityUid>();
         if (component.AlivePlayers.Count == 0)
         {
-            args.Text += Loc.GetString("rb-result-everyone-dead");
+            args.Text += Loc.GetString("rb-results-everyone-dead");
         }
         else
         {
-            MakeObjectivesText(component.AlivePlayers[0],
-                component,
-                place++,
-                component.PlayersMinds.Count,
-                ref args);
+            playerList.AddRange(component.AlivePlayers);
         }
 
-        foreach (var player in component.DeadPlayers)
+        playerList.AddRange(component.DeadPlayers);
+
+        foreach (var player in playerList)
         {
-            MakeObjectivesText(player,
-                component,
-                place++,
-                component.PlayersMinds.Count,
-                ref args);
+            MakeObjectivesText(player, component, place, ref args);
+            place++;
         }
+
+        _sawmill.Debug("Royal battle objectives text was successfully made.");
     }
 
     private void MakeObjectivesText(EntityUid player,
         RoyalBattleRuleComponent component,
         int place,
-        int playerCount,
         ref ObjectivesTextPrependEvent args)
     {
         var record = _scoreSystem.LoadPlayerScoreRecord(component.PlayersNetUserIds[player]);
-        if (place < 4 && place != playerCount)
+
+        if (record.WinScore != 0)
         {
             args.Text += Loc.GetString("rb-result-prise-place",
                 ("place", place),
                 ("player", GetPlayerName(player, component)),
-                ("kills", record.Item2),
-                ("price", record.Item1));
+                ("kills", record.Kills),
+                ("price", record.WinScore));
         }
         else
         {
@@ -415,6 +422,7 @@ public sealed class RoyalBattleRuleSystem : GameRuleSystem<RoyalBattleRuleCompon
                 ("player", GetPlayerName(player, component)),
                 ("kills", record.Item2));
         }
+
         args.Text += '\n';
     }
 
@@ -425,25 +433,38 @@ public sealed class RoyalBattleRuleSystem : GameRuleSystem<RoyalBattleRuleCompon
 
     private void CalculateWinScore(RoyalBattleRuleComponent comp)
     {
-        EntityUid? player = null;
-        var place = 1;
-        if (comp.AlivePlayers.Count != 0)
-        {
-            player = comp.AlivePlayers[0];
-        }
+        _sawmill.Debug("Calculating players win score.");
+        var playerPlace = 1;
+        var playerList = new List<EntityUid>();
 
-        for (var i = comp.DeadPlayers.Count; i > 0; i--)
+        playerList.AddRange(comp.AlivePlayers);
+        playerList.AddRange(comp.DeadPlayers.AsEnumerable().Reverse());
+
+        /*
+         * One player - no score
+         * Two players - only first gets score
+         * Three players - only first gets score
+         * Four players - first and second get score
+         * Five players - first three players get score
+         */
+        var winScoreBound = (int) (playerList.Count * 0.5f);
+
+        _sawmill.Debug($"For {playerList.Count} set {winScoreBound} win score bound.");
+
+        foreach (var player in playerList)
         {
-            if (player != null)
+            if (playerPlace > winScoreBound)
             {
-                if (place > 3)
-                    break;
-
-                var userId = comp.PlayersNetUserIds[player.Value];
-                _scoreSystem.RecordWinScore(userId, WinMaxPrice / place++);
+                break;
             }
 
-            player = comp.DeadPlayers[i - 1];
+            var score = WinMaxPrice * (winScoreBound / playerPlace);
+            var userId = comp.PlayersNetUserIds[player];
+            _scoreSystem.RecordWinScore(userId, score);
+
+            _sawmill.Debug($"{userId} player on {playerPlace} got {score}.");
+
+            playerPlace++;
         }
     }
 }

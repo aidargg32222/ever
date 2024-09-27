@@ -20,11 +20,11 @@ public sealed partial class RoyalBattleRuleComponent : Component
     [DataField("lobbyMapName")]
     public string LobbyMapPath = "Maps/Atlanta/lobby.yml";
 
-    [DataField("lobbyMapId")]
-    public MapId? LobbyMapId;
+    [DataField]
+    public MapId? LobbyMapId = null;
 
     [DataField("battleMapId")]
-    public MapId? MapId;
+    public MapId? MapId = null;
 
     [DataField("center")]
     public EntityUid? Center;

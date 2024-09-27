@@ -17,10 +17,15 @@ public sealed class ScoreSystem : EntitySystem
 
     [Dependency] private readonly IServerDbManager _db = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly ILogManager _logManager = default!;
+
+    private ISawmill _sawmill = default!;
 
     public override void Initialize()
     {
         SubscribeNetworkEvent<RequestScoreListEvent>(OnScoreListRequired);
+
+        _sawmill = _logManager.GetSawmill("Score");
     }
 
     /// <summary>
@@ -72,11 +77,11 @@ public sealed class ScoreSystem : EntitySystem
         RaiseLocalEvent(ref ev);
     }
 
-    public void UploadPlayerScoreRecords(NetUserId userId)
+    public async void UploadPlayerScoreRecords(NetUserId userId)
     {
         var record = LoadPlayerScoreRecord(userId);
 
-        _ = IncreasePlayerScore(userId, record.Item1, record.Item2);
+        await IncreasePlayerScore(userId, record.Item1, record.Item2);
     }
 
     public void UploadPlayersScoreRecords()
@@ -86,11 +91,11 @@ public sealed class ScoreSystem : EntitySystem
 
         foreach (var entry in ev.ScoreRecords)
         {
-            _ = IncreasePlayerScore(entry.Item1, entry.Item2, entry.Item3);
+            UploadPlayerScoreRecords(entry.Item1);
         }
     }
 
-    public (int, int) LoadPlayerScoreRecord(NetUserId userId)
+    public (int WinScore, int Kills) LoadPlayerScoreRecord(NetUserId userId)
     {
         var ev = new RequireScoreRecordEvent(userId);
         RaiseLocalEvent(ref ev);
@@ -100,8 +105,10 @@ public sealed class ScoreSystem : EntitySystem
 
     private async void OnScoreListRequired(RequestScoreListEvent ev, EntitySessionEventArgs args)
     {
+        _sawmill.Debug($"{args.SenderSession} required score list.");
         var list = await _db.LoadPlayersScores();
         var rev = new LoadedScoreListEvent(list);
+        _sawmill.Debug($"Score list successful sent to {args.SenderSession}.");
         RaiseNetworkEvent(rev, args.SenderSession);
     }
 }
