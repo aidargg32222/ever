@@ -29,7 +29,7 @@ public interface IGameMapManager
     /// Gets the currently selected map
     /// </summary>
     /// <returns>selected map</returns>
-    GameMapPrototype? GetSelectedMap();
+    GameMapPrototype? GetSelectedMap(bool ignoreConfigSelected = false);
 
     /// <summary>
     /// Clears the selected map, if any

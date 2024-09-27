@@ -97,12 +97,30 @@ namespace Content.Server.GameTicking
 
             // the map might have been force-set by something
             // (i.e. votemap or forcemap)
+            // Western-Changes-Start
+            GameMapPoolPrototype? mapPoolPrototype = null;
+            if (CurrentPreset?.MapPool != null)
+            {
+                _prototypeManager.TryIndex(CurrentPreset.MapPool, out mapPoolPrototype);
+            }
+            var forcesetMapIgnore = CurrentPreset?.IgnoreForceSetMap is true;
             var mainStationMap = _gameMapManager.GetSelectedMap();
-            if (mainStationMap == null)
+            // Western-Changes-End
+
+            if (mainStationMap == null || mapPoolPrototype?.Maps.Contains(mainStationMap.ID) is false)
             {
                 // otherwise set the map using the config rules
                 _gameMapManager.SelectMapByConfigRules();
-                mainStationMap = _gameMapManager.GetSelectedMap();
+                mainStationMap = _gameMapManager.GetSelectedMap(forcesetMapIgnore);
+
+                // Western-Start
+                if (forcesetMapIgnore && mainStationMap != null && CurrentPreset != null)
+                {
+                    SendServerMessage(Loc.GetString("game-ticker-force-switch-map",
+                        ("preset", Loc.GetString(CurrentPreset.ModeTitle)),
+                        ("map", mainStationMap.ID)));
+                }
+                // Western-End
             }
 
             // Small chance the above could return no map.
@@ -116,13 +134,12 @@ namespace Content.Server.GameTicking
                 throw new Exception("invalid config; couldn't select a valid station map!");
             }
 
-            if (CurrentPreset?.MapPool != null &&
-                _prototypeManager.TryIndex<GameMapPoolPrototype>(CurrentPreset.MapPool, out var pool) &&
-                !pool.Maps.Contains(mainStationMap.ID))
+            if (mapPoolPrototype != null &&
+                !mapPoolPrototype.Maps.Contains(mainStationMap.ID))
             {
                 var msg = Loc.GetString("game-ticker-start-round-invalid-map",
                     ("map", mainStationMap.MapName),
-                    ("mode", Loc.GetString(CurrentPreset.ModeTitle)));
+                    ("mode", Loc.GetString(CurrentPreset!.ModeTitle)));
                 Log.Debug(msg);
                 SendServerMessage(msg);
             }

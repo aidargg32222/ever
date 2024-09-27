@@ -128,8 +128,12 @@ public sealed class GameMapManager : IGameMapManager
         return _prototypeManager.EnumeratePrototypes<GameMapPrototype>();
     }
 
-    public GameMapPrototype? GetSelectedMap()
+    public GameMapPrototype? GetSelectedMap(bool ignoreConfigSelected = false)
     {
+        if (ignoreConfigSelected && _selectedMap != null)
+        {
+            return _selectedMap;
+        }
         return _configSelectedMap ?? _selectedMap;
     }
 
