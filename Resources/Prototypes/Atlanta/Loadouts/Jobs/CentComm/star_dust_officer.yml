@@ -1,83 +1,83 @@
-# Head
-- type: loadout
-  id: StarDustOfficerBeret
-  equipment: StarDustOfficerBeret
-
-- type: startingGear
-  id: StarDustOfficerBeret
-  equipment:
-    head: ClothingHeadHatBeretHoS
-
-# Jumpsuit
-- type: loadout
-  id: StarDustOfficerJumpsuit
-  equipment: StarDustOfficerJumpsuit
-
-- type: startingGear
-  id: StarDustOfficerJumpsuit
-  equipment:
-    jumpsuit: ClothingUniformJumpsuitStarDustOfficer
-
-# Back
-- type: loadout
-  id: StarDustOfficerBackpack
-  equipment: StarDustOfficerBackpack
-
-- type: startingGear
-  id: StarDustOfficerBackpack
-  equipment:
-    back: ClothingBackpackSecurity
-
-- type: loadout
-  id: StarDustOfficerSatchel
-  equipment: StarDustOfficerSatchel
-
-- type: startingGear
-  id: StarDustOfficerSatchel
-  equipment:
-    back: ClothingBackpackSatchelSecurity
-
-- type: loadout
-  id: StarDustOfficerDuffel
-  equipment: StarDustOfficerDuffel
-
-- type: startingGear
-  id: StarDustOfficerDuffel
-  equipment:
-    back: ClothingBackpackDuffelSecurity
-
-# Belt
-- type: loadout
-  id: StarDustOfficerBelt
-  equipment: StarDustOfficerBelt
-
-- type: startingGear
-  id: StarDustOfficerBelt
-  equipment:
-    belt: ClothingBeltSecurityFilled
-
-# Outerclothing
-# From security officer ArmorVest only
-
-#Shoes
-# From security officer ComatBoots only
-
-# PDA
-- type: loadout
-  id: StarDustOfficerPDA
-  equipment: StarDustOfficerPDA
-
-- type: startingGear
-  id: StarDustOfficerPDA
-  equipment:
-    id: StarDustOfficerPDA
-
-# Gloves
-- type: loadout
-  id: StarDustOfficerGloves
-  equipment: StarDustOfficerGloves
-
-- type: startingGear
-  id: StarDustOfficerGloves
-  equipment:
-   id: ClothingHandsGlovesCombat
+## Head
+#- type: loadout
+#  id: StarDustOfficerBeret
+#  equipment: StarDustOfficerBeret
+#
+#- type: startingGear
+#  id: StarDustOfficerBeret
+#  equipment:
+#    head: ClothingHeadHatBeretHoS
+#
+## Jumpsuit
+#- type: loadout
+#  id: StarDustOfficerJumpsuit
+#  equipment: StarDustOfficerJumpsuit
+#
+#- type: startingGear
+#  id: StarDustOfficerJumpsuit
+#  equipment:
+#    jumpsuit: ClothingUniformJumpsuitStarDustOfficer
+#
+## Back
+#- type: loadout
+#  id: StarDustOfficerBackpack
+#  equipment: StarDustOfficerBackpack
+#
+#- type: startingGear
+#  id: StarDustOfficerBackpack
+#  equipment:
+#    back: ClothingBackpackSecurity
+#
+#- type: loadout
+#  id: StarDustOfficerSatchel
+#  equipment: StarDustOfficerSatchel
+#
+#- type: startingGear
+#  id: StarDustOfficerSatchel
+#  equipment:
+#    back: ClothingBackpackSatchelSecurity
+#
+#- type: loadout
+#  id: StarDustOfficerDuffel
+#  equipment: StarDustOfficerDuffel
+#
+#- type: startingGear
+#  id: StarDustOfficerDuffel
+#  equipment:
+#    back: ClothingBackpackDuffelSecurity
+#
+## Belt
+#- type: loadout
+#  id: StarDustOfficerBelt
+#  equipment: StarDustOfficerBelt
+#
+#- type: startingGear
+#  id: StarDustOfficerBelt
+#  equipment:
+#    belt: ClothingBeltSecurityFilled
+#
+## Outerclothing
+## From security officer ArmorVest only
+#
+##Shoes
+## From security officer ComatBoots only
+#
+## PDA
+#- type: loadout
+#  id: StarDustOfficerPDA
+#  equipment: StarDustOfficerPDA
+#
+#- type: startingGear
+#  id: StarDustOfficerPDA
+#  equipment:
+#    id: StarDustOfficerPDA
+#
+## Gloves
+#- type: loadout
+#  id: StarDustOfficerGloves
+#  equipment: StarDustOfficerGloves
+#
+#- type: startingGear
+#  id: StarDustOfficerGloves
+#  equipment:
+#   id: ClothingHandsGlovesCombat

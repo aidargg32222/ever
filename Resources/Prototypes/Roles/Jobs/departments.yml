@@ -91,7 +91,7 @@
   - Detective
   - Warden
   # Atlanta
-  - StarDustOfficer
+  # - StarDustOfficer
 
 - type: department
   id: Science
