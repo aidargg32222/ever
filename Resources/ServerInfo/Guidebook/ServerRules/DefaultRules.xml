@@ -1,5 +1,60 @@
 <Document>
-  # Server Rules
+  #Золотые правила:
+  ## 1. Оскорбление администрации
+  [color=red]ban 4h[/color]
 
-  This server has not written any rules yet. Please listen to the staff.
+  ## 2. Любое упоминание политики
+  [color=red]ban 4h[/color]
+
+  ## 3. Оскорбление родни
+  [color=red]ban 4h[/color]
+
+  ## 4. ПО(читы)
+  [color=red]ban 12h[/color]
+
+  ## 5. Набегаторство
+  [color=red]ban 12h[/color]
+
+  ## 6. Спам разрешён
+  Но без фанатизма, в случае вреда игрокам, и если он их будет не устраивать
+  [color=red]warn - ban 1h[/color]
+
+  ## 7. Неадекватное поведение разрешено
+  Но без фанатизма(вред серверу или дискомфорт для игроков)
+  [color=red]warn - ban 1h[/color]
+
+  ## 8. Багоюз
+  [color=red]ban 2h[/color]
+
+  ## 9. Нацизм
+  [color=red]ban 12h[/color]
+
+  ## 10. Мультиаккаунт
+  [color=red]ПЕРМАЧ[/color]
+
+  # Royal:
+  ## 1. Запрещено покидать территорию станции
+  [color=red]warn[/color]
+
+  ## 2. Запрещено кооперироваться
+  [color=red]warn[/color]
+
+  ## 3. Запрещено взрывать канистры/взрывчатки(исключение C4)
+  [color=red]warn[/color]
+
+  ## 4. В период проведения ивента/турнира не выполнять его условия
+  [color=red]warn[/color]
+
+  # Мгла
+  ## 1. Убийство своих без причины
+  [color=red]warn[/color]
+
+  ## 2. Запрещено багоюзить монстров
+  [color=red]warn[/color]
+
+  ## 3. Запрещено вредить своей команде
+  [color=red]warn[/color]
+
+  ## 4. Предастельство разрешено, но по РП причине
+  [color=red]warn[/color]
 </Document>
