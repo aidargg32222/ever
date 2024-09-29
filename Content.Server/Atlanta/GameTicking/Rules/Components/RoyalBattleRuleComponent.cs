@@ -1,5 +1,4 @@
 using Content.Server.Atlanta.RoyalBattle.Systems;
-using Content.Shared.Atlanta.RoyalBattle.Components;
 using Content.Shared.Roles;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
@@ -21,10 +20,10 @@ public sealed partial class RoyalBattleRuleComponent : Component
     public string LobbyMapPath = "Maps/Atlanta/lobby.yml";
 
     [DataField]
-    public MapId? LobbyMapId = null;
+    public MapId? LobbyMapId;
 
     [DataField("battleMapId")]
-    public MapId? MapId = null;
+    public MapId? MapId;
 
     [DataField("center")]
     public EntityUid? Center;

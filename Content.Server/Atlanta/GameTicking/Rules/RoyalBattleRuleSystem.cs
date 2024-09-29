@@ -40,7 +40,6 @@ public sealed class RoyalBattleRuleSystem : GameRuleSystem<RoyalBattleRuleCompon
 {
     private static readonly int WinMaxPrice = 5;
 
-    [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
@@ -303,7 +302,6 @@ public sealed class RoyalBattleRuleSystem : GameRuleSystem<RoyalBattleRuleCompon
 
     private void RegisterKill(KillSource killSource)
     {
-        // _player.TryGetSessionByEntity()
         if (killSource is KillPlayerSource killPlayerSource)
         {
             _scoreSystem.RecordKills(killPlayerSource.PlayerId, 1);
@@ -340,7 +338,7 @@ public sealed class RoyalBattleRuleSystem : GameRuleSystem<RoyalBattleRuleCompon
             {
                 var rbPlayerRole = new RbPlayerRoleComponent
                 {
-                    PrototypeId = rb.RoyalBattlePrototypeId
+                    PrototypeId = rb.RoyalBattlePrototypeId,
                 };
 
                 _roleSystem.MindAddRole(mindId, rbPlayerRole, mind);
@@ -458,7 +456,7 @@ public sealed class RoyalBattleRuleSystem : GameRuleSystem<RoyalBattleRuleCompon
                 break;
             }
 
-            var score = WinMaxPrice * (winScoreBound / playerPlace);
+            var score = Math.Min(WinMaxPrice * (playerPlace / winScoreBound), WinMaxPrice);
             var userId = comp.PlayersNetUserIds[player];
             _scoreSystem.RecordWinScore(userId, score);
 

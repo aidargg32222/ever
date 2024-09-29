@@ -1,7 +1,7 @@
 - type: gameMap
   id: SilentTown
   mapName: Silent Town - городок Вашей мечты
-  mapPath: Maps/Atlanta/mist.yml
+  mapPath: /Maps/Atlanta/mist.yml
   minPlayers: 1
   maxRandomOffset: 0
   randomRotation: false
