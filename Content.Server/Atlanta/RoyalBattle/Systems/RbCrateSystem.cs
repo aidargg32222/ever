@@ -42,16 +42,11 @@ public sealed class RbCrateSystem : EntitySystem
 
     private void OnRandomCrateMapInit(EntityUid uid, RandomRbCrateSpawnerComponent component, MapInitEvent args)
     {
-        var query = EntityQueryEnumerator<RoyalBattleRuleComponent>();
+        if (!_random.Prob(component.Chance))
+            return;
 
-        while (query.MoveNext(out var rule))
-        {
-            if (_random.Prob(0.35f))
-            {
-                _sawmill.Debug($"Spawn {component.PrototypeId} at {_transform.GetMoverCoordinates(uid)}");
-                Spawn(component.PrototypeId, _transform.GetMoverCoordinates(uid));
-            }
-        }
+        _sawmill.Debug($"Spawn {component.PrototypeId} at {_transform.GetMoverCoordinates(uid)}");
+            Spawn(component.PrototypeId, _transform.GetMoverCoordinates(uid));
     }
 
     private void OnMapInit(EntityUid uid, RbCrateRandomComponent component, MapInitEvent args)
