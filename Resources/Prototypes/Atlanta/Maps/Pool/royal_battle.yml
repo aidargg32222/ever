@@ -1,5 +1,7 @@
 - type: gameMapPool
   id: RoyalBattleMapPool
   maps:
+  - RbMain
+  - RbDeathStar
   - RbKreiser
   - RbDelta

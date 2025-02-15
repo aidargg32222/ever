@@ -23,6 +23,7 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Roles;
+using Content.Shared.Roles.Jobs;
 using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Server.Player;
@@ -321,7 +322,9 @@ public sealed class RoyalBattleRuleSystem : GameRuleSystem<RoyalBattleRuleCompon
             var newMind = _mind.CreateMind(ev.Player.UserId, ev.Profile.Name);
             _mind.SetUserId(newMind, ev.Player.UserId);
 
-            var tryMob = _stationSpawning.SpawnPlayerCharacterOnStation(ev.Station, null, ev.Profile);
+            var job = new JobComponent {Prototype = "RbFighter"};
+
+            var tryMob = _stationSpawning.SpawnPlayerCharacterOnStation(ev.Station, job, ev.Profile);
             DebugTools.AssertNotNull(tryMob);
             var mob = tryMob!.Value;
 
