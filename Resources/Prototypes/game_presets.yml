@@ -37,6 +37,20 @@
   - BasicRoundstartVariation
 
 - type: gamePreset
+  id: Extended
+  alias:
+  - extended
+  - shittersafari
+  name: Molebka - Anomaly zone
+  showInVote: false #2boring2vote
+  description: Вы попадёте в аномальную зону где творяться странные обстоятельства....
+  rules:
+  - BasicStationEventScheduler
+  - GameRuleMeteorScheduler
+  - BasicRoundstartVariation
+
+
+- type: gamePreset
   id: Greenshift
   alias:
   - greenshift
@@ -57,6 +71,8 @@
   description: secret-description
   rules:
     - Secret
+
+
 
 - type: gamePreset
   id: SecretExtended #For Admin Use: Runs Extended but shows "Secret" in lobby.
