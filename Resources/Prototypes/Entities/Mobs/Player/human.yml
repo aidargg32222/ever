@@ -18,7 +18,11 @@
     prototypes: [SyndicateOperativeGearExtremelyBasic]
     roleLoadout: [ RoleSurvivalSyndicate ]
   - type: RandomMetadata
+<<<<<<< HEAD
     nameSegments: [names_first_male, names_last_male] # Corvax-MRP
+=======
+    nameSegments: [NamesDeathCommando]
+>>>>>>> upstream/master
   - type: NpcFactionMember
     factions:
     - Syndicate
@@ -31,8 +35,7 @@
   components:
   # make the player a traitor once its taken
   - type: AutoTraitor
-    giveUplink: false
-    giveObjectives: false
+    profile: TraitorReinforcement
 
 - type: entity
   parent: MobHumanSyndicateAgent
@@ -69,8 +72,8 @@
   - type: NukeOperative
   - type: RandomMetadata
     nameSegments:
-    - nukeops-role-operator
-    - SyndicateNamesNormal
+    - NamesSyndicateNormal
+    nameFormat: name-format-nukie-operator
   - type: Loadout
     prototypes: [SyndicateOperativeGearFullNoUplink]
 
@@ -98,8 +101,21 @@
     roleLoadout: [ RoleSurvivalSyndicate ]
   - type: RandomMetadata
     nameSegments:
-    - SyndicateNamesPrefix
-    - SyndicateNamesNormal
+    - NamesSyndicatePrefix
+    - NamesSyndicateNormal
+    nameFormat: name-format-nukie-generic
   - type: NpcFactionMember
     factions:
     - Syndicate
+
+# Wizard
+- type: entity
+  categories: [ HideSpawnMenu ]
+  name: Wizard
+  parent: MobHuman
+  id: MobHumanWizard
+  components:
+  - type: RandomHumanoidAppearance
+  - type: NpcFactionMember
+    factions:
+    - Wizard

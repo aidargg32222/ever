@@ -1,6 +1,7 @@
-﻿- type: dataset
-  id: adjectives
+﻿- type: localizedDataset
+  id: Adjectives
   values:
+<<<<<<< HEAD
   - новый
   - хороший
   - последний
@@ -957,3 +958,7 @@
   - уральский
   - неудачный
   - лунный
+=======
+    prefix: adjectives-dataset-
+    count: 396
+>>>>>>> upstream/master

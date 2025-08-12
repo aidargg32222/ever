@@ -6,7 +6,11 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Security
+<<<<<<< HEAD
       time: 36000 #10 hrs # Corvax-RoleTime
+=======
+      time: 9000 #2.5 hrs
+>>>>>>> upstream/master
   startingGear: SecurityOfficerGear
   icon: "JobIconSecurityOfficer"
   supervisors: job-supervisors-hos
@@ -32,3 +36,13 @@
     back:
     - Flash
     - MagazinePistol
+
+- type: chameleonOutfit
+  id: SecurityOfficerChameleonOutfit
+  job: SecurityOfficer
+  hasMindShield: true
+  equipment:
+    head: ClothingHeadHatBeretSecurity
+    mask: ClothingMaskGasSecurity
+    neck: Dinkystar
+    gloves: ClothingHandsGlovesColorBlack

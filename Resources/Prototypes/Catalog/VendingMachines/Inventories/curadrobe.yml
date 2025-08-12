@@ -14,4 +14,10 @@
     ClothingUniformJumpskirtLibrarian: 3
     ClothingShoesBootsLaceup: 2
     ClothingHeadsetService: 2
+<<<<<<< HEAD
     PrinterDocFlatpack: 2 # Corvax-Printer
+=======
+  contrabandInventory:
+    ToyFigurineLibrarian: 1
+
+>>>>>>> upstream/master

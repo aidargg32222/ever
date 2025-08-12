@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 - type: dataset
   id: names_mushman_first
   values:
@@ -54,3 +55,10 @@
   - Волвариэлла
   - Гифолома
   - Лактарий
+=======
+﻿- type: localizedDataset
+  id: NamesMushmanFirst
+  values:
+    prefix: names-mushman-first-dataset-
+    count: 54
+>>>>>>> upstream/master

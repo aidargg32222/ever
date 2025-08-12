@@ -4,9 +4,15 @@
   description: job-description-atmostech
   playTimeTracker: JobAtmosphericTechnician
   requirements:
+<<<<<<< HEAD
     - !type:DepartmentTimeRequirement
       department: Engineering
       time: 36000 #10 hrs # Corvax-RoleTime
+=======
+  - !type:DepartmentTimeRequirement
+    department: Engineering
+    time: 9000 #2.5 hrs
+>>>>>>> upstream/master
   startingGear: AtmosphericTechnicianGear
   icon: "JobIconAtmosphericTechnician"
   supervisors: job-supervisors-ce
@@ -15,6 +21,10 @@
   - Engineering
   - External
   - Atmospherics
+  special:
+  - !type:GiveItemOnHolidaySpecial
+    holiday: FirefighterDay
+    prototype: FireAxe
 
 - type: startingGear
   id: AtmosphericTechnicianGear
@@ -26,3 +36,13 @@
   #storage:
     #back:
     #- Stuff
+
+- type: chameleonOutfit
+  id: AtmosphericTechnicianChameleonOutfit
+  job: AtmosphericTechnician
+  equipment:
+    head: ClothingHeadHelmetAtmosFire
+    mask: ClothingMaskGasAtmos
+    neck: ClothingNeckScarfStripedLightBlue
+    outerClothing: ClothingOuterSuitAtmosFire
+    gloves: ClothingHandsGlovesColorYellow

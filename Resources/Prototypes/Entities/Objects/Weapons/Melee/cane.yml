@@ -28,7 +28,7 @@
 
 - type: entity
   name: cane blade
-  parent: BaseItem
+  parent: [BaseItem, BaseSyndicateContraband]
   id: CaneBlade
   description: A sharp blade with a cane shaped hilt.
   components:
@@ -53,7 +53,7 @@
   - type: DisarmMalus
 
 - type: entity
-  parent: Cane
+  parent: [Cane, VoiceLock]
   id: CaneSheath
   suffix: Empty
   components:
@@ -69,6 +69,9 @@
     interfaces:
       enum.StorageUiKey.Key:
         type: StorageBoundUserInterface
+  - type: ItemSlotsLock
+    slots:
+    - item
   - type: ItemSlots
     slots:
       item:

@@ -6,7 +6,11 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Civilian
+<<<<<<< HEAD
       time: 3600 #1 hrs # Corvax-RoleTime
+=======
+      time: 1800 #0.5 hr
+>>>>>>> upstream/master
   startingGear: ChefGear
   icon: "JobIconChef"
   supervisors: job-supervisors-hop
@@ -28,3 +32,15 @@
   #storage:
     #back:
     #- Stuff
+
+- type: chameleonOutfit
+  id: ChefChameleonOutfit
+  job: Chef
+  equipment:
+    head: ClothingHeadHatChef
+    eyes: ClothingEyesGlassesCheapSunglasses
+    mask: ClothingMaskItalianMoustache
+    neck: ClothingNeckScarfStripedBrown
+    outerClothing: ClothingOuterJacketChef
+    gloves: ClothingHandsGlovesColorWhite
+    shoes: ClothingShoesChef

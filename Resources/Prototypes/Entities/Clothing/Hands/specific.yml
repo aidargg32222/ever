@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingHandsButcherable
+  parent: [ClothingHandsButcherable, BaseChameleon]
   id: ClothingHandsChameleon # doesn't protect from electricity or heat
   name: black gloves
   description: Regular black gloves that do not keep you from frying.
@@ -17,6 +17,7 @@
     - type: Fiber
       fiberMaterial: fibers-chameleon
     - type: FingerprintMask
+<<<<<<< HEAD
     - type: UserInterface
       interfaces:
         enum.ChameleonUiKey.Key:
@@ -36,6 +37,8 @@
           - Scientist
           - Borg
 # Corvax-HiddenDesc-End
+=======
+>>>>>>> upstream/master
 
 - type: entity
   parent: ClothingHandsChameleon

@@ -1,10 +1,15 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.CCVar;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Corvax.Interfaces.Shared;
 using Content.Shared.Random;
 using Robust.Shared.Collections;
+<<<<<<< HEAD
 using Robust.Shared.Network;
+=======
+using Robust.Shared.Configuration;
+>>>>>>> upstream/master
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -23,6 +28,11 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
 
     [DataField]
     public Dictionary<ProtoId<LoadoutGroupPrototype>, List<Loadout>> SelectedLoadouts = new();
+
+    /// <summary>
+    /// Loadout specific name.
+    /// </summary>
+    public string? EntityName;
 
     /*
      * Loadout-specific data used for validation.
@@ -44,6 +54,8 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
             weh.SelectedLoadouts.Add(selected.Key, new List<Loadout>(selected.Value));
         }
 
+        weh.EntityName = EntityName;
+
         return weh;
     }
 
@@ -54,12 +66,41 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
     {
         var groupRemove = new ValueList<string>();
         var protoManager = collection.Resolve<IPrototypeManager>();
+<<<<<<< HEAD
         var netManager = collection.Resolve<INetManager>(); // Corvax-Loadouts
+=======
+        var configManager = collection.Resolve<IConfigurationManager>();
+>>>>>>> upstream/master
 
         if (!protoManager.TryIndex(Role, out var roleProto))
         {
+            EntityName = null;
             SelectedLoadouts.Clear();
             return;
+        }
+
+        // Remove name not allowed.
+        if (!roleProto.CanCustomizeName)
+        {
+            EntityName = null;
+        }
+
+        // Validate name length
+        // TODO: Probably allow regex to be supplied?
+        if (EntityName != null)
+        {
+            var name = EntityName.Trim();
+            var maxNameLength = configManager.GetCVar(CCVars.MaxNameLength);
+
+            if (name.Length > maxNameLength)
+            {
+                EntityName = name[..maxNameLength];
+            }
+
+            if (name.Length == 0)
+            {
+                EntityName = null;
+            }
         }
 
         // In some instances we might not have picked up a new group for existing data.
@@ -254,7 +295,7 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
         if (!protoManager.TryIndex(loadout, out var loadoutProto))
         {
             // Uhh
-            reason = FormattedMessage.FromMarkup("");
+            reason = FormattedMessage.FromMarkupOrThrow("");
             return false;
         }
 
@@ -343,7 +384,8 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
 
         if (!Role.Equals(other.Role) ||
             SelectedLoadouts.Count != other.SelectedLoadouts.Count ||
-            Points != other.Points)
+            Points != other.Points ||
+            EntityName != other.EntityName)
         {
             return false;
         }

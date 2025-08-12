@@ -6,6 +6,7 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobWarden
+<<<<<<< HEAD
       time: 36000 #10 hrs # Corvax-RoleTime
 #    - !type:RoleTimeRequirement
 #      role: JobSecurityOfficer
@@ -17,10 +18,21 @@
 #      time: 144000 #40 hrs
     - !type:AgeRequirement
       requiredAge: 20
+=======
+      time: 3600 #1 hr
+    - !type:RoleTimeRequirement
+      role: JobDetective
+      time: 3600 #1 hr, knowing how to use the tools is important
+    - !type:RoleTimeRequirement
+      role: JobSecurityOfficer
+      time: 18000 #5 hrs
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 36000 # 10 hrs
+>>>>>>> upstream/master
   weight: 10
   startingGear: HoSGear
   icon: "JobIconHeadOfSecurity"
-  requireAdminNotify: true
   supervisors: job-supervisors-captain
   canBeAntag: false
   access:
@@ -53,3 +65,11 @@
     back:
     - Flash
     - MagazinePistol
+
+- type: chameleonOutfit
+  id: HeadOfSecurityChameleonOutfit
+  job: HeadOfSecurity
+  hasMindShield: true
+  equipment:
+    mask: ClothingMaskGasSecurity
+    neck: ClothingNeckCloakHos

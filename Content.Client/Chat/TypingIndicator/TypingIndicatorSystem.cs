@@ -16,7 +16,11 @@ public sealed class TypingIndicatorSystem : SharedTypingIndicatorSystem
     private readonly TimeSpan _typingTimeout = TimeSpan.FromSeconds(2);
     private TimeSpan _lastTextChange;
     private bool _isClientTyping;
+<<<<<<< HEAD
     private bool _isClientChatFocused; // Corvax-TypingIndicator
+=======
+    private bool _isClientChatFocused;
+>>>>>>> upstream/master
 
     public override void Initialize()
     {
@@ -32,10 +36,15 @@ public sealed class TypingIndicatorSystem : SharedTypingIndicatorSystem
             return;
 
         // client typed something - show typing indicator
+<<<<<<< HEAD
         // Corvax-TypingIndicator-Start
         _isClientTyping = true;
         ClientUpdateTyping();
         // Corvax-TypingIndicator-End
+=======
+        _isClientTyping = true;
+        ClientUpdateTyping();
+>>>>>>> upstream/master
         _lastTextChange = _time.CurTime;
     }
 
@@ -46,11 +55,27 @@ public sealed class TypingIndicatorSystem : SharedTypingIndicatorSystem
             return;
 
         // client submitted text - hide typing indicator
+<<<<<<< HEAD
         // Corvax-TypingIndicator-Start
         _isClientTyping = false;
         _isClientChatFocused = false;
         ClientUpdateTyping();
         // Corvax-TypingIndicator-End
+=======
+        _isClientTyping = false;
+        ClientUpdateTyping();
+    }
+
+    public void ClientChangedChatFocus(bool isFocused)
+    {
+        // don't update it if player don't want to show typing
+        if (!_cfg.GetCVar(CCVars.ChatShowTypingIndicator))
+            return;
+
+        // client submitted text - hide typing indicator
+        _isClientChatFocused = isFocused;
+        ClientUpdateTyping();
+>>>>>>> upstream/master
     }
 
     // Corvax-TypingIndicator-Start
@@ -70,21 +95,31 @@ public sealed class TypingIndicatorSystem : SharedTypingIndicatorSystem
     {
         base.Update(frameTime);
 
+        if (!_time.IsFirstTimePredicted)
+            return;
+
         // check if client didn't changed chat text box for a long time
         if (_isClientTyping)
         {
             var dif = _time.CurTime - _lastTextChange;
             if (dif > _typingTimeout)
             {
+<<<<<<< HEAD
                 // client didn't typed anything for a long time - hide indicator
                 // Corvax-TypingIndicator-Start
                 _isClientTyping = false;
                 ClientUpdateTyping();
                 // Corvax-TypingIndicator-End
+=======
+                // client didn't typed anything for a long time - change indicator
+                _isClientTyping = false;
+                ClientUpdateTyping();
+>>>>>>> upstream/master
             }
         }
     }
 
+<<<<<<< HEAD
     private void ClientUpdateTyping() // Corvax-TypingIndicator
     {
         // Corvax-TypingIndicator-Start
@@ -104,6 +139,20 @@ public sealed class TypingIndicatorSystem : SharedTypingIndicatorSystem
         // Corvax-TypingIndicator-End
         // send a networked event to server
         RaisePredictiveEvent(new TypingChangedEvent(state)); // Corvax-TypingIndicator
+=======
+    private void ClientUpdateTyping()
+    {
+        // check if player controls any pawn
+        if (_playerManager.LocalEntity == null)
+            return;
+
+        var state = TypingIndicatorState.None;
+        if (_isClientChatFocused)
+            state = _isClientTyping ? TypingIndicatorState.Typing : TypingIndicatorState.Idle;
+
+        // send a networked event to server
+        RaisePredictiveEvent(new TypingChangedEvent(state));
+>>>>>>> upstream/master
     }
 
     private void OnShowTypingChanged(bool showTyping)
@@ -111,10 +160,15 @@ public sealed class TypingIndicatorSystem : SharedTypingIndicatorSystem
         // hide typing indicator immediately if player don't want to show it anymore
         if (!showTyping)
         {
+<<<<<<< HEAD
             // Corvax-TypingIndicator-Start
             _isClientTyping = false;
             ClientUpdateTyping();
             // Corvax-TypingIndicator-End
+=======
+            _isClientTyping = false;
+            ClientUpdateTyping();
+>>>>>>> upstream/master
         }
     }
 }

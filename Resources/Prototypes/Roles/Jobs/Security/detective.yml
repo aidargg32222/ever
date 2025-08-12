@@ -4,9 +4,15 @@
   description: job-description-detective
   playTimeTracker: JobDetective
   requirements:
+<<<<<<< HEAD
   - !type:DepartmentTimeRequirement
     department: Security
     time: 72000 #20 hrs # Corvax-RoleTime
+=======
+  - !type:RoleTimeRequirement
+    role: JobSecurityOfficer
+    time: 18000 #5 hrs
+>>>>>>> upstream/master
   startingGear: DetectiveGear
   icon: "JobIconDetective"
   supervisors: job-supervisors-hos
@@ -17,6 +23,8 @@
   - Maintenance
   - Service
   - Detective
+  - Cryogenics
+  - External
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
@@ -33,3 +41,13 @@
     - Flash
     - ForensicPad
     - ForensicScanner
+
+- type: chameleonOutfit
+  id: DetectiveChameleonOutfit
+  job: Detective
+  hasMindShield: true
+  equipment:
+    head: ClothingHeadHatFedoraBrown
+    mask: ClothingMaskGasSecurity
+    neck: ClothingNeckTieDet
+    gloves: ClothingHandsGlovesForensic

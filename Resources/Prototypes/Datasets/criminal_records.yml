@@ -1,7 +1,8 @@
 # "funny" placeholders of extremely minor/non-crimes for wanted reason dialog
-- type: dataset
+- type: localizedDataset
   id: CriminalRecordsWantedReasonPlaceholders
   values:
+<<<<<<< HEAD
   - Съел свою обувь
   - За то, что клоун
   - За то, что мим
@@ -22,3 +23,7 @@
   - Залил холл смазкой вплоть до отбытия
   - Быстро собрал ДАМ
   - Носит боксёрские перчатки
+=======
+    prefix: placeholders-criminal-records-wanted-reason-
+    count: 20
+>>>>>>> upstream/master

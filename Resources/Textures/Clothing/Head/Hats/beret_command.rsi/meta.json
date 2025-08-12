@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+<<<<<<< HEAD:Resources/Textures/Clothing/Head/Helmets/paramedhelm.rsi/meta.json
+  "copyright": "Created by discord:𝘽𝙚𝙡𝙖𝙮#7441. vox state by Flareguy",
+=======
+  "copyright": "Made by GoldenCan(github) by modifying beret_engineering.rsi which was taken from tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e",
+>>>>>>> upstream/master:Resources/Textures/Clothing/Head/Hats/beret_command.rsi/meta.json
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "equipped-HELMET",
+      "directions": 4
+    },
+    {
+      "name": "equipped-HELMET-hamster",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    }
+  ]
+}

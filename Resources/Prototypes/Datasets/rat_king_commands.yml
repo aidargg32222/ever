@@ -1,27 +1,50 @@
+<<<<<<< HEAD
 - type: dataset
   id: RatKingCommandStay
   values:
     - "Сидеть!"
     - "Стоять!"
     - "Стоп!"
+=======
+﻿- type: localizedDataset
+  id: RatKingCommandStay
+  values:
+    prefix: rat-king-command-stay-
+    count: 3
+>>>>>>> upstream/master
 
-- type: dataset
+- type: localizedDataset
   id: RatKingCommandFollow
   values:
+<<<<<<< HEAD
     - "К ноге!"
     - "За мной!"
+=======
+    prefix: rat-king-command-follow-
+    count: 2
+>>>>>>> upstream/master
 
-- type: dataset
+- type: localizedDataset
   id: RatKingCommandCheeseEm
   values:
+<<<<<<< HEAD
     - "В атаку!"
     - "Фас!"
     - "Убить!"
     - "Убейте его!"
+=======
+    prefix: rat-king-command-cheese-
+    count: 4
+>>>>>>> upstream/master
 
-- type: dataset
+- type: localizedDataset
   id: RatKingCommandLoose
   values:
+<<<<<<< HEAD
     - "Вольно!"
     - "Врассыпную!"
     
+=======
+    prefix: rat-king-command-loose-
+    count: 2
+>>>>>>> upstream/master

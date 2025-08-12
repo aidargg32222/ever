@@ -1,6 +1,7 @@
-- type: dataset
+- type: localizedDataset
   id: TraitorCorporations
   values:
+<<<<<<< HEAD
   - "CyberSun Industries"
   - "Мародёры Горлекса"
   - "MI13"
@@ -10,3 +11,7 @@
   - "Donk Corporation"
   - "Waffle Corporation"
   - "Interdyne Pharmaceutics"
+=======
+    prefix: traitor-corporations-dataset-
+    count: 9
+>>>>>>> upstream/master

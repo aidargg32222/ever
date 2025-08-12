@@ -1,6 +1,7 @@
-﻿- type: dataset
-  id: verbs
+- type: localizedDataset
+  id: Verbs
   values:
+<<<<<<< HEAD
   - сказать
   - говорить
   - хотеть
@@ -992,3 +993,7 @@
   - осваивать
   - разбудить
   - заболеть
+=======
+    prefix: verbs-dataset-
+    count: 631
+>>>>>>> upstream/master

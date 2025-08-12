@@ -32,7 +32,18 @@
 - Альт-кликом по ХимМастеру вытащите таблетницу, возможно сначала возьмётся мензурка.
 - Нажмите на стол, ящик или другую поверхность с таблетницей в руках, чтобы высыпать все таблетки. Также можно просто оставить её как есть или вручную забрать таблетки из таблетницы и переместить их куда душе угодно.
 
+<<<<<<< HEAD
 Вот и все, вы сделали свой первый набор таблеток! Узнайте в первую очередь у врачей, а после и у других членов экипажа, что еще может потребоваться, пополните аптечки в медблоке или просто поэкспериментируйте!
+=======
+- Grab a beaker, Pill Canister, and if desired, some Bottles.
+- Place the beaker in the Chemical Dispenser, and Pill Canister (or bottle) in the Chem Master.
+- Open the Chemical Dispenser UI, and make your mix. Recipes are in other sections of the guidebook.
+- Alt-click the dispenser to remove your beaker, and place it in the Chem Master.
+- Open the Chem Master UI. On the Input tab, move your mix into the buffer.
+- Move to the Output tab, customise your pill, and press the Create button.
+- Alt-click the Chem Master to get the pill bottle out. You may have to remove the beaker first.
+- Click on a table, crate, or another surface to empty the pill bottle if desired. Alternatively, store or empty it into another storage container.
+>>>>>>> upstream/master
 
 Вы также можете использовать этикетировщик для организации отдельных бутылочек или сумок без использования системы этикетирования ХимМастера.
 

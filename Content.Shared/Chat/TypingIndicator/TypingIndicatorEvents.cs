@@ -12,7 +12,10 @@ namespace Content.Shared.Chat.TypingIndicator;
 [Serializable, NetSerializable]
 public sealed class TypingChangedEvent : EntityEventArgs
 {
+<<<<<<< HEAD
     // Corvax-TypingIndicator-Start
+=======
+>>>>>>> upstream/master
     public readonly TypingIndicatorState State;
 
     public TypingChangedEvent(TypingIndicatorState state)

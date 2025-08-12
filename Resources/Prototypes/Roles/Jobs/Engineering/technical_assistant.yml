@@ -8,7 +8,11 @@
       time: 3600 #1 hr
     - !type:DepartmentTimeRequirement
       department: Engineering
+<<<<<<< HEAD
       time: 36000 #10 hrs # Corvax-RoleTime
+=======
+      time: 18000 #5 hrs
+>>>>>>> upstream/master
       inverted: true # stop playing intern if you're good at engineering!
   startingGear: TechnicalAssistantGear
   icon: "JobIconTechnicalAssistant"
@@ -30,3 +34,14 @@
   #storage:
     #back:
     #- Stuff
+
+- type: chameleonOutfit
+  id: TechnicalAssistantChameleonOutfit
+  job: TechnicalAssistant
+  equipment:
+    head: ClothingHeadHatHardhatOrange
+    eyes: ClothingEyesGlassesMeson
+    mask: ClothingMaskBreath
+    neck: ClothingNeckScarfStripedOrange
+    outerClothing: ClothingOuterVestHazard
+    gloves: ClothingHandsGlovesColorYellow

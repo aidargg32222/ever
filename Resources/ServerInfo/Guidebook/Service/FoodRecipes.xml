@@ -1,4 +1,5 @@
 <Document>
+<<<<<<< HEAD
 ## Начало
 Это не все существующие рецепты, этот список предназначен для демонстрации основ.
 
@@ -21,25 +22,26 @@
 - Фрикаделька = 1 яйцо (6 ед.), 5 муки, 5 непрожаренные животные протеины
 - Chocolate = 6 Cocoa Powder, 2 Milk, 2 Sugar
 - Непрожаренные животные протеины: измельчить сырое мясо
+=======
 
-<Box>
-<GuideEntityEmbed Entity="FoodDough"/>
-<GuideEntityEmbed Entity="FoodDoughCornmeal"/>
-<GuideEntityEmbed Entity="FoodTofu"/>
-<GuideEntityEmbed Entity="FoodDoughPie"/>
-<GuideEntityEmbed Entity="FoodCakeBatter"/>
-<GuideEntityEmbed Entity="FoodDoughFlat"/>
-<GuideEntityEmbed Entity="FoodDoughTortilla"/>
-</Box>
+# Microwave Recipes
 
-<Box>
-<GuideEntityEmbed Entity="FoodButter"/>
-<GuideEntityEmbed Entity="FoodMeatMeatball"/>
-<GuideEntityEmbed Entity="FoodCheese"/>
-<GuideEntityEmbed Entity="FoodChevre"/>
-<GuideEntityEmbed Entity="FoodSnackChocolateBar"/>
-</Box>
+This is the latest published version of NanoTrasen Central Command Kitchen de Cuisine's recipe collection for chefs upon NanoTrasen vessels to prepare.
 
+## Pizza Pies
+<GuideMicrowaveGroupEmbed Group="Pizza"/>
+
+## Savory Cooking
+<GuideMicrowaveGroupEmbed Group="Savory"/>
+>>>>>>> upstream/master
+
+## Breads
+<GuideMicrowaveGroupEmbed Group="Breads"/>
+
+## Breakfast Foods
+<GuideMicrowaveGroupEmbed Group="Breakfast"/>
+
+<<<<<<< HEAD
 ## Второстепенные продукты
 
 - Кусочек теста: нарезать тесто
@@ -65,24 +67,39 @@
 - Banana Cream Pie : Microwave 1 Pie Dough, 3 Bananas, and 1 Pie Tin for 15 Seconds
 - Carrot Fries : Microwave 1 Carrot, 15u Salt for 15 Seconds
 - Pancake : Microwave 5u Flour, 5u Milk, 1 Egg (6u) for 5 Seconds
+=======
+## Moth Foods
+<GuideMicrowaveGroupEmbed Group="Moth"/>
 
-<Box>
-<GuideEntityEmbed Entity="FoodBreadPlain"/>
-<GuideEntityEmbed Entity="FoodBurgerPlain"/>
-<GuideEntityEmbed Entity="FoodSoupTomato"/>
-<GuideEntityEmbed Entity="FoodSaladCitrus"/>
-</Box>
-<Box>
-<GuideEntityEmbed Entity="FoodPizzaMargherita"/>
-<GuideEntityEmbed Entity="FoodCakePlain"/>
-<GuideEntityEmbed Entity="FoodPieApple"/>
-<GuideEntityEmbed Entity="FoodTacoBeef"/>
-</Box>
-<Box>
-<GuideEntityEmbed Entity="FoodMealCubancarp"/>
-<GuideEntityEmbed Entity="FoodPieBananaCream"/>
-<GuideEntityEmbed Entity="FoodMealFriesCarrot"/>
-<GuideEntityEmbed Entity="FoodBakedPancake"/>
-</Box>
+## Pastas & Noodles
+<GuideMicrowaveGroupEmbed Group="Pasta"/>
+
+## Pastries & Desserts
+<GuideMicrowaveGroupEmbed Group="Dessert"/>
+
+## Soups & Stews
+<GuideMicrowaveGroupEmbed Group="Soup"/>
+>>>>>>> upstream/master
+
+## Pies & Tarts
+<GuideMicrowaveGroupEmbed Group="Pie"/>
+
+## Bars & Cookies
+<GuideMicrowaveGroupEmbed Group="BarsAndCookies"/>
+
+## Cakes
+<GuideMicrowaveGroupEmbed Group="Cake"/>
+
+## Salads
+<GuideMicrowaveGroupEmbed Group="Salad"/>
+
+## Medicinal
+<GuideMicrowaveGroupEmbed Group="Medicinal"/>
+
+## Other
+<GuideMicrowaveGroupEmbed Group="Other"/>
+
+## Secret
+<GuideMicrowaveGroupEmbed Group="Secret"/>
 
 </Document>

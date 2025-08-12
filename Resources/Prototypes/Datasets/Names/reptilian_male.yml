@@ -1,6 +1,7 @@
-- type: dataset
-  id: names_reptilian_male
+- type: localizedDataset
+  id: NamesReptilianMale
   values:
+<<<<<<< HEAD
   - Абиджу
   - Ах
   - Аджум
@@ -333,3 +334,7 @@
   - Дзухаллаг
   - Ге'на
   
+=======
+    prefix: names-reptilian-male-dataset-
+    count: 328
+>>>>>>> upstream/master

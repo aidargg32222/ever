@@ -20,6 +20,7 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
         SubscribeLocalEvent<HumanoidAppearanceComponent, GetVerbsEvent<Verb>>(OnVerbsRequest);
     }
 
+<<<<<<< HEAD
     // this was done enough times that it only made sense to do it here
 
     /// <summary>
@@ -55,6 +56,8 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
         Dirty(target, targetHumanoid);
     }
 
+=======
+>>>>>>> upstream/master
     /// <summary>
     ///     Removes a marking from a humanoid by ID.
     /// </summary>

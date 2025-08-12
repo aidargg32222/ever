@@ -5,7 +5,7 @@
     <LangVersion>12</LangVersion>
     <IsPackable>false</IsPackable>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <WarningsAsErrors>nullable</WarningsAsErrors>
+    <WarningsAsErrors>RA0032;nullable</WarningsAsErrors>
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
@@ -24,11 +24,14 @@
     </ProjectReference>
     <ProjectReference Include="..\Corvax\Content.Corvax.Interfaces.Shared\Content.Corvax.Interfaces.Shared.csproj" />
   </ItemGroup>
+<<<<<<< HEAD
   <ItemGroup>
     <Folder Include="Atlanta\Player\Components\" />
     <Folder Include="Atlanta\Player\Systems\" />
     <Folder Include="Power\Components\" />
   </ItemGroup>
+=======
+>>>>>>> upstream/master
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
   <Import Project="..\RobustToolbox\MSBuild\Robust.CompNetworkGenerator.targets" />
 </Project>

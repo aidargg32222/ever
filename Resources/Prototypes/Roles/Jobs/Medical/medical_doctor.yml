@@ -6,7 +6,11 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
+<<<<<<< HEAD
       time: 7200 #2 hrs # Corvax-RoleTime
+=======
+      time: 9000 #2.5 hrs
+>>>>>>> upstream/master
   startingGear: DoctorGear
   icon: "JobIconMedicalDoctor"
   supervisors: job-supervisors-cmo
@@ -15,6 +19,10 @@
   - Maintenance
   extendedAccess:
   - Chemistry
+  special:
+  - !type:GiveItemOnHolidaySpecial
+    holiday: DoctorDay
+    prototype: WehMedipen
 
 - type: startingGear
   id: DoctorGear
@@ -24,3 +32,14 @@
   #storage:
     #back:
     #- Stuff
+
+- type: chameleonOutfit
+  id: MedicalDoctorChameleonOutfit
+  job: MedicalDoctor
+  equipment:
+    head: ClothingHeadNurseHat
+    eyes: ClothingEyesHudMedical
+    mask: ClothingMaskSterile
+    neck: ClothingNeckStethoscope
+    outerClothing: ClothingOuterCoatLab
+    gloves: ClothingHandsGlovesLatex

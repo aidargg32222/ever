@@ -5,7 +5,11 @@ namespace Content.Shared.Chat.TypingIndicator;
 [Serializable, NetSerializable]
 public enum TypingIndicatorVisuals : byte
 {
+<<<<<<< HEAD
     State, // Corvax-TypingIndicator
+=======
+    State
+>>>>>>> upstream/master
 }
 
 [Serializable]

@@ -7,5 +7,12 @@
   icon: JobIconVisitor
   setPreference: false
   overrideConsoleVisibility: true
+<<<<<<< HEAD
 #  access: # Corvax-MRP
 #  - Maintenance
+=======
+  access:
+  - Maintenance
+  extendedAccess:
+  - External
+>>>>>>> upstream/master

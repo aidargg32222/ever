@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 - type: dataset
   id: names_ai
   values:
@@ -85,3 +86,10 @@
   - Орион
   - Астрид
   - Луна
+=======
+﻿- type: localizedDataset
+  id: NamesAI
+  values:
+    prefix: names-ai-dataset-
+    count: 108
+>>>>>>> upstream/master

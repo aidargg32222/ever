@@ -8,6 +8,7 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobChemist
+<<<<<<< HEAD
       time: 18000 #5 hrs # Corvax-RoleTime
 #    - !type:RoleTimeRequirement
 #      role: JobMedicalDoctor
@@ -19,10 +20,18 @@
 #      time: 144000 #40 hrs
     - !type:AgeRequirement
       requiredAge: 20
+=======
+      time: 9000 #2.5 hrs
+    - !type:RoleTimeRequirement
+      role: JobMedicalDoctor
+      time: 18000 #5 hrs
+    - !type:DepartmentTimeRequirement
+      department: Medical
+      time: 36000 #10 hrs
+>>>>>>> upstream/master
   weight: 10
   startingGear: CMOGear
   icon: "JobIconChiefMedicalOfficer"
-  requireAdminNotify: true
   supervisors: job-supervisors-captain
   canBeAntag: false
   access:
@@ -49,3 +58,15 @@
   storage:
     back:
     - Flash
+
+- type: chameleonOutfit
+  id: ChiefMedicalOfficerChameleonOutfit
+  job: ChiefMedicalOfficer
+  hasMindShield: true
+  equipment:
+    head: ClothingHeadHatBeretCmo
+    eyes: ClothingEyesHudMedical
+    mask: ClothingMaskSterile
+    neck: ClothingCloakCmo
+    outerClothing: ClothingOuterCoatLabCmo
+    gloves: ClothingHandsGlovesNitrile

@@ -1,6 +1,7 @@
-- type: dataset
-  id: DionaFirst
+- type: localizedDataset
+  id: NamesDionaFirst
   values:
+<<<<<<< HEAD
   - Мох
   - Гриб
   - Трава
@@ -37,10 +38,15 @@
   - Звезда
   - Путь
   - Облако
+=======
+    prefix: names-diona-first-dataset-
+    count: 89
+>>>>>>> upstream/master
 
-- type: dataset
-  id: DionaLast
+- type: localizedDataset
+  id: NamesDionaLast
   values:
+<<<<<<< HEAD
   - Мира
   - Гармонии
   - Расслабления
@@ -80,3 +86,7 @@
   - Решительности
   - Терпения
   - Бесконечности
+=======
+    prefix: names-diona-last-dataset-
+    count: 122
+>>>>>>> upstream/master

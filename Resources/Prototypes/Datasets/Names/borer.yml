@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 - type: dataset
   id: names_borer
   values:
@@ -71,3 +72,10 @@
   - Волют
   - Волвокс
   
+=======
+﻿- type: localizedDataset
+  id: NamesBorer
+  values:
+    prefix: names-borer-dataset-
+    count: 69
+>>>>>>> upstream/master

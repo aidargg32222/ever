@@ -8,7 +8,11 @@
       time: 36000 #10 hrs # Corvax-RoleTime
     - !type:DepartmentTimeRequirement
       department: Security
+<<<<<<< HEAD
       time: 72000 #20 hrs # Corvax-RoleTime
+=======
+      time: 18000 #5 hrs
+>>>>>>> upstream/master
       inverted: true # stop playing intern if you're good at security!
   startingGear: SecurityCadetGear
   icon: "JobIconSecurityCadet"
@@ -28,7 +32,11 @@
 - type: startingGear
   id: SecurityCadetGear
   equipment:
+<<<<<<< HEAD
     shoes: ClothingShoesBootsJackSec # Corvax-Resprite-MRP
+=======
+    shoes: ClothingShoesBootsJackFilled
+>>>>>>> upstream/master
     outerClothing: ClothingOuterArmorBasic
     id: SecurityCadetPDA
     ears: ClothingHeadsetSecurity
@@ -39,3 +47,15 @@
     back:
     - Flash
     - MagazinePistol
+
+- type: chameleonOutfit
+  id: SecurityCadetChameleonOutfit
+  job: SecurityCadet
+  hasMindShield: true
+  equipment:
+    head: ClothingHeadHelmetBasic
+    eyes: ClothingEyesHudSecurity
+    mask: ClothingMaskGasSecurity
+    neck: ClothingNeckScarfStripedRed
+    belt: ClothingBeltSecurity
+    gloves: ClothingHandsGlovesColorBlack

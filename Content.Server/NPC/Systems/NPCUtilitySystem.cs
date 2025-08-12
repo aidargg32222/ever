@@ -1,7 +1,11 @@
-using Content.Server.Chemistry.Containers.EntitySystems;
+using Content.Server.Atmos.Components;
 using Content.Server.Fluids.EntitySystems;
+<<<<<<< HEAD
 using Content.Server.Mind;
 using Content.Server.NPC.Pathfinding;
+=======
+using Content.Server.Hands.Systems;
+>>>>>>> upstream/master
 using Content.Server.NPC.Queries;
 using Content.Server.NPC.Queries.Considerations;
 using Content.Server.NPC.Queries.Curves;
@@ -9,19 +13,26 @@ using Content.Server.NPC.Queries.Queries;
 using Content.Server.Nutrition.Components;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Storage.Components;
+using Content.Server.Temperature.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs;
+<<<<<<< HEAD
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mind.Components;
+=======
+>>>>>>> upstream/master
 using Content.Shared.Mobs.Systems;
 using Content.Shared.NPC.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.Stunnable;
 using Content.Shared.Tools.Systems;
+using Content.Shared.Turrets;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
@@ -43,20 +54,25 @@ public sealed class NPCUtilitySystem : EntitySystem
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly DrinkSystem _drink = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly FoodSystem _food = default!;
+    [Dependency] private readonly HandsSystem _hands = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly IngestionSystem _ingestion = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly OpenableSystem _openable = default!;
     [Dependency] private readonly PuddleSystem _puddle = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutions = default!;
+    [Dependency] private readonly SharedSolutionContainerSystem _solutions = default!;
     [Dependency] private readonly WeldableSystem _weldable = default!;
     [Dependency] private readonly ExamineSystemShared _examine = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly MobThresholdSystem _thresholdSystem = default!;
+<<<<<<< HEAD
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
+=======
+    [Dependency] private readonly TurretTargetSettingsSystem _turretTargetSettings = default!;
+>>>>>>> upstream/master
 
     private EntityQuery<PuddleComponent> _puddleQuery;
     private EntityQuery<TransformComponent> _xformQuery;
@@ -172,6 +188,7 @@ public sealed class NPCUtilitySystem : EntitySystem
         switch (consideration)
         {
             case FoodValueCon:
+<<<<<<< HEAD
                 {
                     if (!TryComp<FoodComponent>(targetUid, out var food))
                         return 0f;
@@ -232,6 +249,70 @@ public sealed class NPCUtilitySystem : EntitySystem
             case TargetAccessibleCon:
                 {
                     if (_container.TryGetContainingContainer(targetUid, out var container))
+=======
+            {
+                // do we have a mouth available? Is the food item opened?
+                if (!_ingestion.CanConsume(owner, targetUid))
+                    return 0f;
+
+                var avoidBadFood = !HasComp<IgnoreBadFoodComponent>(owner);
+
+                // only eat when hungry or if it will eat anything
+                if (TryComp<HungerComponent>(owner, out var hunger) && hunger.CurrentThreshold > HungerThreshold.Okay && avoidBadFood)
+                    return 0f;
+
+                // no mouse don't eat the uranium-235
+                if (avoidBadFood && HasComp<BadFoodComponent>(targetUid))
+                    return 0f;
+
+                var nutrition = _ingestion.TotalNutrition(targetUid, owner);
+                if (nutrition <= 1.0f)
+                    return 0f;
+
+                return 1f;
+            }
+            case DrinkValueCon:
+            {
+                // can't drink closed drinks and can't drink with a mask on...
+                if (!_ingestion.CanConsume(owner, targetUid))
+                    return 0f;
+
+                // only drink when thirsty
+                if (TryComp<ThirstComponent>(owner, out var thirst) && thirst.CurrentThirstThreshold > ThirstThreshold.Okay)
+                    return 0f;
+
+                // no janicow don't drink the blood puddle
+                if (HasComp<BadDrinkComponent>(targetUid))
+                    return 0f;
+
+                // needs to have something that will satiate thirst, mice wont try to drink 100% pure mutagen.
+                // We don't check if the solution is metabolizable cause all drinks should be currently.
+                // If that changes then simply use the other overflow.
+                var hydration = _ingestion.TotalHydration(targetUid);
+                if (hydration <= 1.0f)
+                    return 0f;
+
+                return 1f;
+            }
+            case OrderedTargetCon:
+            {
+                if (!blackboard.TryGetValue<EntityUid>(NPCBlackboard.CurrentOrderedTarget, out var orderedTarget, EntityManager))
+                    return 0f;
+
+                if (targetUid != orderedTarget)
+                    return 0f;
+
+                return 1f;
+            }
+            case TargetAccessibleCon:
+            {
+                if (_container.TryGetContainingContainer(targetUid, out var container))
+                {
+                    if (container.Owner == owner)
+                        return 0f;
+
+                    if (TryComp<EntityStorageComponent>(container.Owner, out var storageComponent))
+>>>>>>> upstream/master
                     {
                         if (TryComp<EntityStorageComponent>(container.Owner, out var storageComponent))
                         {
@@ -249,7 +330,60 @@ public sealed class NPCUtilitySystem : EntitySystem
                         }
                     }
 
+<<<<<<< HEAD
                     // TODO: Pathfind there, though probably do it in a separate con.
+=======
+                // TODO: Pathfind there, though probably do it in a separate con.
+                return 1f;
+            }
+            case TargetAmmoMatchesCon:
+            {
+                if (!blackboard.TryGetValue(NPCBlackboard.ActiveHand, out string? activeHand, EntityManager) ||
+                    !_hands.TryGetHeldItem(owner, activeHand, out var heldEntity) ||
+                    !TryComp<BallisticAmmoProviderComponent>(heldEntity, out var heldGun))
+                {
+                    return 0f;
+                }
+
+                if (_whitelistSystem.IsWhitelistFailOrNull(heldGun.Whitelist, targetUid))
+                {
+                    return 0f;
+                }
+
+                return 1f;
+            }
+            case TargetDistanceCon:
+            {
+                var radius = blackboard.GetValueOrDefault<float>(blackboard.GetVisionRadiusKey(EntityManager), EntityManager);
+
+                if (!TryComp(targetUid, out TransformComponent? targetXform) ||
+                    !TryComp(owner, out TransformComponent? xform))
+                {
+                    return 0f;
+                }
+
+                if (!targetXform.Coordinates.TryDistance(EntityManager, _transform, xform.Coordinates,
+                        out var distance))
+                {
+                    return 0f;
+                }
+
+                return Math.Clamp(distance / radius, 0f, 1f);
+            }
+            case TargetAmmoCon:
+            {
+                if (!HasComp<GunComponent>(targetUid))
+                    return 0f;
+
+                var ev = new GetAmmoCountEvent();
+                RaiseLocalEvent(targetUid, ref ev);
+
+                if (ev.Count == 0)
+                    return 0f;
+
+                // Wat
+                if (ev.Capacity == 0)
+>>>>>>> upstream/master
                     return 1f;
                 }
             case TargetAmmoMatchesCon:
@@ -313,12 +447,30 @@ public sealed class NPCUtilitySystem : EntitySystem
                 return 0f;
             }
             case TargetInLOSCon:
+<<<<<<< HEAD
                 {
                     var radius = blackboard.GetValueOrDefault<float>(NPCBlackboard.VisionRadius, EntityManager);
+=======
+            {
+                var radius = blackboard.GetValueOrDefault<float>(blackboard.GetVisionRadiusKey(EntityManager), EntityManager);
+>>>>>>> upstream/master
 
                     return _examine.InRangeUnOccluded(owner, targetUid, radius + 0.5f, null) ? 1f : 0f;
                 }
             case TargetInLOSOrCurrentCon:
+<<<<<<< HEAD
+=======
+            {
+                var radius = blackboard.GetValueOrDefault<float>(blackboard.GetVisionRadiusKey(EntityManager), EntityManager);
+                const float bufferRange = 0.5f;
+
+                if (blackboard.TryGetValue<EntityUid>("Target", out var currentTarget, EntityManager) &&
+                    currentTarget == targetUid &&
+                    TryComp(owner, out TransformComponent? xform) &&
+                    TryComp(targetUid, out TransformComponent? targetXform) &&
+                    xform.Coordinates.TryDistance(EntityManager, _transform, targetXform.Coordinates, out var distance) &&
+                    distance <= radius + bufferRange)
+>>>>>>> upstream/master
                 {
                     var radius = blackboard.GetValueOrDefault<float>(NPCBlackboard.VisionRadius, EntityManager);
                     const float bufferRange = 0.5f;
@@ -354,8 +506,38 @@ public sealed class NPCUtilitySystem : EntitySystem
                         return melee.Damage.GetTotal().Float() * melee.AttackRate / 100f;
                     }
 
+<<<<<<< HEAD
                     return 0f;
                 }
+=======
+                return 0f;
+            }
+            case TargetOnFireCon:
+                {
+                    if (TryComp(targetUid, out FlammableComponent? fire) && fire.OnFire)
+                        return 1f;
+                    return 0f;
+                }
+            case TargetIsStunnedCon:
+                {
+                    return HasComp<StunnedComponent>(targetUid) ? 1f : 0f;
+                }
+            case TurretTargetingCon:
+                {
+                    if (!TryComp<TurretTargetSettingsComponent>(owner, out var turretTargetSettings) ||
+                        _turretTargetSettings.EntityIsTargetForTurret((owner, turretTargetSettings), targetUid))
+                        return 1f;
+
+                    return 0f;
+                }
+            case TargetLowTempCon con:
+                {
+                    if (!TryComp<TemperatureComponent>(targetUid, out var temperature))
+                        return 0f;
+
+                    return temperature.CurrentTemperature <= con.MinTemp ? 1f : 0f;
+                }
+>>>>>>> upstream/master
             default:
                 throw new NotImplementedException();
         }
@@ -380,7 +562,7 @@ public sealed class NPCUtilitySystem : EntitySystem
     private void Add(NPCBlackboard blackboard, HashSet<EntityUid> entities, UtilityQuery query)
     {
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
-        var vision = blackboard.GetValueOrDefault<float>(NPCBlackboard.VisionRadius, EntityManager);
+        var vision = blackboard.GetValueOrDefault<float>(blackboard.GetVisionRadiusKey(EntityManager), EntityManager);
 
         switch (query)
         {

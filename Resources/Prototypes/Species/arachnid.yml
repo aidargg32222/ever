@@ -8,10 +8,16 @@
   markingLimits: MobArachnidMarkingLimits
   dollPrototype: MobArachnidDummy
   skinColoration: Hues
+<<<<<<< HEAD
   maleFirstNames: names_arachnid_first
   femaleFirstNames: names_arachnid_first
   maleLastNames: names_arachnid_last # Corvax-LastnameGender
   femaleLastNames: names_arachnid_last # Corvax-LastnameGender
+=======
+  maleFirstNames: NamesArachnidFirst
+  femaleFirstNames: NamesArachnidFirst
+  lastNames: NamesArachnidLast
+>>>>>>> upstream/master
   sexes:
   - Unsexed
 
@@ -20,6 +26,8 @@
   sprites:
     Head: MobArachnidHead
     Snout: MobHumanoidAnyMarking
+    UndergarmentTop: MobHumanoidAnyMarking
+    UndergarmentBottom: MobHumanoidAnyMarking
     Chest: MobArachnidTorso
     HeadTop: MobHumanoidAnyMarking
     HeadSide: MobHumanoidAnyMarking
@@ -62,7 +70,7 @@
       required: true
       defaultMarkings: [ ArachnidCheliceraeDownwards ]
     Chest:
-      points: 1
+      points: 2
       required: false
     Legs:
       points: 2
